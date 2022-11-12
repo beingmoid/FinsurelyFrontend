@@ -1,0 +1,110 @@
+<div class="add-account-modal-div">
+    <nz-modal nzFooter="null" nzWidth="700" [(nzVisible)]="isVisible" nzMaskClosable="false"
+        [nzTitle]="isEditMode ? 'Update Account':'Create New Account'" (nzOnCancel)="handleCancel()">
+        {{this.AccountForm.value | json}}
+        <div class="row">
+            <form [formGroup]="AccountForm" (ngSubmit)="onSubmit(formDirective)" novalidate #formDirective="ngForm">
+
+                <mat-form-field class="form-group col-xl-6">
+                    <mat-label>Account Type</mat-label>
+                    <mat-select formControlName="accountTypeId" >
+                        <mat-option *ngFor="let item of accountTypes" [value]="item.id"
+                        (onSelectionChange)="LoadDetails($event, item)"
+                        >{{item.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="f.accountTypeId.hasError('required')">
+                        Account type is required
+                    </mat-error>
+                </mat-form-field>
+                <!-- Account Type -->
+
+                <mat-form-field class="form-group col-xl-6">
+                    <mat-label>Account Detail Type</mat-label>
+                    <mat-select formControlName="accountDetailTypeId">
+                        <mat-option *ngFor="let item of filterList"
+                        
+                        (onSelectionChange)="LoadOtherDetails($event, item)"
+                        [value]="item.id">
+                            
+                            
+                            {{item.description}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="f.accountDetailTypeId.hasError('required')">
+                        Account Detail type is required
+                    </mat-error>
+                </mat-form-field>
+                
+                <!-- Account  Detail Type -->
+
+
+
+                <mat-form-field class="form-group col-xl-6">
+                    <mat-label>Account name </mat-label>
+                    <input matInput type="text" placeholder="Name*"  formControlName="name">
+                    <mat-error *ngIf="f.name.hasError('required')">
+                        Account name is required
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-xl-6">
+                    <mat-label>Description </mat-label>
+                    <input matInput type="text" placeholder="Description"  formControlName="description">
+              
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-xl-8">
+                    <mat-label>Account Number/IBAN </mat-label>
+                    <input matInput type="text" placeholder="Number" formControlName="number">
+                </mat-form-field>
+          
+                <mat-form-field class="form-group col-xl-8" *ngIf="isEditMode==false">
+                    <mat-label>Opening Balance </mat-label>
+                    <input matInput type="text" placeholder="Opening Balance" formControlName="openingBalanceEquity">
+                </mat-form-field>
+                <mat-form-field class="col-xl-4"  *ngIf="isEditMode==false">
+                    <mat-label>As Of</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="asOf" (dateChange)="startChange($event)">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <!-- <mat-error *ngIf="AccountForm.controls.asOf?.hasError('required')">
+                        Sales Invoice date is required
+                    </mat-error> -->
+                </mat-form-field>
+
+          
+            
+
+          <div class="form-group">
+            <div class="col-xl-2">
+                <mat-checkbox formControlName="isSubAccount" class="text-primary">Is Sub Account?
+                </mat-checkbox>
+            </div>
+            
+           
+                <mat-form-field class="col-xl-6" *ngIf="ifSubAccount">
+                    <mat-label>Parent Account </mat-label>
+                    <mat-select formControlName="accountId">
+                        <mat-option *ngFor="let item of listData"
+                        
+                       
+                        [value]="item.id">
+                            
+                            
+                            {{item.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="f.accountDetailTypeId.hasError('required')">
+                        Account Detail type is required
+                    </mat-error>
+                </mat-form-field>
+          </div>
+
+               
+           
+                <div class="form-group text-center mt-3">
+                    <button type="submit" nz-button nzType="primary">{{isEditMode ? 'Update Account' : 'Open new Account'}}
+                        </button>
+                </div>
+            </form>
+        </div>
+    </nz-modal>
+</div>

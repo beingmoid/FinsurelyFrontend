@@ -1,0 +1,82 @@
+<div class="breadcrumbs mb-3">
+    <strong>Supplier</strong>
+</div>
+<div>
+    <div class="row mb-4">
+        <div class="col-xl-10">
+            <div class="w-25 searchBarWidth">
+                <nz-input-group nzSize="large" [nzPrefix]="suffixIconSearch">
+                    <input type="text" nz-input [(ngModel)]="search" (ngModelChange)="filter()"
+                        placeholder="Search for Supplier" />
+                </nz-input-group>
+                <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search"></i>
+                </ng-template>
+            </div>
+        </div>
+        <div class="col-xl-2 ">
+            <a nz-button class="float-right" nzType="primary" 
+                (click)="showModal()">Add
+                Supplier</a>
+        </div>
+    </div>
+    <div class="row">
+            <div class="col-xl-12">
+                <nz-table class="card" #rowSelectionTable [nzData]="listData" [nzNoResult]="noData" nzShowSizeChanger
+                [nzPageSize]="pageSize" [nzTableLayout]="'fixed'" [nzBordered]="true" [nzSize]="'small'">
+                <thead>
+                    <tr>
+                        <th [nzLeft]="true" [nzWidth]="'100px'" class="ant-table-selection-column" [nzSortFn]="sortNumbersFn" (click)="sortOn('index')">#
+                        </th>
+                        <th [nzLeft]="true"  [nzAlign]="'center'"  [nzSortFn]="sortNamesFn" (click)="sortOn('number')">Supplier Person / Supplier</th>
+                        <th [nzLeft]="true"  [nzAlign]="'center'" [nzSortFn]="sortNumbersFn" (click)="sortOn('type')">Email </th>
+                        <th [nzRight]="true" [nzAlign]="'center'"  [nzSortFn]="sortNamesFn" (click)="sortOn('name')">Phone</th>
+                        <th [nzRight]="true" [nzAlign]="'center'"  [nzSortFn]="sortNumbersFn" (click)="sortOn('type')">Mobile </th>
+                  
+                      
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of rowSelectionTable.data; let i = index;" (click)="showSingleSalesAgent(data)"
+                      style="cursor: pointer;">
+                        <td [nzLeft]="true" [nzAlign]="'center'">{{i+1}}</td>
+                        <td >
+                            
+                            <div class="font-size-16">
+                            {{data.displayNameAs}} 
+                            <i nz-icon nzType="mail" nzTheme="twotone" class="ml-2"
+                        nz-tooltip [nzTooltipTitle]="'Mail to ' + data?.displayNameAs">
+                    </i>
+                             </div>
+                       
+                        </td>
+                  
+                        <td >{{ data.email }}</td>
+                        <td >{{ data.phone }}</td>
+                        <td >{{data.mobile}}</td>
+               
+                     
+                        <td>
+                            <i nz-icon nzType="fund-view" style="font-size:32px;" nzTheme="outline" nz-tooltip nzTooltipTitle="View Account History"
+                                class="text-success"
+                                (click)="$event.stopPropagation(editAccount(data))"></i>
+                    
+                        </td> 
+                    </tr>
+                </tbody>
+                </nz-table>
+            </div>
+    </div>
+</div>
+<div class="add-account-modal-div">
+    <nz-modal nzFooter="null" nzWidth="1000" [(nzVisible)]="isVisible" nzMaskClosable="false"
+        [nzTitle]="isEditMode ? 'Update Supplier':'Create New Supplier'" (nzOnCancel)="handleCancel()">
+        <app-add-supplier></app-add-supplier>
+        </nz-modal>
+</div>
+
+<ng-template #noData>
+    <nz-empty class="m-5" [nzNotFoundImage]="'assets/images/no-data/no-account.svg'" [nzNotFoundContent]="noDataDescrp">
+    </nz-empty>
+</ng-template>

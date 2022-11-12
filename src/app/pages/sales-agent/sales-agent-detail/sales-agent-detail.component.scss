@@ -1,0 +1,38 @@
+ .mat-step-header .mat-step-icon-state-done,
+.mat-step-header .mat-step-icon-state-process {
+    background-color: #2ED47A !important;
+}
+.mat-step-header .mat-step-icon-selected{
+    background-color: #109CF1 !important;
+}
+.icon {
+    font-size: 36px;
+}
+.searchIcon :hover{
+    fill: #fce57e;
+}
+.svgitem :hover{
+    fill: black;
+}
+.searchIcon {
+    .svgitem :hover{
+        fill: #fce57e;
+    }
+}
+.box-yellow{
+    background-color: #ffb946 ;
+    padding: 20px ;
+    border: 1px solid ffb946 ;
+}
+.box-red{
+    background-color: #f5222e ;
+    padding: 20px ;
+    border: 1px solid f5222e ;
+}
+.right {
+  float: right;
+
+}
+.right :hover {
+ width: 50%;
+}

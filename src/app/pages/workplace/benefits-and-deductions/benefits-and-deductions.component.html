@@ -1,0 +1,235 @@
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card bg-white">
+            <div class="card-header text-center bg-alice-blue">
+                <div class="row align-items-center">
+                    <div class="col-md-11">
+                        <div class="font-size-18">
+                            Benefits and Deductions History
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <i class="fa fa-question-circle float-right"></i>
+                    </div>`
+                </div>
+            </div>
+            <div class="card-body">
+                <nz-timeline>
+                    <nz-timeline-item *ngFor="let item of benefitAndDeductions" [nzColor]="item.applied==false?'red':'blue'">
+                        
+                        Benefits / Deductions for date of {{item.applicableDate | date }}
+                            <nz-timeline *ngFor="let benefit of item.benefits">
+                                <nz-timeline-item>
+                                 Benefit -   {{benefit.payStubLabel}} :    {{benefit.amount | number}} AED
+                                </nz-timeline-item>
+                                
+                            </nz-timeline>
+                            <nz-timeline *ngFor="let deduction of item.deduction">
+                                <nz-timeline-item>
+                                 Deduction -   {{deduction.payStubLabel}} :    {{deduction.amount | number}} AED
+                                </nz-timeline-item>
+                                
+                            </nz-timeline>
+                        </nz-timeline-item>
+           
+                </nz-timeline>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-12">
+        <div class="card bg-white">
+
+            <div class="card-header text-center bg-alice-blue">
+                <div class="row align-items-center">
+                    <div class="col-md-11">
+                        <div class="font-size-18">
+                            Benefits and Deductions
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <i class="fa fa-question-circle float-right"></i>
+                    </div>`
+                </div>
+            </div>
+
+            <div class="card-body">
+                <form [formGroup]="benefitAndDeduction">
+                  
+                    <mat-form-field class="col-xl-6">
+                        <mat-label>
+                            Applicable Date
+                        </mat-label>
+                        <input type="text" [matDatepicker]="picker4" matInput formControlName="applicableDate"  />
+                        <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                      <mat-datepicker #picker4></mat-datepicker>
+                    </mat-form-field>
+                    
+                    <mat-form-field class="col-xl-6" [formGroup]="benefitAndDeduction">
+                        <mat-label>
+                            Benefits
+                        </mat-label>
+                        <mat-chip-list #chipList aria-label="Benefits selection">
+                            <mat-chip *ngFor="let item of benefits"
+                            [selectable]="selectable"
+                            [removable]="removable"
+                            (removed)="removeBenefit(item)">
+                                {{item.payStubLabel}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+            
+                        <input 
+                        placeholder="Benefits"
+                        [matChipInputFor]="chipList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        (matChipInputTokenEnd)="add($event)" 
+                        matInput formControlName="benefits" />
+                        <button mat-icon-button matSuffix (click)="handleBenefitOpen()" >
+                            <mat-icon>{{ 'add'}}</mat-icon>
+                          </button>
+                    </mat-chip-list>
+         
+                    </mat-form-field>
+                    <mat-form-field class="col-xl-6" [formGroup]="benefitAndDeduction">
+                        <mat-label>
+                            Deduction
+                        </mat-label>
+                        <mat-chip-list #chipList2 aria-label="Deductions">
+                            <mat-chip *ngFor="let item of deductions"
+                            [selectable]="selectable"
+                            [removable]="removable"
+                            (removed)="removeDeduction(item)">
+                                {{item.payStubLabel}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+            
+                        <input 
+                        placeholder="Deductions"
+                        [matChipInputFor]="chipList2"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        (matChipInputTokenEnd)="add($event)" 
+                        matInput formControlName="deduction" />
+                        <button mat-icon-button matSuffix (click)="$event.stopPropagation(handleDeductionOpen())" >
+                            <mat-icon>{{ 'add'}}</mat-icon>
+                          </button>
+                    </mat-chip-list>
+         
+              
+                    </mat-form-field>
+                    <div class="col-xl-12 d-flex justify-content-center">
+                        <button type="submit" nz-button nzType="primary" (click)="OnSubmit()" >{{ 'Add Benefits / Deduction'}}
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+
+        <nz-modal
+        nzFooter="null" nzWidth="500" [(nzVisible)]="isBenefitVisible" nzMaskClosable="false"
+        [nzTitle]="'Add Benefits'" (nzOnCancel)="handleBenefitCancel()"
+        >
+        <form [formGroup]="benefit">
+            <mat-form-field class="col-xl-6">
+                <mat-label>
+                    Benefit Type
+                </mat-label>
+                <mat-select formControlName="benefitTypeId">
+                    <mat-option *ngFor="let item of benefitType" [value]="item.id">
+                        {{item.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-xl-6">
+                <mat-label>
+                    Pay Stub Label
+                </mat-label>
+            <input matInput type="text" formControlName="payStubLabel" />
+            </mat-form-field>
+            <mat-form-field class="col-xl-6">
+                <mat-label>
+                    Amount
+                </mat-label>
+            <input matInput type="text" formControlName="amount" />
+            </mat-form-field>
+            <mat-form-field class="col-xl-6">
+            <mat-label>
+                Occurance
+            </mat-label>
+            <mat-select formControlName="occurance">
+                <mat-option value=1>
+                    Yearly
+                </mat-option>
+                <mat-option value=2>
+                    Monthly
+                </mat-option>
+                <mat-option value=3>
+                    Quaterly
+                </mat-option>
+                <mat-option value=4>
+                    Once
+                </mat-option>
+            </mat-select>
+            </mat-form-field>
+
+            <div class="col-xl-12 d-flex justify-content-center">
+                <button type="submit" nz-button nzType="primary" (click)="BenefitSubmit()">{{ 'Add Benefits'}}
+                </button>
+            </div>
+        </form>
+        </nz-modal>
+
+        <nz-modal
+        nzFooter="null" nzWidth="500" [(nzVisible)]="isDeductionVisible" nzMaskClosable="false"
+        [nzTitle]="'Add Deduction'" (nzOnCancel)="handleDeductionCancel()"
+        >
+        <form [formGroup]="deduction">
+            <mat-form-field class="col-xl-6">
+                <mat-label>
+                    Deduction Type
+                </mat-label>
+                <mat-select formControlName="deductionTypeId">
+                    <mat-option *ngFor="let item of deductionType" [value]="item.id">
+                        {{item.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-xl-6">
+                <mat-label>
+                    Pay Stub Label
+                </mat-label>
+            <input matInput type="text" formControlName="payStubLabel" />
+            </mat-form-field>
+            <mat-form-field class="col-xl-6">
+                <mat-label>
+                    Amount
+                </mat-label>
+            <input matInput type="text" formControlName="amount" />
+            </mat-form-field>
+            <mat-form-field class="col-xl-6">
+            <mat-label>
+                Occurance
+            </mat-label>
+            <mat-select formControlName="occurance">
+                <mat-option value=1>
+                    Yearly
+                </mat-option>
+                <mat-option value=2>
+                    Monthly
+                </mat-option>
+                <mat-option value=3>
+                    Quaterly
+                </mat-option>
+                <mat-option value=4>
+                    Once
+                </mat-option>
+            </mat-select>
+            </mat-form-field>
+
+            <div class="col-xl-12 d-flex justify-content-center">
+                <button type="submit" nz-button nzType="primary" (click)="DeductionSubmit()">{{ 'Add Deductions'}}
+                </button>
+            </div>
+        </form>
+        </nz-modal>
+ 

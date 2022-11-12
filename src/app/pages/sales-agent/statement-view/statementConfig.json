@@ -1,0 +1,70 @@
+{
+    "columns": [
+        {
+            "index": 0,
+            "columnName": "DATE",
+            "selectedToDisplay": false
+        }
+        ,
+        {
+            "index": 1,
+            "columnName": "CUSTOMER NAME",
+            "selectedToDisplay": false
+        },
+        {
+            "index": 2,
+            "columnName": "POLICY NUMBER",
+            "selectedToDisplay": false
+        },
+        {
+            "index": 3,
+            "columnName": "INSURANCE COMPANY / BROKER",
+            "selectedToDisplay": false
+        },
+        {
+            "index": 4,
+            "columnName": "TRANSACTION TYPE",
+            "selectedToDisplay": false
+        },
+        {
+            "index": 5,
+            "columnName": "VEHICLE",
+            "selectedToDisplay": false
+        },
+        {
+            "index": 6,
+            "columnName": "TRANSACTION REFERENCE NUMBER",
+            "selectedToDisplay": false
+        },
+        {
+            "index": 7,
+            "columnName": "INSURANCE TYPE",
+            "selectedToDisplay": false
+        },
+        {
+            "index": 8,
+            "columnName": "MEMO/DESCRIPTION",
+            "selectedToDisplay": false
+        },
+        {
+            "index": 9,
+            "columnName": "DEBIT",
+            "selectedToDisplay": false
+        },
+        {
+            "index": 10,
+            "columnName": "CREDIT",
+            "selectedToDisplay": false
+        },
+        {
+            "index": 11,
+            "columnName": "AMOUNT",
+            "selectedToDisplay": false
+        },
+        {
+            "index": 12,
+            "columnName": "BALANCE",
+            "selectedToDisplay": false
+        }
+    ]
+}

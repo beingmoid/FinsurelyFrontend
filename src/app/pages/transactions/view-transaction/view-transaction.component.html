@@ -1,0 +1,85 @@
+<div>
+
+
+    <div class="row mb-4">
+        <div class="col-xl-10">
+            <div class="w-25 TM-searchBar">
+                <nz-input-group nzSize="large" [nzPrefix]="suffixIconSearch">
+                    <input type="text" nz-input [(ngModel)]="search" (ngModelChange)="filter()"
+                        placeholder="Search for Transactions" />
+                </nz-input-group>
+                <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search"></i>
+                </ng-template>
+            </div>
+        </div>
+        <div class="col-xl-2 ">
+            <a nz-button class="float-right" nzType="primary" (click)="showModal()">
+                Add Transcations</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12 ">
+            <nz-table class="card" #rowSelectionTable [nzData]="listData" [nzNoResult]="noData" nzShowSizeChanger
+                [nzPageSize]="pageSize">
+                <thead>
+                    <tr>
+                        <th class="ant-table-selection-column" [nzSortFn]="sortNumbersFn" (click)="sortOn('index')">#
+                        </th>
+                        <th [nzSortFn]="sortNamesFn" (click)="sortOn('transactionType')">Transaction Type </th>
+                        <th [nzSortFn]="sortNamesFn" (click)="sortOn('memo')">Memo</th>
+                        <th [nzSortFn]="sortNumbersFn" (click)="sortOn('date')">Date</th>
+                        <th [nzSortFn]="sortNamesFn" (click)="sortOn('entity')">Entity</th>
+                        <!-- <th>Phone Number</th> -->
+                        <!-- <th [nzSortFn]="sortNamesFn" (click)="sortOn('lastLoggedIn')">Last Logged in</th> -->
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let data of rowSelectionTable.data; let i = index;" 
+                        nz-tooltip nzTooltipTitle="Click to View Task" style="cursor: pointer;">
+                        <td>{{data.index}}</td>
+                        <td>
+                            <nz-avatar nzIcon="user" [nzSrc]="data.blobURI"></nz-avatar>
+                            {{ data.firstName }} {{data.lastName}}
+                        </td>
+                        <td>{{ data.email }}</td>
+                        <td>
+                            <span class="badge badge-danger" *ngIf="!data.memberStatus">Deactive</span>
+                            <span class="badge badge-success" *ngIf="data.memberStatus">Active</span>
+                        </td>
+                        <td>{{ data.role.substring(0, data.role.lastIndexOf('_') > 0 ? data.role.lastIndexOf('_') :
+                            data.role.length) }}</td>
+                        <!-- <td>{{ data.phoneNumber }}</td> -->
+                        <td>{{ data.lastLoggedIn == null ? 'N/A' : data.lastLoggedIn | appDateFormat: false}}
+                        </td>
+                        <td>
+                            <i nz-icon nzType="edit" nz-tooltip nzTooltipTitle="Edit Team Member" nzTheme="fill"
+                               class="text-success"
+                               ></i>
+                            <nz-divider nzType="vertical"></nz-divider>
+                            <i nz-icon nzType="delete" nz-tooltip nzTooltipTitle="Delete Team Member" nzTheme="fill"
+                             
+                             ></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </div>
+
+</div>
+<ng-template #noData>
+    <nz-empty class="m-5" [nzNotFoundImage]="'assets/images/no-data/no-team.svg'" [nzNotFoundContent]="noDataDescrp">
+    </nz-empty>
+</ng-template>
+
+<ng-template #noDataDescrp>
+    <div class="m-4">
+        No Data Available.
+        <a  (click)="showModal()" class="kit__utils__link">
+            Add New Transaction
+        </a>
+    </div>
+</ng-template>

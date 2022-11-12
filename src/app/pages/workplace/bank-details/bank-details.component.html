@@ -1,0 +1,94 @@
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card bg-white">
+            <div class="card-header text-center bg-alice-blue">
+                <div class="row align-items-center">
+                    <div class="col-md-11">
+                        <div class="font-size-18">
+                         Banking Details
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <i class="fa fa-question-circle float-right"></i>
+                    </div>`
+                </div>
+            </div>
+            <div class="card-body">
+                <nz-table class="card" #rowSelectionTable [nzData]="banks"  nzShowSizeChanger
+                [nzPageSize]="20" [nzTableLayout]="'fixed'" [nzBordered]="true" [nzSize]="'small'">
+                <thead>
+                    <tr>
+                        <th  [nzLeft]="true" [nzWidth]="'164px'" > Account Holder Name</th>
+                        <th [nzLeft]="true"  [nzAlign]="'center'"  >Account Number</th>
+                        <th [nzLeft]="true"  [nzAlign]="'center'" >IBAN Number  </th>
+                        <th [nzRight]="true" [nzAlign]="'center'"  >Bank Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of  rowSelectionTable.data">
+                        <td> {{item.accountHolderName}} </td>
+                        <td> {{item.accountNumber}} </td>
+                        <td> {{item.ibanNumber}} </td>
+                        <td> {{item.bankType}} </td>
+                    </tr>
+                </tbody>
+                </nz-table>
+            </div>
+        </div>
+        </div>
+    <div class="col-xl-12">
+        <div class="card bg-white">
+            <div class="card-header text-center bg-alice-blue">
+                <div class="row align-items-center">
+                    <div class="col-md-11">
+                        <div class="font-size-18">
+                      Add Bank Details
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <i class="fa fa-question-circle float-right"></i>
+                    </div>`
+                </div>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="bankForm">
+                 <mat-form-field class="col-xl-6">
+                    <mat-label>
+                        Account Holder Name
+                        </mat-label>
+                        <input matInput type="text" formControlName="accountHolderName"/>
+                 </mat-form-field>
+                 <mat-form-field class="col-xl-6">
+                    <mat-label>
+                        Account Number
+                        </mat-label>
+                        <input matInput type="text" formControlName="accountNumber"/>
+                 </mat-form-field>
+                 <mat-form-field class="col-xl-6">
+                    <mat-label>
+                        IBAN Number
+                        </mat-label>
+                        <input matInput type="text" formControlName="ibanNumber"/>
+                 </mat-form-field>
+                 <mat-form-field class="col-xl-6">
+                    <mat-label>
+                        Bank Type
+                        </mat-label>
+                       <mat-select formControlName="bankType">
+                            <mat-option [value]=1>
+                                Current Account
+                            </mat-option>
+                            <mat-option [value]=2>
+                                Saving Account
+                            </mat-option>
+                           </mat-select>
+                 </mat-form-field>
+                 <div class="col-xl-12 d-flex justify-content-center">
+                    <button type="submit" nz-button nzType="primary" (click)="OnSubmit()" >{{ 'Add Banking Details'}}
+                    </button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

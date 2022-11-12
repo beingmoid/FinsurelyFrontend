@@ -1,0 +1,44 @@
+<nz-tabset>
+    <nz-tab [nzTitle]="Workplace">
+        <app-workplace></app-workplace>
+    </nz-tab>
+    <nz-tab [nzTitle]="Employees">
+        <app-employee-view></app-employee-view>
+    </nz-tab>
+    <!-- <nz-tab [nzTitle]="Teams">
+        <app-teams></app-teams>
+    </nz-tab> -->
+</nz-tabset>
+
+
+
+
+
+
+  <ng-template #Workplace>
+    <div class="font-size-16 font-weight-light">
+        <i nz-icon >
+            <img src="assets/images/home/workplace.svg" width="30px" alt="Icon" style="margin-bottom: 5px;" />
+
+        </i>
+        <nz-divider nzType="vertical"></nz-divider> Workplace Manager
+    </div>
+</ng-template>
+<ng-template #Employees>
+    <div class="font-size-16 font-weight-light">
+        <i nz-icon >
+            <img src="assets/images/home/employee.svg" style="margin-bottom: 5px;" width="30px" alt="Icon" />
+        </i>
+        <nz-divider nzType="vertical"></nz-divider> Manage your employees
+    </div>
+</ng-template>
+
+<ng-template #Teams>
+    <div class="font-size-16 font-weight-light">
+        <i nz-icon >
+
+            <img src="assets/images/home/delegate.svg" style="margin-bottom: 5px;" width="30px" alt="Icon" />
+        </i>
+        <nz-divider nzType="vertical"></nz-divider> Teams 
+    </div>
+</ng-template>

@@ -1,0 +1,107 @@
+<nz-sider nzCollapsible [nzWidth]="leftMenuWidth" [nzCollapsible]="!isMobileView"
+  [(nzCollapsed)]="isMenuCollapsed && !isMobileView" (nzCollapsedChange)="onCollapse($event)" [ngClass]="{
+  menu: true,
+  dark: 'dark',
+  unfixed: isMenuUnfixed,
+  shadow: isMenuShadow && !isMobileView
+}">
+  <div class="menuOuter" [ngStyle]="{
+    width: isMenuCollapsed && !isMobileView ? '80px' : leftMenuWidth + 'px',
+    height: isMobileView || isMenuUnfixed ? 'calc(100% - 64px)' : 'calc(100% - 110px)'
+  }">
+
+
+    <perfect-scrollbar>
+      <!-- Start Profile -->
+      <div  class="p-2">
+
+        <div class="d-flex flex-wrap align-items-start mb-3 mt-2">
+          <div [hidden]="isMenuCollapsed" class="kit__utils__avatar kit__utils__avatar--size27 kit__utils__avatar--rounded mr-3 ml-4">
+            <!-- TODO: Add image as avatar -->
+            <img src="assets/images/icon.png" height="50" width="50"  class="mr-2" alt="Afnan" />
+            <!-- <nz-avatar nzIcon="user" [nzShape]="'square'" [nzSize]="'large'" class="avatar"></nz-avatar> -->
+
+          </div>
+          <div [hidden]="!isMenuCollapsed" class="kit__utils__avatar kit__utils__avatar--size27 kit__utils__avatar--rounded mr-3 ml-4">
+            <!-- TODO: Add image as avatar -->
+            <img src="assets/images/icon.png" alt="{{name}}" />
+            <img src="assets/images/icon.png" height="50" width="50"  class="mr-2" alt="Afnan" />
+            <!-- <nz-avatar nzIcon="user" [nzShape]="'square'" [nzSize]="'large'" class="avatar"></nz-avatar> -->
+
+          </div>
+
+          <div >
+            <div class="text-primary font-weight-bold font-size-18">
+              <span nzTooltipTitle="Manage your finance with insurely" nzTooltipPlacement="right" nz-tooltip style="color:#ffffff">
+                Finsurely
+              </span>
+              <!-- <a (click)="logout()" class="float-right" nzTooltipTitle="Logout" nzTooltipPlacement="right" nz-tooltip>
+                <i class="fe fe-power"></i>
+              </a> -->
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
+
+
+      <!-- End Profile -->
+      <!-- Start Menu -->
+      <ul nz-menu class="navigation" [nzInlineIndent]="15" [nzMode]="'inline'"
+        [nzInlineCollapsed]="isMenuCollapsed && !isMobileView">
+        <ng-container *ngTemplateOutlet="menuTpl; context: {$implicit: menuDataActivated, level: 0}"></ng-container>
+        <ng-template #menuTpl let-menuDataActivated let-level="level">
+          <ng-container *ngFor="let item of menuDataActivated">
+            <!-- <ng-container *ngIf="(!item.roles || item.roles.includes(role)) && hasPermission(item)"> -->
+              <ng-container >
+
+              <ng-template #tooltipTpl>
+                {{ item.title }}
+              </ng-template>
+              <!-- group title item -->
+              <li nz-menu-group [nzTitle]="item.title" *ngIf="item.category">
+                <hr *ngIf="item.title === '' && !isMenuCollapsed ">
+              </li>
+              <!-- disabled item -->
+              <li nz-menu-item *ngIf="item.disabled" [nzSelected]="item.selected" [nzDisabled]="true" nz-tooltip
+                nzTooltipPlacement="right" [nzTooltipTitle]="isMenuCollapsed && level === 0 ? tooltipTpl : ''">
+                <span [ngStyle]="{'padding-left.px': isMenuCollapsed ? '40' : '40'}">
+                  <i *ngIf="item.icon" [ngClass]="[item.icon, 'icon']"></i>
+                  <span class="title">{{item.title}}</span>
+                  <span *ngIf="item.count" class="badge badge-success ml-2">{{ item.count }}</span>
+                </span>
+              </li>
+              <!-- main item -->
+              <li nz-menu-item *ngIf="!item.children && item.url" routerLink={{item.url}} [nzSelected]="item.selected"
+                [nzDisabled]="item.disabled" nz-tooltip nzTooltipPlacement="right"
+                [nzTooltipTitle]="isMenuCollapsed && level === 0 ? tooltipTpl : ''">
+                <span [ngStyle]="{'padding-left.px': isMenuCollapsed ? '40' : '40'}">
+                  <i *ngIf="item.icon" [ngClass]="[item.icon, 'icon']"></i>
+                  <span class="title">{{item.title}}</span>
+                  <span *ngIf="item.count" class="badge badge-success ml-2">{{ item.count }}</span>
+                </span>
+              </li>
+              <!-- submenu item with recursive template -->
+              <li nz-submenu *ngIf="item.children" [nzOpen]="item.open && !isMenuCollapsed">
+                <span title [ngStyle]="{'padding-left.px': isMenuCollapsed ? '40' : '40'}">
+                  <i *ngIf="item.icon" [ngClass]="[item.icon, 'icon']"></i>
+                  <span class="title">{{item.title}}</span>
+                  <span *ngIf="item.count" class="badge badge-success ml-2">{{ item.count }}</span>
+                </span>
+                <ul>
+                  <ng-container *ngTemplateOutlet="menuTpl; context: {$implicit: item.children, level: level + 1}">
+                  </ng-container>
+                </ul>
+              </li>
+            </ng-container>
+          </ng-container>
+        </ng-template>
+      </ul>
+      <!-- <div class="banner">
+        <p>Some Text</p>
+      </div> -->
+    </perfect-scrollbar>
+  </div>
+</nz-sider>

@@ -1,0 +1,216 @@
+<div class="breadcrumbs">
+    <strong>Home</strong>
+</div>
+<div>
+    <div class="row mb-4">
+        <div class="col-xl-12">
+            <div class="float-right" [hidden]="_permissionService.getRole() == 'Client'">
+                <div ngbDropdown placement="bottom-right" class="d-inline-block">
+                    <button class="btn btn-primary btn-lg ant-btn-primary" id="addNew" ngbDropdownToggle>
+                        <span class="pl-4 pr-4">Add New</span>
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="addNew">
+                        <button ngbDropdownItem>Add Customer</button>
+                        <button ngbDropdownItem>Add Invoice</button>
+                        <button ngbDropdownItem>Receive Payment </button>
+                        <!-- <button [hidden]="!canViewContact || !canCreateContact" ngbDropdownItem (click)="showAddContact()">Add New Contact</button>
+                        <button [hidden]="!canViewSales || !canCreateSales" ngbDropdownItem (click)="showAddSales()">Add
+                            New Sales</button>
+                        <button [hidden]="!canViewEvent || !canCreateEvent" ngbDropdownItem (click)="showAddEvent()">Add
+                            New Event</button>
+                        <button [hidden]="!canViewTask || !canCreateTask" ngbDropdownItem (click)="showAddTask()">Add
+                            New Task</button>
+                        <button [hidden]="!canViewTeam || !canCreateTeam" ngbDropdownItem (click)="showAddTeamMember()">Add New Team Member</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row home-top-cards">
+        <div class="col-xl-3">
+            <div class="card">
+                <div class="card-body d-flex flex-wrap justify-content-between align-items-start bg-alice-blue">
+                    <div class="">
+                        <div class="text-dark f-13 font-weight-bold">Payable Amount</div>
+                        <div class="text-dark font-weight-bold font-size-24">{{upcomingEventCount}}</div>
+                        <div class="font-size-12 text-default">Analytics for this month</div>
+                    </div>
+                    <div class="">
+                        <img src="assets/images/home/payable.svg" width="50px" alt="Icon" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3">
+            <div class="card">
+                <div class="card-body d-flex flex-wrap justify-content-between align-items-start bg-alice-blue">
+                    <div class="">
+                        <div class="text-dark f-13 font-weight-bold">Receviable Amount</div>
+                        <div class="text-dark font-weight-bold font-size-24">03</div>
+                        <div class="font-size-12 text-default">Analytics for this month</div>
+                    </div>
+                    <div class="">
+                        <img src="assets/images/home/rocket.svg" width="50px" alt="Icon" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3">
+            <div class="card">
+                <div class="card-body d-flex flex-wrap justify-content-between align-items-start bg-alice-blue">
+                    <div class="">
+                        <div class="text-dark f-13 font-weight-bold">Sales </div>
+                        <div class="text-dark font-weight-bold font-size-24">{{casesApprocDeadlineCount}}</div>
+                        <div class="font-size-12 text-default">Analytics for this month</div>
+                    </div>
+                    <div class="">
+                        <img src="assets/images/home/sale.svg" width="50px" alt="Icon" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3">
+            <div class="card">
+                <div class="card-body d-flex flex-wrap justify-content-between align-items-start bg-alice-blue">
+                    <div class="">
+                        <div class="text-dark f-13 font-weight-bold">Expense</div>
+                        <div class="text-dark font-weight-bold font-size-24">{{casesToBeInvoicedCount}}</div>
+                        <div class="font-size-12 text-default">Analytics for this month</div>
+                    </div>
+                    <div class="">
+                        <img src="assets/images/home/accounting.svg" width="50px" alt="Icon" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row home-top-cards">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body d-flex flex-wrap justify-content-between align-items-start bg-alice-blue">
+                    <div class="">
+                        <div class="text-dark f-13 font-weight-bold">Sales Agent</div>
+                        <ul class="mt-3">
+                            <li class="mb-3">Syedain Shahid <br><small>16-Nov-2021</small></li>
+                            <li class="mb-3">Moid Shams <br><small>16-Nov-2021</small></li>
+                            <li>Saeed Khan <br><small>16-Nov-2021</small></li>
+                        </ul>
+                    </div>
+                    <div class="">
+                        <a href="#">View All</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<!-- Contact   -->
+
+<div>
+    <nz-modal nzFooter="null" nzWidth="700" [(nzVisible)]="isVisibleContact" [nzTitle]="modalTitle" (nzOnCancel)="handleCancelPopUp()" nzMaskClosable="false">
+        <app-add-contacts></app-add-contacts>
+    </nz-modal>
+</div>
+
+<!-- Task   -->
+
+<div>
+    <nz-modal nzFooter="null" nzWidth="700" [(nzVisible)]="isVisibleTask" [nzTitle]="modalTitle" (nzOnCancel)="handleCancelPopUp()" nzMaskClosable="false">
+        <app-add-tasks></app-add-tasks>
+    </nz-modal>
+</div>
+
+<!-- Team Members   -->
+
+<div>
+    <nz-modal nzFooter="null" nzWidth="700" [(nzVisible)]="isVisibleTeamMember" [nzTitle]="modalTitle" (nzOnCancel)="handleCancelPopUp()" nzMaskClosable="false">
+        <app-add-team-member></app-add-team-member>
+    </nz-modal>
+</div>
+
+<!-- Sales   -->
+
+<div>
+    <nz-modal nzFooter="null" nzWidth="1100" (nzOnCancel)="handleCancelPopUp()" nzMaskClosable="false" [nzTitle]="'Add New Sales'">
+
+    </nz-modal>
+</div>
+
+
+<!-- Events -->
+<div>
+    <nz-modal nzFooter="null" nzWidth="700" [(nzVisible)]="isVisibleEvent" (nzOnCancel)="handleCancelPopUp()" nzMaskClosable="false" [nzTitle]="modalTitle">
+        <app-add-event></app-add-event>
+    </nz-modal>
+</div>
+
+
+<!--
+  [contactDataSub]="contactObserverSubject"  -->
+
+<ng-template #noRecentContacts>
+    <div class="text-center  no-data" *ngIf="mostRecentContact">
+        <img class="no-data-img mb-3" src="assets/images/no-data/no-contact.svg" alt="No Contacts">
+        <div class="mt-2 f-13">
+            No Data Available.
+            <a [hidden]="_permissionService.getRole() == 'Client' || (!canViewContact || !canCreateContact)" href="javascript:void(0)" (click)="showAddContact()" class="kit__utils__link">
+                Create New Contact
+            </a>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #noRecentSales>
+    <div class="text-center  no-data" *ngIf="mostRecentSales">
+        <img class="no-data-img mb-3" src="assets/images/no-data/no-case.svg" alt="No Sales">
+        <div class="mt-2 f-13">
+            No Data Available.
+            <a [hidden]="_permissionService.getRole() == 'Client'  || (!canViewSales || !canCreateSales)" href="
+                javascript:void(0)" (click)="showAddSales()" class="kit__utils__link">
+                Create New Sales
+            </a>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #noUpcomingEvents>
+    <div class="text-center  no-data" *ngIf="upcomingEvents">
+        <img class="no-data-img mb-3" src="assets/images/no-data/no-event.svg" alt="No Events">
+        <div class="mt-2 f-13">
+            No Data Available.
+            <a [hidden]="_permissionService.getRole() == 'Client'  || (!canViewEvent || !canCreateEvent)" href="javascript:void(0)" (click)="showAddEvent()" class="kit__utils__link">
+                Create New Event
+            </a>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #noSalesApprocDeadlines>
+    <div class="text-center  no-data">
+        <img class="no-data-img mb-3" src="assets/images/no-data/no-case.svg" alt="No Sales">
+        <div class="mt-2 f-13">
+            No Data Available.
+            <a [hidden]="_permissionService.getRole() == 'Client' || (!canViewSales || !canCreateSales)" href="javascript:void(0)" (click)="showAddSales()" class="kit__utils__link">
+                Create New Sales
+            </a>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #noSalesToBeInvoiced>
+    <div class="text-center  no-data">
+        <img class="no-data-img mb-3" src="assets/images/no-data/no-case.svg" alt="No Sales">
+        <div class="mt-2 f-13">
+            No Data Available.
+            <a [hidden]="_permissionService.getRole() == 'Client'  || (!canViewSales || !canCreateSales)" href=" javascript:void(0)" (click)="showAddSales()" class="kit__utils__link">
+                Create New Sales
+            </a>
+        </div>
+    </div>
+</ng-template>

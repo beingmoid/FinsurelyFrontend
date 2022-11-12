@@ -1,0 +1,160 @@
+
+// .reportBtn{
+//     border-left: 1px solid #ccc;
+//     padding-left: 25px;
+//     margin-left: 5px;
+//     height: 60px;
+// }
+// .tbl{
+//     border-collapse: collapse;
+//     margin: 25px 0;
+//     // font-size: 0.9em;
+//     // font-family:  sans-serif;
+//     // position: absolute;
+//     width: 100%;
+//     left: 0;
+//     border-collapse: collapse;
+//     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+//     background-color: white;
+// }
+
+// .tbl thead tr:nth-child(1){ 
+  
+
+    
+//     left: 40%;
+//     right: 0;
+//     position: relative;
+    
+// }
+
+// .topRow{
+//     height: 250px;
+// }
+
+// .heading {
+//     font-family: 'Poppins';
+//     font-weight: 100;
+//     font-size: 24px;
+//     left: 38%;
+//     position: absolute;
+//     color: darkgray;
+//     align-items: center;
+//     position: relative;
+// }
+// .subheading{
+//     font-family: 'Poppins';
+//     font-weight: 100;
+//     font-size: 12px;
+//     left: 38%;
+//     position: absolute;
+//     color: darkgray;
+//     align-items: center;
+
+//     position: relative;
+// }
+
+// .tableHeader{ border-bottom: solid 1px rgb(0, 0, 0); 
+//     border-top: solid 1px rgb(0, 0, 0); 
+//     padding: 5px; 
+//     font-family: 'Poppins';
+//     font-weight: 100;
+//     color: black;
+
+// }
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+  }
+
+
+
+  .ant-table tr:nth-child(1){
+    border-top: 1px solid black;
+  }
+  table thead tr th{
+    //   padding: 24px;
+    //   padding-bottom: 0px;
+    //   padding-top: 0px;
+      font-weight: 600;
+      font-size: 14px;
+  }
+  table thead tr {
+    border-bottom: .5px solid black;
+    border-top: 1px solid black;
+    color: black;
+;
+    text-align: left;
+}
+table tbody tr{
+    border-bottom: .5px solid black;
+    color: black;
+    font-size: 14px;
+
+}
+
+.innerRow{
+    border-bottom: .5px solid black;
+    color: black;
+    font-size: 14px;
+
+}
+/* 
+Max width before this PARTICULAR table gets nasty
+This query will take effect for any screen smaller than 760px
+and also iPads specifically.
+*/
+@media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+	/* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+	
+	/* Hide table headers (but not display: none;, for accessibility) */
+	thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	tr :nth-child(1){ border: 1px solid black; }
+	
+	td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+        
+	}
+    td tr td{
+        border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+    }
+	
+	td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+	
+	/*
+	Label the data
+	*/
+
+}
+tr.hide-table-padding td {
+    padding: 0;
+  }
+
+  

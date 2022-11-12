@@ -1,0 +1,81 @@
+
+<div class="row">
+    
+    <div class="col-xl-12">
+        <div class="card-header text-center bg-alice-blue">
+            <div class="row align-items-center">
+                <div class="col-md-11">
+                   <div class="font-size-18 font-weight-bold ">
+                    Vacation Offering History for Employee
+                   </div> 
+                     </div>
+       
+                </div>
+            <div class="row">
+                <nz-timeline>
+                    <nz-timeline-item *ngFor="let item of vacations" [nzColor]="item.applicable!=null?'red':'blue'"> {{item.applicable?'Vacations -':'Previous Vacations (Expired) -'}} Of Date : {{ item.forYear | date}} - {{item.applicable==false?"Expired by :":""}} 
+                        {{item.applicable!=null? (item.forYear | date):null}}  
+                        - Sick Leave  : {{item.sickLeaveCount | number}} Days
+                        - Casual Leave  : {{item.casualLeaveCount | number}} Days
+                        - Annual Leave  : {{item.annualLeavesCount | number}} Days
+                    
+                    
+                    </nz-timeline-item>
+   
+                  </nz-timeline>
+            </div>
+         
+             
+            </div>
+        <div class="card bg-white">
+
+            <div class="card-header text-center bg-alice-blue">
+                <div class="row align-items-center">
+                    <div class="col-md-11">
+                            <div class="font-size-18">
+                                Vacation Policy
+                            </div>
+                         </div>
+                       <div class="col-md-1">
+                          <i class="fa fa-question-circle float-right"></i>
+                    </div>`
+                    </div>
+                    </div>
+                <div class="card-body">
+                    <form [formGroup]="vacationForm"   (ngSubmit)="OnSubmit(formDirective)" novalidate #formDirective="ngForm">
+                        <mat-form-field class="col-xl-6">
+                            <mat-label>
+                                Annual Leaves
+                            </mat-label>
+                            <input matInput type="text" formControlName="annualLeavesCount"/>
+                            </mat-form-field>
+                        <mat-form-field class="col-xl-6">
+                            <mat-label>
+                                Casual Leaves
+                            </mat-label>
+                            <input matInput type="text" formControlName="casualLeaveCount"/>
+                            </mat-form-field>
+                        <mat-form-field class="col-xl-6">
+                            <mat-label>
+                                Sick Leaves
+                            </mat-label>
+                            <input matInput type="text" formControlName="sickLeaveCount"/>
+                            </mat-form-field>
+                        <mat-form-field class="col-xl-6">
+                            <mat-label> For year of  </mat-label>
+                        <input type="text" [matDatepicker]="picker4" matInput formControlName="forYear"  />
+                        <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                      <mat-datepicker #picker4></mat-datepicker>
+                            </mat-form-field>
+
+                            <div class="col-xl-12 d-flex justify-content-center">
+                 
+                                <button type="submit" nz-button nzType="primary">{{ 'Enter Vacation Policy'}}
+                                    </button>
+                          
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

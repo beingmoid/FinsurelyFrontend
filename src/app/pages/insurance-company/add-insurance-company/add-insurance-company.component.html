@@ -1,0 +1,152 @@
+<div class="container">
+    <div class="row"> 
+     
+        <form [formGroup]="SalesAgentForm"  (ngSubmit)="OnSubmit(formDirective)" novalidate #formDirective="ngForm">
+
+            <nz-upload class="avatar-uploader d-flex justify-content-center" nzShowButton="true" nzName="avatar" nzListType="picture-card" [nzShowUploadList]="false" [nzBeforeUpload]="beforeUpload">
+                <div *ngIf="!avatarUrl">
+                    <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+                    <div class="ant-upload-text">Upload</div>
+                </div>
+                <img *ngIf="avatarUrl" [src]="avatarUrl" style="width: 100%" />
+                <i class="fe fe-edit-2 pic-edit-icon position-absolute" *ngIf="avatarUrl"></i>
+               
+            </nz-upload>
+      
+              
+            <div class="row">
+                <mat-form-field class="form-group col-xl-6" appearance="fill" [formGroup]="userDetail">
+                    <mat-label>Company Title</mat-label>
+                    <input type="text" matInput placeholder="Company" formControlName="company" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-xl-6" appearance="fill" [formGroup]="userDetail">
+                    <mat-label>Display name As</mat-label>
+                    <input type="text" matInput placeholder="Display name as" formControlName="displayNameAs" />
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="form-group col-xl-3" appearance="fill" [formGroup]="SalesAgentForm">
+                    <mat-label>Email*</mat-label>
+                    <input type="text" matInput placeholder="Email*" formControlName="email" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-xl-3" appearance="fill" [formGroup]="userDetail">
+                    <mat-label>Phone</mat-label>
+                    <input type="text" matInput placeholder="Phone" formControlName="phone" />
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-xl-3" appearance="fill" [formGroup]="userDetail">
+                    <mat-label>Mobile</mat-label>
+                    <input type="text" matInput placeholder="Mobile" formControlName="mobile" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-xl-3" appearance="fill" [formGroup]="userDetail">
+                    <mat-label>Fax</mat-label>
+                    <input type="text" matInput placeholder="Phone" formControlName="fax" />
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="form-group col-xl-6" appearance="fill" [formGroup]="userDetail">
+                    <mat-label>Other</mat-label>
+                    <input type="text" matInput placeholder="Other" formControlName="other" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-xl-6" appearance="fill" [formGroup]="userDetail">
+                    <mat-label>Website</mat-label>
+                    <input type="text" matInput placeholder="Website" formControlName="website" />
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <div class="form-group col-xl-3 mt-3" appearance="fill" [formGroup]="userDetail">
+                    <!-- <mat-label>Enter Parent Company</mat-label> -->
+                    <mat-checkbox formControlName="isSubCustomer" style="padding: 0; margin: 0;" class="text-primary">Is
+                        sub Company?
+                    </mat-checkbox>
+                </div>
+                <mat-form-field class="form-group col-xl-3" appearance="fill" [formGroup]="userDetail"
+                    *ngIf="ParentSalesAgentInfoTag">
+                    <mat-label>Parent Company Info</mat-label>
+                    <mat-select matInput placeholder="Select Parent Company" formControlName="userDetailId">
+                        <mat-option *ngFor="let item of SalesAgentSelectList" [value]="item.id" >
+                            {{item.displayNameAs}} | <br>
+                           <sub> {{item.companyName}}</sub>
+
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-xl-6" appearance="fill" [formGroup]="userDetail">
+                    <mat-label>Default Account Info</mat-label>
+                    <mat-select matInput placeholder="Select Default Account" formControlName="defaultAccountId">
+
+                        <mat-option (click)="openAccountModal()" class="fw-700"> Add new Account </mat-option>
+                        <mat-option *ngFor="let item of Accounts" [value]="item.id" >
+                            {{item.name}} | {{item.accountDetailType.description}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-xl-12">
+                    <div class="col-xl-12 card">
+                        <nz-tabset class="" nzSize="large">
+                            <nz-tab nzTitle="Address">
+                                <mat-form-field class="form-group col-xl-4" appearance="fill" [formGroup]="fnAddress">
+                                    <mat-label>Billing Address</mat-label>
+                                    <input type="text" matInput placeholder="Street" formControlName="billingAddress" />
+                                </mat-form-field>
+                                <mat-form-field class="form-group col-xl-4" appearance="fill" [formGroup]="fnAddress">
+                                    <mat-label>Street</mat-label>
+                                    <input type="text" matInput placeholder="Street" formControlName="street" />
+                                </mat-form-field>
+                                <mat-form-field class="form-group col-xl-4" appearance="fill" [formGroup]="fnAddress">
+                                    <mat-label>City</mat-label>
+                                    <input type="text" matInput placeholder="City" formControlName="city" />
+                                </mat-form-field>
+                                <mat-form-field class="form-group col-xl-4" appearance="fill" [formGroup]="fnAddress">
+                                    <mat-label>State</mat-label>
+                                    <input type="text" matInput placeholder="State" formControlName="state" />
+                                </mat-form-field>
+                                <mat-form-field class="form-group col-xl-4" appearance="fill" [formGroup]="fnAddress">
+                                    <mat-label>Postal code</mat-label>
+                                    <input type="text" matInput placeholder="Postal code"
+                                        formControlName="postalCode" />
+                                </mat-form-field>
+                                <mat-form-field class="form-group col-xl-4" appearance="fill" [formGroup]="fnAddress">
+                                    <mat-label>Country</mat-label>
+                                    <input type="text" matInput placeholder="Country" formControlName="country" />
+                                </mat-form-field>
+
+                                <!-- <ng-container *ngTemplateOutlet="retainerSchedule"></ng-container> -->
+                            </nz-tab>
+
+                            <nz-tab nzTitle="Attachments">
+                                <nz-upload nzType="drag" [nzMultiple]="true"
+                                    [nzAction]="UploadURL"
+                                    (nzChange)="handleChange($event)">
+                                    <p class="ant-upload-drag-icon">
+              #523734                   <i nz-icon nzType="inbox"></i>
+                                    </p>
+                                    <p class="ant-upload-text">
+                                        Click or drag file to this area to upload
+                                    </p>
+                                    <p class="ant-upload-hint">
+                                        Support for a single or bulk upload. Strictly prohibit from
+                                        uploading company data or other band files
+                                    </p>
+                                </nz-upload>
+                            </nz-tab>
+                        </nz-tabset>
+                    </div>
+                </div>
+              
+            </div>
+            <div class="col-xl-12 d-flex justify-content-center">
+         
+                <button type="submit" nz-button nzType="primary">{{isEditMode ? 'Update Company' : 'Add new Company'}}
+                    
+                    </button>
+          
+        </div>
+        </form>
+    </div>
+</div>
+
+<app-add-accounts></app-add-accounts>

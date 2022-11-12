@@ -1,0 +1,225 @@
+<div class="row mb-3">
+    <div class="col-xl-12">
+        <a class="font-size-16 text-primary" [routerLink]="['/customer']"><i class="fe fe-arrow-left"></i> Back to
+            Customer
+            List</a>
+    </div>
+</div>
+<!-- <div class="row mb-3">
+    <div class="col-xl-12">
+        <button nz-button nzType="primary">
+            <i nz-icon nzType="plus" nzTheme="outline"></i>
+            Add Applicant
+        </button>
+    </div>
+</div> -->
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card bg-white">
+            <div class="card-body d-flex align-items-center align-content-center">
+
+                <div class="col-xl-6">
+
+                    <div class="font-size-24 text-dark font-weight-bold">
+                        {{this.fullName==null ? customerDetail?.displayNameAs: this.fullName}} <nz-divider
+                            nzType="vertical"> </nz-divider>
+
+                        <a [href]="'mailto:'+customerDetail?.email+'?subject = Feedback&body = Message'">
+
+                            <i nz-icon nzType="phone" nzTheme="twotone" nz-tooltip
+                                [nzTooltipTitle]="'Call ' + customerDetail?.displayNameAs"></i>
+                            <nz-divider nzType="vertical"> </nz-divider> <i nz-icon nzType="mail" nzTheme="twotone"
+                                nz-tooltip [nzTooltipTitle]="'Mail to ' + customerDetail?.displayNameAs">
+                            </i>
+                        </a>
+                    </div>
+                    <div class="font-size-12 text-gray-5 d-flex justify-content">
+                        {{customerDetail?.company}} <nz-divider nzType="vertical"> </nz-divider>
+                        {{customerDetail?.addresses[0]?.billingAddress==null ? customerDetail?.addresses[0]?.country:
+                        customerDetail?.addresses[0]?.billingAddress }} <nz-divider nzType="vertical"> </nz-divider> {{
+                        customerDetail?.addresses[0]?.country}}
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="font-size-12 text-gray-5">
+                        Total Spending
+                    </div>
+                    <div class="font-size-24 text-gray-5">
+                        {{this.totalSpending}} AED
+                    </div>
+                </div>
+
+                <!-- <div class="col-xl-6">
+                    <div class="font-size-12 text-gray-5">
+                        Email
+                    </div>
+                    <div class="text-dark font-weight-bold">
+                        {{customerDetail?.email}}
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="font-size-12 text-gray-5">
+                        Email
+                    </div>
+                    <div class="text-dark font-weight-bold">
+                        {{customerDetail?.email}}
+                    </div>
+                </div> -->
+                <!-- <div class="col-xl-2">
+                    <div class="font-size-12 text-gray-5">
+                        Company
+                    </div>
+                    <div class="text-dark font-weight-bold">
+                        {{customerDetail?.company}}
+                    </div>
+                </div> -->
+          
+            </div>
+        </div>
+    </div>
+  
+</div>
+<div class="row">
+    <div class="col-xl-12">
+        <nz-tabset class="" nzSize="large">
+            <nz-tab [nzTitle]="TransactionTabTitle">
+
+                <nz-table class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small" #filterTable
+                    [nzData]="listData" [nzNoResult]="noData" nzShowSizeChanger [nzPageSize]="pageSize" >
+                    <thead>
+                        <tr>
+
+                            <th nzLeft="fixedColumn" nzWidth="20px"> # </th>
+                            <th nzLeft="fixedColumn" nzWidth="60px">Date</th>
+                            <th>Insurance company</th>
+                            <th>Insurance type</th>
+                            <th>Policy number</th>
+                            <th>Branch</th>
+                            <th>Vehilce</th>
+                            <th>VAT</th>
+                            <th>Sub Total</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of filterTable.data; let i = index;">
+                            <td>{{i+1}}</td>
+                            <td>{{data?.salesInvoiceDate | date}}</td>
+                            <td> {{data?.insuranceCompany?.displayNameAs}} </td>
+                            <td> {{data?.insuranceType?.name}}</td>
+                            <td>{{data?.saleLineItem[0]?.policyNumber}}</td>
+                            <td>{{data?.branch}}</td>
+                            <td>{{data?.saleLineItem[0]?.vehicle?.make}}</td>
+                            <td>{{data?.saleLineItem[0]?.vat}}</td>
+                            <td>{{data?.saleLineItem[0]?.total}}</td>
+                         
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </nz-tab>
+            <nz-tab [nzTitle]="CustomerTabTitle">
+
+                <nz-card [nzTitle]="cardTitle" nzType="">
+
+                    <nz-card nzType="inner" [nzTitle]="basicDetails" nzBordered="false">
+                        <nz-descriptions>
+                            <nz-descriptions-item nzTitle="Customer"> {{customerDetail?.firstName +" "+
+                                customerDetail?.middleName +" "+ customerDetail?.lastName }}</nz-descriptions-item>
+                            <nz-descriptions-item nzTitle="Email"> {{customerDetail?.email }}</nz-descriptions-item>
+                            <nz-descriptions-item nzTitle="Mobile"> {{customerDetail?.mobile }}</nz-descriptions-item>
+                            <nz-descriptions-item nzTitle="Fax"> {{customerDetail?.fax }}</nz-descriptions-item>
+                            <nz-descriptions-item nzTitle="Other"> {{customerDetail?.other }}</nz-descriptions-item>
+                            <nz-descriptions-item nzTitle="Website"> {{customerDetail?.website }}
+                            </nz-descriptions-item>
+                        </nz-descriptions>
+
+                    </nz-card>
+                    <nz-card nzType="inner" [nzTitle]="address" nzBordered="false">
+
+                        <nz-descriptions>
+                            <nz-descriptions-item nzTitle="Billing address"> {{customerDetail?.addresses[0]?.billingAddress
+                                }}</nz-descriptions-item>
+                            <nz-descriptions-item nzTitle="Street"> {{customerDetail?.addresses[0]?.street }}
+                            </nz-descriptions-item>
+                            <nz-descriptions-item nzTitle="City"> {{customerDetail?.addresses[0]?.city }}
+                            </nz-descriptions-item>
+                            <nz-descriptions-item nzTitle="State"> {{customerDetail?.addresses[0]?.state }}
+                            </nz-descriptions-item>
+                            <nz-descriptions-item nzTitle="Postal Code"> {{customerDetail?.addresses[0]?.postalCode }}
+                            </nz-descriptions-item>
+                            <nz-descriptions-item nzTitle="Country"> {{customerDetail?.addresses[0]?.country }}
+                            </nz-descriptions-item>
+                        </nz-descriptions>
+
+                    </nz-card>
+                    <nz-card nzType="inner" [nzTitle]="attachments" nzBordered="false">
+                        <nz-list nzItemLayout="horizontal" [nzLoading]="cardLoading">
+                            <nz-list-item *ngFor="let item of customerDetail?.attachments">
+                                <nz-list-item-meta
+                                    nzAvatar="https://findicons.com/files/icons/2813/flat_jewels/512/file.png"
+                                    nzDescription="Customer Files">
+                                    <nz-list-item-meta-title>
+                                        <a [href]="item.attachmentUrl"> Open file </a>
+                                    </nz-list-item-meta-title>
+                                </nz-list-item-meta>
+                            </nz-list-item>
+                            <nz-list-empty *ngIf="customerDetail?.attachments === 0"></nz-list-empty>
+                        </nz-list>
+
+
+                    </nz-card>
+
+                </nz-card>
+
+
+            </nz-tab>
+        </nz-tabset>
+    </div>
+</div>
+<ng-template #noData>
+    <nz-empty class="m-5" [nzNotFoundImage]="'assets/images/no-data/no-contact.svg'" [nzNotFoundContent]="noDataDescrp">
+    </nz-empty>
+</ng-template>
+
+<ng-template #noDataDescrp>
+    <div class="m-4">
+        No Data Available.
+    </div>
+</ng-template>
+<ng-template #cardTitle>
+    <div class="font-size-24">
+        Customer Details <i nz-icon nzType="edit" nzTheme="twotone" nz-tooltip [nzTooltipTitle]="'Edit Customer Info'" style="color: #109CF1;" (click)="$event.stopPropagation(editDetail())"></i>
+    </div>
+</ng-template>
+<ng-template #basicDetails>
+    <div class="font-size-18">
+        Basic Details <nz-divider nzType="vertical"></nz-divider>  <i nz-icon nzType="info-circle" nzTheme="twotone" style="color: #109CF1;font-size: 20px;"></i>
+    </div>
+</ng-template>
+<ng-template #address>
+    <div class="font-size-18">
+       Address <nz-divider nzType="vertical"></nz-divider> <i class="fa fa-address-card"  aria-hidden="true" style="color: #109CF1;"></i>  
+    </div>
+</ng-template>
+<ng-template #attachments>
+    <div class="font-size-18">
+       Attachments <nz-divider nzType="vertical"></nz-divider> <i class="fa fa-paperclip"  aria-hidden="true" style="color: #109CF1;"></i>  
+    </div>
+</ng-template>
+<ng-template #TransactionTabTitle>
+    <div class="font-size-16 font-weight-light">
+        <i nz-icon nzType="database" nzTheme="twotone"></i>  <nz-divider nzType="vertical"></nz-divider>   Order History 
+    </div>
+</ng-template>
+<ng-template #CustomerTabTitle>
+    <div class="font-size-16 font-weight-light">
+        <i class="fa fa-user"  aria-hidden="true" style="color: #109CF1;"   ></i>  <nz-divider nzType="vertical"></nz-divider>   Customer 
+    </div>
+</ng-template>
+
+<div class="add-account-modal-div">
+    <nz-modal nzFooter="null" nzWidth="1000" [(nzVisible)]="isVisible" nzMaskClosable="false"
+        [nzTitle]="cardTitle" (nzOnCancel)="handleCancel()">
+        <app-add-customer [customerDataSub]="customerObserverSubject"></app-add-customer>
+        </nz-modal>
+</div>

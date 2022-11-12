@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card bg-white">
+
+            <div class="card-header text-center bg-alice-blue">
+                <div class="row">
+                    <nz-timeline>
+                        <nz-timeline-item *ngFor="let item of compensations" [nzColor]="item.expired!=null?'red':'blue'"> {{item.effective?'Current Salary -':'Previous Salary (Expired) -'}} Effective From : {{ item.effectiveDate | date}} - {{item.expired!=null?"Expired by :":""}} {{item.expired!=null? (item.expiryDate | date):null}}  - Amount : {{item.salaryAmount | number}} AED</nz-timeline-item>
+       
+                      </nz-timeline>
+                </div>
+                <div class="row align-items-center">
+                       <div class="col-md-11">
+                           Compensation for Employees
+                            </div>
+              
+                       </div>
+                       <div class="col-md-1">
+                             <i class="fa fa-question-circle float-right"></i>
+                       </div>`
+                </div>
+     
+
+            <div class="card-body">
+                <form [formGroup]="CompensationForm"  (ngSubmit)="OnSubmit(formDirective)" novalidate #formDirective="ngForm">
+
+                    <mat-form-field class="col-xl-6">
+                        <mat-label> Salary Amount </mat-label>
+                        <input type="text" matInput  formControlName="salaryAmount">
+                        </mat-form-field>
+                    <mat-form-field class="col-xl-6">
+                        <mat-label> Effective Date </mat-label>
+                        <input type="text" [matDatepicker]="picker4" matInput formControlName="effectiveDate"  />
+                        <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                      <mat-datepicker #picker4></mat-datepicker>
+                        </mat-form-field>
+                        <div class="col-xl-12 d-flex justify-content-center">
+                 
+                            <button type="submit" nz-button nzType="primary">{{ 'Make compensation Effective'}}
+                                </button>
+                      
+                    </div>
+                </form> 
+
+
+                </div>
+ 
+            </div>
+        </div>
+    </div>

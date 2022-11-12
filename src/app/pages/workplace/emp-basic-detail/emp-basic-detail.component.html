@@ -1,0 +1,158 @@
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card bg-white">
+            <div class="card-body">
+                
+                <form [formGroup]="EmployeeForm"  (ngSubmit)="OnSubmit(formDirective)" novalidate #formDirective="ngForm">
+
+                    <div class="col-xl-12 m-3 text-center">
+                     
+        
+                        <nz-upload class="avatar-uploader d-flex justify-content-center" nzShowButton="true" nzName="avatar" nzListType="picture-card" 
+                        
+                        [nzShowUploadList]="false" [nzBeforeUpload]="beforeUpload"
+              
+                        >
+                            <div *ngIf="!avatarUrl">
+                                <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+                                <div class="ant-upload-text">Upload</div>
+                            </div>
+                            <img *ngIf="avatarUrl" [src]="avatarUrl" style="width: 100%" />
+                            <i class="fe fe-edit-2 pic-edit-icon position-absolute" *ngIf="avatarUrl"></i>
+                        </nz-upload>
+        
+                    </div>
+               
+              
+                    <div class="row">
+                        <mat-form-field class="form-group col-xl-1" appearance="fill">
+                            <mat-label>Title</mat-label>
+                            <input type="text" matInput placeholder="Title" formControlName="title" />
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-xl-3" appearance="fill" >
+                            <mat-label>First name</mat-label>
+                            <input type="text" matInput placeholder="First name" formControlName="firstName" />
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-xl-3" appearance="fill" >
+                            <mat-label>Middle name</mat-label>
+                            <input type="text" matInput placeholder="Middle name" formControlName="middleName" />
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-xl-3" appearance="fill">
+                            <mat-label>Last name</mat-label>
+                            <input type="text" matInput placeholder="Last name" formControlName="lastName" />
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-xl-2" appearance="fill" >
+                            <mat-label>Suffix</mat-label>
+                            <input type="text" matInput placeholder="Suffix" formControlName="suffix" />
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field class="form-group col-xl-6" appearance="fill" >
+                            <mat-label>Display name As</mat-label>
+                            <input type="text" matInput placeholder="Display name as" formControlName="displayNameAs" />
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field class="form-group col-xl-3" appearance="fill" >
+                            <mat-label>Email*</mat-label>
+                            <input type="text" matInput placeholder="Email*" formControlName="email" />
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-xl-3" appearance="fill" >
+                            <mat-label>Phone</mat-label>
+                            <input type="text" matInput placeholder="Phone" formControlName="phone" />
+                        </mat-form-field>
+        
+                        <mat-form-field class="form-group col-xl-3" appearance="fill" >
+                            <mat-label>Mobile</mat-label>
+                            <input type="text" matInput placeholder="Mobile" formControlName="mobile" />
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-xl-3" appearance="fill" >
+                            <mat-label>Fax</mat-label>
+                            <input type="text" matInput placeholder="Phone" formControlName="fax" />
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field class="form-group col-xl-6" appearance="fill" >
+                            <mat-label>Other</mat-label>
+                            <input type="text" matInput placeholder="Other" formControlName="other" />
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-xl-6" appearance="fill" >
+                            <mat-label>Website</mat-label>
+                            <input type="text" matInput placeholder="Website" formControlName="website" />
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field class="form-group col-xl-4" appearance="fill" [formGroup]="employmentDetails" >
+                            <mat-label>Manager</mat-label>
+                            <mat-select type="text" matInput placeholder="Manager" formControlName="managerId" [formGroup]="employmentDetails" >
+                                <mat-option *ngFor="let item of managers" [value]="item.id">
+                                    {{item.displayNameAs}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-xl-4" appearance="fill" [formGroup]="employmentDetails">
+                            <mat-label>Position</mat-label>
+                            <input type="text" matInput placeholder="Position" formControlName="position"  />
+                        </mat-form-field>
+                        <mat-form-field class="col-xl-4" appearance="fill" [formGroup]="employmentDetails">
+                            <mat-label>Hired Date</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="hiredDate" (dateChange)="startChange($event)">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    
+        
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="col-xl-12 card">
+                                <nz-tabset class="" nzSize="large">
+                                    <nz-tab nzTitle="Address">
+                                        <mat-form-field class="form-group col-xl-4" appearance="fill" [formGroup]="fnAddress">
+                                            <mat-label>Billing Address</mat-label>
+                                            <input type="text" matInput placeholder="Billing Address" formControlName="billingAddress" />
+                                        </mat-form-field>
+                                        <mat-form-field class="form-group col-xl-4" appearance="fill" [formGroup]="fnAddress">
+                                            <mat-label>Street</mat-label>
+                                            <input type="text" matInput placeholder="Street" formControlName="street" />
+                                        </mat-form-field>
+                                        <mat-form-field class="form-group col-xl-4" appearance="fill" [formGroup]="fnAddress">
+                                            <mat-label>City</mat-label>
+                                            <input type="text" matInput placeholder="City" formControlName="city" />
+                                        </mat-form-field>
+                                        <mat-form-field class="form-group col-xl-4" appearance="fill" [formGroup]="fnAddress">
+                                            <mat-label>State</mat-label>
+                                            <input type="text" matInput placeholder="State" formControlName="state" />
+                                        </mat-form-field>
+                                        <mat-form-field class="form-group col-xl-4" appearance="fill" [formGroup]="fnAddress">
+                                            <mat-label>Postal code</mat-label>
+                                            <input type="text" matInput placeholder="Postal code"
+                                                formControlName="postalCode" />
+                                        </mat-form-field>
+                                        <mat-form-field class="form-group col-xl-4" appearance="fill" [formGroup]="fnAddress">
+                                            <mat-label>Country</mat-label>
+                                            <input type="text" matInput placeholder="Country" formControlName="country" />
+                                        </mat-form-field>
+        
+                                        <!-- <ng-container *ngTemplateOutlet="retainerSchedule"></ng-container> -->
+                                    </nz-tab>
+                                   
+                                
+                                </nz-tabset>
+                            </div>
+                        </div>
+                     
+                    </div>
+        
+                    <div class="col-xl-12 d-flex justify-content-center">
+                 
+                        <button type="submit" nz-button nzType="primary">{{ 'Update Employee'}}
+                            </button>
+                  
+                </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

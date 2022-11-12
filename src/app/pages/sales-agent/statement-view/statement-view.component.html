@@ -1,0 +1,228 @@
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body d-flex flex-wrap justify-content-between align-items-start bg-alice-blue">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="text-gray font-size-24 font-weight-bold"> Account Statement</div>
+                    </div>
+
+                    <mat-form-field class="col-xl-6">
+                        <mat-label>Select date range</mat-label>
+                        <mat-date-range-input [formGroup]="dateAndFilters" [rangePicker]="picker">
+                            <input matStartDate formControlName="start" placeholder="Start date"
+                                (dateChange)="startDateFilterChange($event)">
+                            <input matEndDate formControlName="end" placeholder="End date"
+                                (dateChange)="endDateFilterChange($event)">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+
+                    </mat-form-field>
+
+                    <div class="col-xl-3 mt-3">
+                        <mat-label>Include Logo? </mat-label>
+                        <mat-checkbox [(ngModel)]="includeLogo"></mat-checkbox>
+
+                    </div>
+                    <div class="col-xl-3 mt-3">
+                        <mat-label>Include Name? </mat-label>
+                        <mat-checkbox [(ngModel)]="includeName"></mat-checkbox>
+
+                    </div>
+
+           
+                 
+                    <div class="col-xl-12 mb-4">
+                        <button nz-button nzType="primary" (click)="search()">Run Report</button>
+                    </div>
+                    <div class="col-xl-12">
+                        <mat-accordion>
+                            <mat-expansion-panel >
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <div class="mb-3"  style="color: #595C97 !important ; font-size: 20px; font-weight: 700!important;">     Column selection for Statements</div>
+                                    
+                         
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="">
+                        
+                                    <div class="example-container">
+                                        <h2>All Columns</h2>
+                                        
+                                        <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="columnsToDisplay"
+                                            [cdkDropListConnectedTo]="[doneList]" class="example-list"
+                                            (cdkDropListDropped)="drop($event)">
+            
+            
+                                            <div class="example-box" *ngFor="let item of columnsToDisplay" cdkDrag>
+            
+            
+                                                {{item.columnName}}</div>
+                                        </div>
+                                    </div>
+            
+                                    <div class="example-container">
+                                        <h2>Selected Columns</h2><span></span>
+            
+                                        <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="SelectedColumns"
+                                            [cdkDropListConnectedTo]="[todoList]" class="example-list"
+                                            (cdkDropListDropped)="drop($event)">
+            
+                                            <div class="example-box" *ngFor="let item of SelectedColumns" cdkDrag>
+            
+            
+                                                {{item.columnName}}</div>
+                                        </div>
+                                    </div>
+            
+            
+                                    <p>
+            
+                                    </p>
+                                </div>
+                                <mat-action-list>
+                                    <div class="col-xl-12 mb-4">
+                                        <button nz-button nzType="primary" class="mr-2"  (click)="UpdateSelected()">Save Selection</button>
+                                        <button nz-button nzType="primary" class="mr-2" (click)="autoSelect()">Auto Select</button>
+                                        <button nz-button nzType="primary" class="mr-2" (click)="autoArrange()">Auto Arrange</button>
+                                        <button nz-button nzType="primary" class="mr-2" (click)="reset()"> Reset </button>
+                                    </div>
+                                    </mat-action-list>
+                            </mat-expansion-panel>
+                    
+                        </mat-accordion>
+                        </div>
+            
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+    <div class="col-xl-12">
+
+        <div class="card">
+            <div class="card-header bg-alice-blue">
+                <div class="col-xl-4 d-flex justify-content-start" *ngIf="includeLogo">
+                    <img src="assets/images/logo-afnan.jpg" class="mb-2" style="padding: 0 !important;"
+                        width="100px" alt="Icon" />
+                </div>
+                <div class="d-flex justify-content-center " *ngIf="includeName">
+                    <div class="text-gray text-center font-size-24">
+                        Afnan Groups
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div class="text-gray text-center font-size-16">
+                        Account Statement
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div class="text-gray text-center font-size-12">
+                        1-25 August 2021
+                    </div>
+                </div>
+                <div class="d-flex justify-content-start">
+                    <div class="text-gray text-center font-size-12">
+                        Statement To : {{this.entity?.displayNameAs}}
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-body  bg-alice-blue">
+
+                <div class="row">
+                    <div class="col-xl-12">
+                        <!-- <table style="border: 5px;">
+                          <thead>
+                              <tr>
+                                  <th> DATE </th>
+                                  <th> CUSTOMER NAME </th>
+                                  <th> POLICY NUMBER </th>
+                                  <th> INSURANCE COMPANY / BROKER </th>
+                                  <th> TRANSACTION TYPE  </th>
+                                  <th> VEHICLE </th>
+                                  <th> TRANSACTION REFERENCE NUMBER </th>
+                                  <th> INSURANCE TYPE </th>
+                                  <th> MEMO/DESCRIPTION </th>
+                                  <th> DEBIT </th>
+                                  <th> CREDIT </th>
+                                  <th> AMOUNT </th>
+                                  <th> BALANCE </th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              
+                          </tbody>
+                      </table> -->
+                        <nz-table class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small" #filterTable
+                            [nzData]="statement" [nzNoResult]="null" [nzFooter]="tableFooter">
+                            <thead>
+                                <tr>
+
+                                    <th> # </th>
+                                    <th *ngFor="let item of SelectedColumns">
+                                        {{item.columnName}}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of filterTable.data; let i = index;">
+                                    <td>{{i+1}}</td>
+                                    <td> {{data.date | date}} </td>
+                                    <td *ngIf="data.transactionType==1">Sales Invoice</td>
+                                    <td *ngIf="data.transactionType==2">Payment</td>
+                                    <td *ngIf="data.transactionType==3">Insurance Credit</td>
+                                    <td *ngIf="data.transactionType==4">Transfer</td>
+                                    <td *ngIf="data.transactionType==5">Deposit</td>
+                                    <td *ngIf="data.transactionType==6">Expense</td>
+                                    <td *ngIf="data.transactionType==7">Bill</td>
+                                    <td *ngIf="data.transactionType==8">Refund</td>
+                                    
+                                    <td> {{data.invoiceNumber ==null  ? "":data.invoiceNumber}} </td>
+                                    <td> {{data.name}} </td>
+                                    <td> {{data.policyNumber}} </td>
+                                    <td> {{data.invoiceDate | date}} </td>
+                                    <td> {{data.insuranceType }} </td>
+                                    <td> {{data.vehicle}} </td>
+                                    <td> {{data.memo}} </td>
+                                    <td> {{data.transactionRefNumber}} </td>
+                                    <td> {{data.accountName}} </td>
+                                    <td> {{data.debit==0?'':data.debit}} </td>
+                                    <td> {{data.credit==0?'':data.credit}} </td>
+                                    <td> {{data.amount}} </td>
+                                    <td> {{data.balance}} </td>
+        
+
+
+
+
+
+                                </tr>
+                            </tbody>
+                        </nz-table>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<ng-template #tableFooter>
+    <div nz-row nzJustify="end" class="card-footer bg-alice-blue">
+        <div nz-col nzSpan="2">
+            <i class="fa fa-calculator" aria-hidden="true" style="color: #109CF1;"></i>
+            Total : 50000 AED
+        </div>
+
+    </div>
+</ng-template>

@@ -1,0 +1,340 @@
+<div class="breadcrumbs mb-3">
+  <strong>Sales Invoice</strong>
+</div>
+<div>
+  <div class="row mb-4">
+    <div class="col-xl-10">
+      <div class="w-25 searchBarWidth">
+        <nz-input-group nzSize="large" [nzPrefix]="suffixIconSearch">
+          <input
+            type="text"
+            nz-input
+            [(ngModel)]="search"
+            (ngModelChange)="filter()"
+            placeholder="Search for Sales"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i nz-icon nzType="search"></i>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="col-xl-2 mb-5">
+      <div ngbDropdown placement="bottom-right" class="d-inline-block">
+        <button
+          class="btn btn-primary btn-lg ant-btn-primary"
+          id="addNew"
+          ngbDropdownToggle
+        >
+          <span class="pl-4 pr-4">Add New</span>
+        </button>
+        <div ngbDropdownMenu aria-labelledby="addNew">
+          <button ngbDropdownItem (click)="showModal()">
+            <i class="fa fa-plus mr-2"></i>
+            Issue a new sales policy
+          </button>
+          <button ngbDropdownItem (click)="isBulkUploadVisible = true">
+            <i class="fa fa-upload mr-2"></i>Bulk Upload
+          </button>
+          <button ngbDropdownItem (click)="exportExcel()">
+            <i class="fa fa-upload mr-2"></i>Export Excel
+          </button>
+        </div>
+      </div>
+      <!-- <button [hidden]="!canViewContact || !canCreateContact" ngbDropdownItem (click)="showAddContact()">Add New Contact</button>
+                <button [hidden]="!canViewSales || !canCreateSales" ngbDropdownItem (click)="showAddSales()">Add
+                    New Sales</button>
+                <button [hidden]="!canViewEvent || !canCreateEvent" ngbDropdownItem (click)="showAddEvent()">Add
+                    New Event</button>
+                <button [hidden]="!canViewTask || !canCreateTask" ngbDropdownItem (click)="showAddTask()">Add
+                    New Task</button>
+                <button [hidden]="!canViewTeam || !canCreateTeam" ngbDropdownItem (click)="showAddTeamMember()">Add New Team Member</button> -->
+
+      <div class="row">
+        <div class="col-xl-12"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-12">
+      <nz-table
+
+      id="excel-table"
+      class="card"
+      #rowSelectionTable
+      [nzFrontPagination]="false"
+      [nzTotal]="totalRows"
+      [nzData]="listData"
+      [nzNoResult]="noData"
+
+      nzShowSizeChanger
+      [(nzPageIndex)]="page"
+       [(nzPageSize)]="pageSize"
+
+      (nzPageIndexChange)="onQueryParamsChange($event)"
+      (nzPageSizeChange)="onQueryParamsChange($event)"
+      [nzTableLayout]="'auto'"
+      [nzBordered]="true"
+      [nzLoading]="isloading"
+      [nzSize]="'small'"
+
+
+    >
+      <thead>
+        <tr>
+          <th [nzWidth]="'100px'" class="ant-table-selection-column">#</th>
+          <th [nzAlign]="'center'" [nzAlign]="'center'">Date</th>
+          <th [nzAlign]="'center'">Customer / Company</th>
+          <th [nzAlign]="'center'">Insurance Company</th>
+          <th [nzAlign]="'center'">Sales Personn / Company</th>
+          <th [nzAlign]="'center'">Policy Number</th>
+          <th [nzAlign]="'center'">Vehicle</th>
+          <th [nzAlign]="'center'">Branch</th>
+          <th [nzAlign]="'center'">Underwritter</th>
+          <th [nzAlign]="'center'">Payment Method</th>
+          <th [nzAlign]="'center'">Gross</th>
+          <th [nzAlign]="'center'">VAT</th>
+          <th [nzAlign]="'center'">NET</th>
+          <th [nzAlign]="'center'">Comission%</th>
+          <th [nzAlign]="'center'">Comission Rate</th>
+          <th [nzAlign]="'center'">Notes</th>
+          <th [nzAlign]="'center'">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let data of rowSelectionTable.data; let i = index"
+          style="cursor: pointer;"
+        >
+          <td [nzLeft]="true">{{ i + 1 }}</td>
+          <td>
+            {{ data.salesInvoiceDate | date }}
+          </td>
+
+          <td>{{ data.customerDetails?.displayNameAs }}</td>
+          <td>{{ data.insuranceCompany?.displayNameAs }}</td>
+          <td>{{ data.salesInvoicePerson?.displayNameAs }}</td>
+          <td>
+            {{
+              data.saleLineItem != []
+                ? data.saleLineItem[0]?.policyNumber
+                : "N/A"
+            }}
+          </td>
+          <td>
+            {{
+              data.saleLineItem != []
+                ? data.saleLineItem[0]?.vehicle?.make +
+                  " | " +
+                  data.saleLineItem[0]?.vehicle?.model
+                : "N/A"
+            }}
+          </td>
+          <td>{{ data.branch.branchName }}</td>
+          <td>{{ data.underWritter }}</td>
+          <td>{{ data.paymentMethod?.name }}</td>
+          <td>
+            {{
+              data.saleLineItem != [] ? data.saleLineItem[0]?.gross : "N/A"
+            }}
+          </td>
+          <td>
+            {{ data.saleLineItem != [] ? data.saleLineItem[0]?.vat : "N/A" }}
+          </td>
+          <td>
+            {{ data.saleLineItem != [] ? data.saleLineItem[0]?.net : "N/A" }}
+          </td>
+          <td>
+            {{
+              data.saleLineItem != []
+                ? data.saleLineItem[0]?.commisionRate
+                : "N/A"
+            }}
+          </td>
+          <td>
+            {{
+              data.saleLineItem != []
+              ? data.saleLineItem[0]?.actualComission
+              : "N/A"
+            }}
+          </td>
+          <td>{{ data.notes }}</td>
+          <td>{{ data.saleLineItem[0]?.salesPrice }}</td>
+          <td>
+            <i nz-icon nzType="fund-view" style="font-size:32px;" nzTheme="outline" nz-tooltip nzTooltipTitle="View Account History"
+                class="text-success"
+                (click)="$event.stopPropagation(editSales(data))"></i>
+
+        </td>
+        </tr>
+      </tbody>
+
+    </nz-table>
+    </div>
+  </div>
+  <div class="add-account-modal-div">
+    <nz-modal
+      nzFooter="null"
+      nzWidth="1500"
+      [(nzVisible)]="isVisible"
+      nzMaskClosable="false"
+      [nzTitle]="isEditMode ? 'Update Sales' : 'Create New Sales'"
+      (nzOnCancel)="handleCancel()"
+    >
+      <app-add-sales [inputObserver]="salesObserverSubject"></app-add-sales>
+    </nz-modal>
+  </div>
+  <div>
+    <nz-modal
+      nzFooter="null"
+      nzWidth="800"
+      [(nzVisible)]="isBulkUploadVisible"
+      nzMaskClosable="false"
+      [nzTitle]="'Bulk Upload Sales Polices'"
+      (nzOnCancel)="isBulkUploadVisible = false"
+    >
+      <nz-upload
+        nzType="drag"
+        [nzMultiple]="false"
+        [nzAction]="UploadUrl"
+        (nzChange)="handleChange($event)"
+      >
+        <p class="ant-upload-drag-icon">
+          <i nz-icon nzType="inbox"></i>
+        </p>
+        <p class="ant-upload-text">Click or drag file to this area to upload</p>
+        <p class="ant-upload-hint">
+          Support for a single or bulk upload. Strictly prohibit from uploading
+          company data or other band files
+        </p>
+      </nz-upload>
+
+      <div class="row" *ngIf="rejectedEntries">
+        <div class="bg-light height-200 d-flex flex-column">
+          <h1 class="mb-0 text-color-6">Rejected Polices</h1>
+        </div>
+
+        <nz-table
+
+          class="card"
+          #rowSelectionTable
+          [nzData]="rejectedEntries"
+          [nzNoResult]="noData"
+          nzShowSizeChanger
+          [nzPageSize]="pageSize"
+          [nzTableLayout]="'auto'"
+          [nzBordered]="true"
+          [nzSize]="'small'"
+          [nzTotal]="totalRows"
+          (nzPageIndexChange)="ChangePage($event)"
+        >
+          <thead>
+            <tr>
+              <th [nzWidth]="'100px'" class="ant-table-selection-column">#</th>
+              <th [nzAlign]="'center'" [nzAlign]="'center'">Date</th>
+              <th [nzAlign]="'center'">Customer / Company</th>
+              <th [nzAlign]="'center'">Insurance Company</th>
+              <th [nzAlign]="'center'">Sales Personn / Company</th>
+              <th [nzAlign]="'center'">Policy Number</th>
+              <th [nzAlign]="'center'">Vehicle</th>
+              <th [nzAlign]="'center'">Branch</th>
+              <th [nzAlign]="'center'">Underwritter</th>
+              <th [nzAlign]="'center'">Payment Method</th>
+              <th [nzAlign]="'center'">Gross</th>
+              <th [nzAlign]="'center'">VAT</th>
+              <th [nzAlign]="'center'">NET</th>
+              <th [nzAlign]="'center'">Comission%</th>
+              <th [nzAlign]="'center'">Comission Rate</th>
+              <th [nzAlign]="'center'">Notes</th>
+              <th [nzAlign]="'center'">Total</th>
+              <th [nzAlign]="'center'">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let data of rowSelectionTable.data; let i = index"
+              style="cursor: pointer;"
+            >
+              <td [nzLeft]="true">{{ i + 1 }}</td>
+              <td>
+                {{ data.salesInvoiceDate | date }}
+              </td>
+
+              <td>{{ data.customerDetails?.displayNameAs }}</td>
+              <td>{{ data.insuranceCompany?.displayNameAs }}</td>
+              <td>{{ data.salesInvoicePerson?.displayNameAs }}</td>
+              <td>
+                {{
+                  data.saleLineItem != []
+                    ? data.saleLineItem[0]?.policyNumber
+                    : "N/A"
+                }}
+              </td>
+              <td>
+                {{
+                  data.saleLineItem != []
+                    ? data.saleLineItem[0]?.vehicle?.make +
+                      " | " +
+                      data.saleLineItem[0]?.vehicle?.model
+                    : "N/A"
+                }}
+              </td>
+              <td>{{ data.branch.branchName }}</td>
+              <td>{{ data.underWritter }}</td>
+              <td>{{ data.paymentMethod?.name }}</td>
+              <td>
+                {{
+                  data.saleLineItem != [] ? data.saleLineItem[0]?.gross : "N/A"
+                }}
+              </td>
+              <td>
+                {{
+                  data.saleLineItem != [] ? data.saleLineItem[0]?.vat : "N/A"
+                }}
+              </td>
+              <td>
+                {{
+                  data.saleLineItem != [] ? data.saleLineItem[0]?.net : "N/A"
+                }}
+              </td>
+              <td>
+                {{
+                  data.saleLineItem != []
+                    ? data.saleLineItem[0]?.commission
+                    : "N/A"
+                }}
+              </td>
+              <td>
+                {{
+                  data.saleLineItem != []
+                    ? data.saleLineItem[0]?.commission &&
+                      data.saleLineItem[0]?.total
+                      ? (
+                          (data.saleLineItem[0]?.commission / 100) *
+                          data.saleLineItem[0]?.total
+                        ).toFixed(2)
+                      : ""
+                    : "N/A"
+                }}
+              </td>
+              <td>{{ data.notes }}</td>
+              <td>{{ data.saleLineItem[0]?.salesPrice }}</td>
+
+            </tr>
+          </tbody>
+
+        </nz-table>
+      </div>
+    </nz-modal>
+  </div>
+  <ng-template #noData>
+    <nz-empty
+      class="m-5"
+      [nzNotFoundImage]="'assets/images/no-data/no-account.svg'"
+      [nzNotFoundContent]="noDataDescrp"
+    >
+    </nz-empty>
+  </ng-template>
+</div>

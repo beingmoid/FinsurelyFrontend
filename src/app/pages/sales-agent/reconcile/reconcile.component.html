@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-xl-12">
+        
+   
+    {{this.mappingFormGroup.value | json}}
+ <nz-table   [nzBordered]="true" nzSize="small" #filterTable
+ [nzData]="importFileColumns" [nzShowPagination]='false' [nzFrontPagination]='false'>
+ 
+        <thead>
+            <tr>
+            <th [nzLeft]="true" nzWidth="450px" [nzAlign]="'center'"> Columns from Uploaded Excel</th>
+            <th [nzRight]="true" nzWidth="450px" [nzAlign]="'center'" > Columns to be mapped from</th>
+            <th [nzRight]="true" [nzAlign]="'center'" > Include field in mapping</th>
+            <th [nzRight]="true" [nzAlign]="'center'" > Run Comparison </th>
+            </tr>
+        </thead>
+ 
+    <tbody>
+        <tr *ngFor="let item of fElement">  
+            <td>{{item.controls?.columnName?.value}}</td>
+            <td> 
+
+                <div class="col-xl-12" [formGroup]="item" (click)="selectAll(item)" >
+                    <nz-select  formControlName="mappedTo"  [nzSize]="size"  > 
+                        <nz-option *ngFor="let column of this.salesColumns" [nzLabel]="column.name"  [nzValue]="column.id" ></nz-option>
+               
+                      </nz-select>
+                    </div>
+            </td>
+            <td>
+                <div  class="col-xl-12" [formGroup]="item">
+                    <mat-checkbox formControlName="allowMapping" >Yes</mat-checkbox>
+                </div>
+            </td>
+            <td>
+                <div  class="col-xl-12" [formGroup]="item">
+                    <mat-checkbox formControlName="compare" >Yes</mat-checkbox>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+
+ </nz-table>
+
+    <div class="col-xl-12 d-flex justify-content-center mt-5">
+         
+                <button type="submit" nz-button nzType="primary" (click)="process()"> Process 
+                    
+                    </button>
+          
+        </div>
+    </div>
+</div>
+
+
+<ng-template #noData>
+    <nz-empty class="m-5" [nzNotFoundImage]="'assets/images/no-data/no-contact.svg'" [nzNotFoundContent]="noDataDescrp">
+    </nz-empty>
+</ng-template>

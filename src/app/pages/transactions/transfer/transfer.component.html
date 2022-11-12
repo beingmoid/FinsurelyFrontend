@@ -1,0 +1,76 @@
+<div class="row mb-4">
+    <div class="col-xl-10">
+        <div class="w-25 TM-searchBar">
+            <nz-input-group nzSize="large" [nzPrefix]="suffixIconSearch">
+                <input type="text" nz-input [(ngModel)]="search" 
+                    placeholder="Search for Payments" />
+            </nz-input-group>
+            <ng-template #suffixIconSearch>
+                <i nz-icon nzType="search"></i>
+            </ng-template>
+        </div>
+    </div>
+    <div class="col-xl-2 ">
+        <a nz-button class="float-right" nzType="primary" (click)="openModal()" >
+           Make a Transfer </a>
+    </div>
+</div>
+  <div *ngIf="modalView">
+  <app-add-payment></app-add-payment>
+  </div>
+    <div class="row">
+        <div class="col-xl-12 ">
+            <nz-table class="card" #rowSelectionTable [nzData]="listData" [nzNoResult]="noData" nzShowSizeChanger
+                [nzPageSize]="pageSize">
+                <thead>
+                    <tr>
+                        <th class="ant-table-selection-column" [nzSortFn]="sortNumbersFn" (click)="sortOn('index')">#
+                        </th>
+                        <th [nzSortFn]="sortNamesFn" (click)="sortOn('date')"> Transfer date</th>
+                        <th [nzSortFn]="sortNamesFn" (click)="sortOn('salesAgent')">  Transferred From  </th>
+                        <th [nzSortFn]="sortNamesFn" (click)="sortOn('policyNumber')"> Transferred To  </th>
+                        <th [nzSortFn]="sortNamesFn" (click)="sortOn('insuranceType')"> Amount  </th>\
+         
+                       
+                        <!-- <th>Phone Number</th> -->
+                        <!-- <th [nzSortFn]="sortNamesFn" (click)="sortOn('lastLoggedIn')">Last Logged in</th> -->
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let data of rowSelectionTable.data; let i = index;" 
+                        >
+                        <td>
+                            {{data.index}}
+
+                        </td>
+                        <td>
+                           {{data.refundDate | date}}
+                        </td>
+                        <td>{{data.salesAgent.displayNameAs}}</td>
+                        <td>{{data.policyNumber}}</td>
+                        <td>{{data.policyNumber}}</td>
+                
+          
+          
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </div>
+
+
+<ng-template #noData>
+    <nz-empty class="m-5" [nzNotFoundImage]="'assets/images/no-data/no-team.svg'" [nzNotFoundContent]="noDataDescrp">
+    </nz-empty>
+</ng-template>
+
+<ng-template #noDataDescrp>
+    <div class="m-4">
+        No Data Available.
+        <a  (click)="showModal()" class="kit__utils__link">
+            Receive New Payment
+        </a>
+    </div>
+</ng-template>

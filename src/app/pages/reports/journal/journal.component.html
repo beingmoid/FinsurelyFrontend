@@ -1,0 +1,154 @@
+<div class="row" >
+    <div class="col-xl-12 ant-card">
+        <div class="card-body">
+            <div class="card-title font-size-24 text-dark">Journal Ledger</div>
+            <h6 class="card-subtitle text-blue mb-2 "><i class="fa fa-arrow-left mr-2"></i> <a (click)="Back()">Back to
+                   Reports </a></h6>
+            <div class="row">
+                <div class="col-xl-3" style="padding: 0; margin: 0;">
+                    <mat-form-field>
+                        <mat-label>Pick Date</mat-label>
+                        <mat-date-range-input [rangePicker]="campaignOnePicker">
+                            <input matStartDate placeholder="Start date" [(ngModel)]="datefrom">
+                            <input matEndDate placeholder="End date" [(ngModel)]="dateTo">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3" style="padding: 0; margin: 0;">
+                    <div class="reportBtn">
+                        <button class="btn btn-rounded btn-primary mt-2" (click)="RunReport()"> <i class="	fa fa-cog"
+                                aria-hidden="true"></i> Run Report</button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="row mt-6" style="padding: 35px; margin: 35px;" >
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-header bg-alice-blue">
+                <div class="col-xl-4 d-flex justify-content-start">
+      
+                </div>
+                <div class="d-flex justify-content-center ">
+                    <div class="text-dark text-center font-size-24">
+                        Afnan Insurance Groups
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div class="text-dark font-weight-bold text-center font-size-16">
+                       Journal Ledger
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div class="text-dark text-center font-size-12">
+                        1-25 August 2021
+                    </div>
+                </div>
+             
+
+            </div>
+            <div class="card-body  bg-alice-blue">
+
+                <div class="row">
+                    <div class="col-xl-12">
+                        <!-- <table style="border: 5px;">
+                  <thead>
+                      <tr>
+                          <th> DATE </th>
+                          <th> CUSTOMER NAME </th>
+                          <th> POLICY NUMBER </th>
+                          <th> INSURANCE COMPANY / BROKER </th>
+                          <th> TRANSACTION TYPE  </th>
+                          <th> VEHICLE </th>
+                          <th> TRANSACTION REFERENCE NUMBER </th>
+                          <th> INSURANCE TYPE </th>
+                          <th> MEMO/DESCRIPTION </th>
+                          <th> DEBIT </th>
+                          <th> CREDIT </th>
+                          <th> AMOUNT </th>
+                          <th> BALANCE </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      
+                  </tbody>
+              </table> -->
+                        <table   nzSize="small" #filterTable
+                           >
+                            <thead>
+                                <tr class="">
+                                    								
+                                    <th> </th>
+                                    <th> DATE </th>
+                              
+                                    <th> TRANSACTION TYPE </th>
+                                
+                                    <th> NO. </th>
+                                    <th>  NAME </th>
+                                 
+                                    <th>  <th> MEMO/DESCRIPTION </th>
+                                    <th> ACCOUNT  </th>
+                                    <th> DEBIT </th>
+                               
+                                    <th> CREDIT </th>
+                           
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of statement">
+                               
+                            <td></td>
+                            <div *ngFor="let entry of item.entries">
+                                <td>{{entry.date | date}}</td>
+                                    <td > <a (click)="swtich()"> {{item.transactionType }} </a></td>
+                              
+                                    <td>{{item.transactionId }}</td>
+                                    <td>{{item.name }}</td>
+                                    <td>{{item.memo }}</td>
+
+                                    <td>{{item.account }}</td>
+                                    <td>{{item.debit }}</td>
+                                    <td>{{item.credit }}</td>
+                               
+       
+                            </div>
+                                    
+                              
+                               
+       
+                                 
+                    
+                                    
+                                </tr>
+                                
+                         </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #tableFooter>
+    <div nz-row nzJustify="end" class="card-footer bg-alice-blue">
+        <div nz-col nzSpan="2">
+            <i class="fa fa-calculator" aria-hidden="true" style="color: #109CF1;"></i>
+            Total : 50000 AED
+        </div>
+
+    </div>
+</ng-template>

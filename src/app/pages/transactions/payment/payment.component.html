@@ -1,0 +1,89 @@
+<div class="row mb-4">
+    <div class="col-xl-10">
+        <div class="w-25 TM-searchBar">
+            <nz-input-group nzSize="large" [nzPrefix]="suffixIconSearch">
+                <input type="text" nz-input [(ngModel)]="search" 
+                    placeholder="Search for Payments" />
+            </nz-input-group>
+            <ng-template #suffixIconSearch>
+                <i nz-icon nzType="search"></i>
+            </ng-template>
+        </div>
+    </div>
+    <div class="col-xl-2 ">
+        <a nz-button class="float-right" nzType="primary" (click)="openModal()" >
+            Receive Payment </a>
+    </div>
+</div>
+  <div *ngIf="modalView">
+  <app-add-payment></app-add-payment>
+  </div>
+    <div class="row">
+        <div class="col-xl-12 ">
+            <nz-table class="card" #rowSelectionTable [nzData]="listData" [nzNoResult]="noData" nzShowSizeChanger
+                [nzPageSize]="pageSize">
+                <thead>
+                    <tr>
+                        <th class="ant-table-selection-column" [nzSortFn]="sortNumbersFn" (click)="sortOn('index')">#
+                        </th>
+                        <th [nzSortFn]="sortNamesFn" (click)="sortOn('date')"> Receving Date</th>
+                        <th [nzSortFn]="sortNamesFn" (click)="sortOn('salesAgent')"> Recevied From  </th>
+                        <th [nzSortFn]="sortNumbersFn" (click)="sortOn('transactionReferenceNumber')">Transaction Reference Number</th>
+                        <th [nzSortFn]="sortNumbersFn" (click)="sortOn('paymentMethod')">Payment Method</th>
+                        <th [nzSortFn]="sortNamesFn" (click)="sortOn('memo')">Memo/Description</th>
+                        <th [nzSortFn]="sortNamesFn" (click)="sortOn('account')">Deposit Account</th>
+                        <th [nzSortFn]="sortNamesFn" (click)="sortOn('amount')">Amount </th>
+                       
+                        <!-- <th>Phone Number</th> -->
+                        <!-- <th [nzSortFn]="sortNamesFn" (click)="sortOn('lastLoggedIn')">Last Logged in</th> -->
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let data of rowSelectionTable.data; let i = index;" 
+                        >
+                        <td>
+                            {{i+1}}
+
+                        </td>
+                        <td>
+                           {{data.paymentDate | date}}
+                        </td>
+                        <td>{{data.salesAgent.displayNameAs}}</td>
+                        <td>{{data.transactionReferenceNumber}}</td>
+                        <td>{{ data.paymentMethod.name }}</td>
+      
+                        <td>{{ data.memo}}</td>
+                        <td>{{ data.depositAccount?.name }}</td>
+                        <td>{{ data.amount}}</td>
+                        <td>  <i nz-icon nzType="edit" nz-tooltip nzTooltipTitle="Edit Payment" nzTheme="fill"
+                            (click)="$event.stopPropagation(EditPayment(data))" 
+                            class="text-success"></i>
+                          <nz-divider nzType="vertical"></nz-divider>
+                          <i nz-icon nzType="delete" nz-tooltip nzTooltipTitle="Delete Payment"
+                            (click)="$event.stopPropagation(DeletePayment(data))" 
+                            nzTheme="fill" class="text-danger"></i></td>
+          
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </div>
+
+
+<ng-template #noData>
+    <nz-empty class="m-5" [nzNotFoundImage]="'assets/images/no-data/no-team.svg'" [nzNotFoundContent]="noDataDescrp">
+    </nz-empty>
+</ng-template>
+
+<ng-template #noDataDescrp>
+    <div class="m-4">
+        No Data Available.
+        <a  (click)="showModal()" class="kit__utils__link">
+            Receive New Payment
+        </a>
+    </div>
+</ng-template>
+
+<app-add-payment></app-add-payment>

@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-xl-12">
+
+
+        <form [formGroup]="form"  (ngSubmit)="OnSubmit(formDirective)" novalidate #formDirective="ngForm">
+            <mat-form-field class="col-xl-12" appearance="fill"  >
+            <mat-label> Make of Body Type</mat-label>
+            <input type="text" matInput placeholder="Make of BodyType" formControlName="name">
+            <mat-error *ngIf="f.controls.name.hasError('required')">
+                Make of Body Type is required
+            </mat-error>
+            </mat-form-field>
+            <div class="col-xl-12 d-flex justify-content-center">
+         
+                <button type="submit" nz-button nzType="primary" [nzLoading]="isLoading">
+                    Add Body Type                    
+                    </button>
+          
+        </div>
+        </form>
+
+    </div>
+</div>

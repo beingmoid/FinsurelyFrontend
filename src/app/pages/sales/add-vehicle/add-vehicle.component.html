@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-xl-12">
+
+
+        <form [formGroup]="form"  (ngSubmit)="OnSubmit(formDirective)" novalidate #formDirective="ngForm">
+            <mat-form-field class="col-xl-12" appearance="fill"  >
+            <mat-label> Make of Vehicle</mat-label>
+            <input type="text" matInput placeholder="Make of Vehicle" formControlName="make">
+            <mat-error *ngIf="f.controls.make.hasError('required')">
+                Make of Vehicle is required
+            </mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-xl-12" appearance="fill"  >
+            <mat-label> Model of Vehicle</mat-label>
+            <input type="text" matInput placeholder="Model of Vehicle" formControlName="model">
+            <mat-error *ngIf="f.controls.model.hasError('required')">
+                Model of Vehicle is required
+            </mat-error>
+            </mat-form-field>
+            <div class="col-xl-12 d-flex justify-content-center">
+         
+                <button type="submit" nz-button nzType="primary" [nzLoading]="isLoading">
+                    Add Vehicle                    
+                    </button>
+          
+        </div>
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="row">
+
+  <div class="col-xl-2 breadcrumbs mb-3">
+    <strong>Branch</strong>
+  </div>
+  <div class="col-xl-10">
+    <div class="w-20">
+      <nz-input-group nzSize="large" [nzPrefix]="suffixIconSearch">
+        <input type="text" nz-input [(ngModel)]="search" (ngModelChange)="filter()" placeholder="Search for Branch" />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<div>
+
+  <div class="row mb-4">
+
+    <div class="col-xl-2 ">
+      <a nz-button class="float-right" nzType="primary" (click)="showModal()">Add
+        Branch</a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-12">
+      <nz-table class="card" #rowSelectionTable [nzData]="listData" [nzNoResult]="noData" nzShowSizeChanger
+        [nzPageSize]="pageSize" [nzTableLayout]="'auto'" [nzBordered]="true" [nzSize]="'small'">
+        <thead>
+          <tr>
+            <th [nzWidth]="'100px'" class="ant-table-selection-column">#
+            </th>
+            <th [nzWidth]="'100px'"> Branch Name</th>
+            <th [nzWidth]="'100px'"> Branch Address</th>
+
+
+            <th [nzRight]="true" [nzWidth]="'100px'" [nzAlign]="'center'">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of rowSelectionTable.data; let i = index;" (click)="showSingleSalesAgent(data)"
+            style="cursor: pointer;">
+            <td [nzLeft]="true">{{i+1}}</td>
+            <td>
+              {{data.branchName}}
+            </td>
+            <td>
+              {{data.branchAddress}}
+            </td>
+
+
+
+            <td>
+              <i nz-icon class="text-success font-size-18" nzType="edit" nzTheme="fill" nz-tooltip
+                nzTooltipTitle="Edit Branch" (click)="$event.stopPropagation(editBranch(data))"></i>
+              <nz-divider nzType="vertical"></nz-divider>
+              <i nz-icon class="text-danger font-size-18" nzType="delete" nzTheme="fill" nz-tooltip
+                nzTooltipTitle="Delete Branch" (click)="$event.stopPropagation(deleteBranch(data))">
+
+              </i>
+            </td>
+
+
+
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+
+
+</div>
+
+<app-add-branch></app-add-branch>
+
+
+<ng-template #noData>
+  <nz-empty class="m-5" [nzNotFoundImage]="'assets/images/no-data/no-account.svg'" [nzNotFoundContent]="noDataDescrp">
+  </nz-empty>
+</ng-template>

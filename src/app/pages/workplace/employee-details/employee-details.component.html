@@ -1,0 +1,135 @@
+<div class="row mb-3">
+    <div class="col-xl-12">
+        <a class="font-size-16 text-primary" [routerLink]="['/workplace']"><i class="fe fe-arrow-left"></i> Back to
+            Workplace/Employees
+            </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card bg-white">
+            <div class="card-body d-flex align-items-center align-content-center">
+           
+                <div class="col-xl-12">
+                  
+                    <div class="font-size-24 text-dark font-weight-bold">
+         
+                            <nz-avatar *ngIf="empDetails?.imageUrl" [nzSrc]="empDetails?.imageUrl" [nzShape]="'circle'" [nzSize]="64" ></nz-avatar>
+               
+                        {{empDetails?.displayNameAs}} <nz-divider
+                            nzType="vertical"> </nz-divider>
+
+                        <a [href]="'mailto:'+empDetails?.email+'?subject = Feedback&body = Message'">
+
+                            <i nz-icon nzType="phone" nzTheme="twotone" nz-tooltip
+                                [nzTooltipTitle]="'Call ' + empDetails?.displayNameAs"></i>
+                            <nz-divider nzType="vertical"> </nz-divider> <i nz-icon nzType="mail" nzTheme="twotone"
+                                nz-tooltip [nzTooltipTitle]="'Mail to ' + empDetails?.displayNameAs">
+                            </i>
+                        </a>
+                    </div>
+                    <div class="font-size-12 text-gray-5 d-flex justify-content ml-5">
+                        {{empDetails?.company}} <nz-divider nzType="vertical"> </nz-divider>
+                        {{empDetails?.addresses[0]?.billingAddress==null ? empDetails?.addresses[0]?.country:
+                            empDetails?.addresses[0]?.billingAddress }} <nz-divider nzType="vertical"> </nz-divider> {{
+                                empDetails?.addresses[0]?.country}}
+                    </div>
+                </div>
+            
+                
+                <!-- <div class="col-xl-6">
+                    <div class="font-size-12 text-gray-5">
+                        Email
+                    </div>
+                    <div class="text-dark font-weight-bold">
+                        {{customerDetail?.email}}
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="font-size-12 text-gray-5">
+                        Email
+                    </div>
+                    <div class="text-dark font-weight-bold">
+                        {{customerDetail?.email}}
+                    </div>
+                </div> -->
+                <!-- <div class="col-xl-2">
+                    <div class="font-size-12 text-gray-5">
+                        Company
+                    </div>
+                    <div class="text-dark font-weight-bold">
+                        {{customerDetail?.company}}
+                    </div>
+                </div> -->
+          
+            </div>
+        </div>
+    </div>
+  
+</div>
+<nz-tabset>
+    <nz-tab [nzTitle]="basicDetails">
+        <app-emp-basic-detail [empObserverSubject]="empObserverSubject"></app-emp-basic-detail>
+    </nz-tab>
+    <nz-tab [nzTitle]="compensation">
+        <app-compensation [empObserverSubject]="empObserverSubject"></app-compensation>
+    </nz-tab>
+    <nz-tab [nzTitle]="VacationPolicies">
+        <app-vacation-policy [empObserverSubject]="empObserverSubject" ></app-vacation-policy>
+    </nz-tab>
+    <nz-tab [nzTitle]="BenefitsAndDeductions">
+        <app-benefits-and-deductions [empObserverSubject]="empObserverSubject"></app-benefits-and-deductions>
+    </nz-tab>
+    <nz-tab [nzTitle]="BankDetails">
+        <app-bank-details [empObserverSubject]="empObserverSubject"></app-bank-details>
+    </nz-tab>
+    <!-- <nz-tab [nzTitle]="EmployeeFiles">
+        <app-emp-files [empObserverSubject]="empObserverSubject"></app-emp-files>
+    </nz-tab>
+    <nz-tab [nzTitle]="EmploymentStatus">
+
+        <app-emp-status [empObserverSubject]="empObserverSubject"></app-emp-status>
+    </nz-tab> -->
+  
+</nz-tabset>
+
+<ng-template #cardTitle>
+    <div class="font-size-18 font-weight-light">
+        Customer Details <i nz-icon nzType="edit" nzTheme="twotone" nz-tooltip [nzTooltipTitle]="'Edit Customer Info'" style="color: #109CF1;" (click)="$event.stopPropagation(editDetail())"></i>
+    </div>
+</ng-template>
+<ng-template #basicDetails>
+    <div class="font-size-18 font-weight-light">
+        Basic Details <nz-divider nzType="vertical"></nz-divider>  <i nz-icon nzType="info-circle" nzTheme="twotone" style="color: #109CF1;font-size: 20px;"></i>
+    </div>
+</ng-template>
+<ng-template #compensation>
+    <div class="font-size-18 font-weight-light">
+       Compensation <nz-divider nzType="vertical"></nz-divider> <i class="fa fa-address-card"  aria-hidden="true" style="color: #109CF1;"></i>  
+    </div>
+</ng-template>
+<ng-template #VacationPolicies>
+    <div class="font-size-18 font-weight-light">
+        Vacation Policies <nz-divider nzType="vertical"></nz-divider> <i class="fa fa-paperclip"  aria-hidden="true" style="color: #109CF1;"></i>  
+    </div>
+</ng-template>
+<ng-template #BenefitsAndDeductions>
+    <div class="font-size-18 font-weight-light">
+        <i nz-icon nzType="database" nzTheme="twotone"></i>  <nz-divider nzType="vertical"></nz-divider>   Benefits And Deductions
+    </div>
+</ng-template>
+<!-- <ng-template #EmployeeFiles>
+    <div class="font-size-18 font-weight-light">
+        <i class="fa fa-user"  aria-hidden="true" style="color: #109CF1;"   ></i>  <nz-divider nzType="vertical"></nz-divider>   Employee Files 
+    </div>
+</ng-template>
+<ng-template #EmploymentStatus>
+    <div class="font-size-18 font-weight-light">
+        <i class="fa fa-user"  aria-hidden="true" style="color: #109CF1;"   ></i>  <nz-divider nzType="vertical"></nz-divider>   Employment Status 
+    </div>
+</ng-template> -->
+<ng-template #BankDetails>
+    <div class="font-size-18 font-weight-light">
+        <i class="fa fa-user"  aria-hidden="true" style="color: #109CF1;"   ></i>  <nz-divider nzType="vertical"></nz-divider>   Bank Details 
+    </div>
+</ng-template>
