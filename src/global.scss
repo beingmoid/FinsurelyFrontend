@@ -227,7 +227,7 @@ ul li {
 
 .breadcrumbs>strong {
   // color: #141322;
-  color: #334d6e;
+  color: #054085;
   font-size: 1.4rem;
 }
 
@@ -458,7 +458,7 @@ nz-input-group.ant-input-affix-wrapper {
 }
 
 
-// for user setting page tabs 
+// for user setting page tabs
 .user-settings-page {
 
   .ribbon {
@@ -923,7 +923,7 @@ i.anticon-search.anticon {
   width: 85%;
 }
 
-// Pricing plan 
+// Pricing plan
 
 nz-header.ant-layout-header.cui__layout__header {
   height: 47px;
@@ -934,7 +934,7 @@ nz-header.ant-layout-header.cui__layout__header {
   height: 100% !important;
 }
 
-// User Settings Page 
+// User Settings Page
 .user-tabs nz-tabs-nav {
   width: 100% !important;
 }
@@ -945,20 +945,20 @@ nz-header.ant-layout-header.cui__layout__header {
   }
 }
 
-// terms of conditions modal 
+// terms of conditions modal
 .termsModal {
   .ant-modal-footer {
     display: none !important;
   }
 }
 
-// for dropdown btns text size 
+// for dropdown btns text size
 .dropdown .dropdown-menu .dropdown-item,
 .btn-group .dropdown-menu .dropdown-item {
   font-size: 0.86rem;
 }
 
-// for calendar page 
+// for calendar page
 .calendarView {
   .ant-badge-status-dot {
     display: none;
@@ -984,13 +984,13 @@ nz-header.ant-layout-header.cui__layout__header {
         // ant-badge-status-text
       }
 
-      // li 
+      // li
     }
 
-    // ul 
+    // ul
   }
 
-  // ant-picker-calendar-date-content ends 
+  // ant-picker-calendar-date-content ends
 }
 
 .appointment-tag {
@@ -1027,7 +1027,7 @@ nz-header.ant-layout-header.cui__layout__header {
   margin: 0 !important;
 }
 
-// calendarView ends 
+// calendarView ends
 
 .country-selector-flag {
   margin-left: -20px;
@@ -1061,7 +1061,7 @@ nz-header.ant-layout-header.cui__layout__header {
   }
 }
 
-// for select label height 
+// for select label height
 .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-focused .mat-select+.mat-form-field-label-wrapper .mat-form-field-label,
 .mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label {
   transform: translateY(-2em) scale(0.75) perspective(100px) translateZ(0.00106px);
@@ -1071,7 +1071,7 @@ nz-header.ant-layout-header.cui__layout__header {
   -o-transform: translateY(-2em) scale(0.75) perspective(100px) translateZ(0.00106px);
 }
 
-// analytics page date picker 
+// analytics page date picker
 .topRow {
   .ant-picker {
     border: 0;
@@ -1089,7 +1089,7 @@ nz-header.ant-layout-header.cui__layout__header {
   }
 }
 
-// for left side menu scroll issue 
+// for left side menu scroll issue
 
 .ant-layout-sider-children .menuOuter .ps-content {
   overflow-x: auto;
@@ -1112,13 +1112,13 @@ nz-header.ant-layout-header.cui__layout__header {
   width: 4px;
 }
 
-// for add new case popup current location select option 
+// for add new case popup current location select option
 .currentLocationSelect .mat-select-panel {
   min-width: 100% !important;
   max-width: 255px;
 }
 
-// *********************************** Responsiveness Starts ****************************************** 
+// *********************************** Responsiveness Starts ******************************************
 // Responsive utils
 // $xxl-min-width: 1600px;
 // $xxl-max-width: 1599px;
@@ -1133,7 +1133,7 @@ nz-header.ant-layout-header.cui__layout__header {
 
 @media (max-width: $xxl-max-width) {}
 
-// (max-width: 1599px) ends 
+// (max-width: 1599px) ends
 
 @media (max-width: $xl-max-width) {
   .accountInvoiceRow.row{
@@ -1141,7 +1141,7 @@ nz-header.ant-layout-header.cui__layout__header {
   }
 }
 
-// $xl-max-width: 1199px ends 
+// $xl-max-width: 1199px ends
 
 @media (max-width: $lg-max-width) {
   .searchBarWidth {
@@ -1170,4 +1170,4 @@ nz-header.ant-layout-header.cui__layout__header {
 
 // $sm-max-width: 575px;
 
-// **************************************** Responsiveness Ends ***************************************** 
+// **************************************** Responsiveness Ends *****************************************

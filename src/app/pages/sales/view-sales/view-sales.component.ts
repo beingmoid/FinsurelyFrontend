@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { MatAutocompleteTrigger } from "@angular/material/autocomplete";
 import { NzTableQueryParams } from "ng-zorro-antd";
 import { NzResizeEvent } from "ng-zorro-antd/resizable";
@@ -31,6 +31,7 @@ class FilterObject {
 })
 export class ViewSalesComponent implements OnInit {
   search: string;
+
   listData: any[] = [];
   file = {
     uid: "",
@@ -65,10 +66,12 @@ export class ViewSalesComponent implements OnInit {
   columnTrackBy(index: number, item) {
     return item.key;
   }
+  listOfSelectedSearch=[];
   constructor(
     private service: SalesService,
     private alert: AlertService,
     private sharedService: SharedService,
+    private fb:FormBuilder,
     private excel:ExportService,
   ) {
     this.sharedService.formSubmited.subscribe(res => {
@@ -181,6 +184,56 @@ export class ViewSalesComponent implements OnInit {
 }
   ];
 
+  selectedSearchFilters=[];
+  customField=false;
+  broker=false;
+  agent=false;
+  vehicles=false;
+  branch=false;
+  range=false;
+
+  OnSelectionChange($event:string[]){
+   if($event.find(x=>x==="crown")){
+    this.agent=true;
+   }
+   else{
+    this.agent=false;
+   }
+   if($event.find(x=>x==="calendar")){
+    this.range=true;
+   }
+   else{
+    this.range=false;
+   }
+   if($event.find(x=>x==="field-string")){
+    this.customField=true;
+   }
+   else{
+    this.customField=false;
+   }
+   if($event.find(x=>x==="insurance")){
+    this.broker=true;
+   }
+   else{
+    this.broker=false;
+   }
+   if($event.find(x=>x==="branches")){
+    this.branch=true;
+   }
+   else{
+    this.branch=false;
+   }
+   if($event.find(x=>x==="car")){
+    this.vehicles=true;
+   }
+   else{
+    this.vehicles=false;
+   }
+    console.log(this.selectedSearchFilters);
+    console.log($event);
+  }
+
+
   onQueryParamsChange(params: NzTableQueryParams): void {
     this.isloading=true;
 
@@ -192,7 +245,56 @@ export class ViewSalesComponent implements OnInit {
       e.name === col ? { ...e, width: `${width}px` } : e
     );
   }
+  validateForm: FormGroup= this.fb.group({
+    searchTerm:[null],
+    searchOptions:[null],
+    dateRange:[null],
+    includeBrokers:[null],
+    includeAgents:[null],
+    includeVehicles:[null],
+    includeBranches:[null]
+  })
+  isCollapse = true;
+
+
+  resetForm(): void {
+    this.validateForm.reset();
+  }
+  listOfOption: Array<{ label: string; value: string }> = [
+    {label: "Policy Number",value:"Policy Number"},
+    {label: "Chasis Number",value:"Chasis Number"},
+    {label: "Customer Name",value:"Customer Name"},
+   {label: "Gross",value:"Gross"},
+   {label: "NET",value:"NET"},
+   {label: "Comission%",value:"Comission%"},
+   {label: "Comission Rate",value:"Comission Rate"},
+   {label: "Notes",value:"Notes"},
+   {label: "Total",value:"Total"},
+  ];
+  listOfTagOptions = [];
+  inputValue?: string;
+  webFrameworks = [
+    { name: 'React', type: 'JavaScript', icon: 'https://zos.alipayobjects.com/rmsportal/LFIeMPzdLcLnEUe.svg' },
+    { name: 'Angular', type: 'JavaScript', icon: 'https://zos.alipayobjects.com/rmsportal/PJTbxSvzYWjDZnJ.png' },
+    { name: 'Dva', type: 'Javascript', icon: 'https://zos.alipayobjects.com/rmsportal/EYPwSeEJKxDtVxI.png' },
+    { name: 'Flask', type: 'Python', icon: 'https://zos.alipayobjects.com/rmsportal/xaypBUijfnpAlXE.png' }
+  ];
+
+  valueWith = (data: { name: string; type: string; icon: string }): string => data.name;
+
+  onSelect(value: string): void {
+    console.log(value);
+  }
   ngOnInit(): void {
+
+    // this.selectedSearchFilters.valueChanges.subscribe(val=>{
+    //   console.log('working as val',val)
+    // })
+    // const children: Array<{ label: string; value: string }> = [];
+    // for (let i = 10; i < 36; i++) {
+    //   children.push({ label: i.toString(36) + i, value: i.toString(36) + i });
+    // }
+    // this.listOfOption = children;
   this.isloading=true;
     this.salesSubject = this.service.salesObserver$.subscribe(res => {
 
