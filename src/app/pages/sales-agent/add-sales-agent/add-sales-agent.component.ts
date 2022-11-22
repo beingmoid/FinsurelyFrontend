@@ -103,11 +103,12 @@ export class AddSalesAgentComponent implements OnInit {
 
 
   }
-  get fnAddress() { return (this.address.controls as FormGroup[])[0] }
+  get fnAddress() { return (this.address.controls as FormGroup[]  )  [0]}
   get fnPaymentAndDelivery() { return (this.paymentAndBilling.controls as FormGroup[])[0] }
   get fnAttachment() { return (this.attachments.controls as FormGroup[])[0] }
   async ngOnInit(): Promise<void> {
 
+      console.log('address',this.fnAddress);
 
     this.accountsService.accountObserver$.subscribe(res => {
       if(res){
@@ -360,7 +361,7 @@ export class AddSalesAgentComponent implements OnInit {
       if(res.isSuccessfull){
         formDirective.resetForm();
         this.SalesAgentService.GetAllSalesAgents()
-        this.alertService.success("Sales Agent Updated Sucessfully")
+        this.alertService.success("Sales Agent Updated Sucessfully")  
         this._shared.formSubmited.next({ status: "Inserted" });
       }
       else {

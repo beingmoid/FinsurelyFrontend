@@ -1,0 +1,485 @@
+{
+    "make": [
+        {
+            "id": "112",
+            "value": "ABARTH",
+            "validations": null
+        },
+        {
+            "id": "3",
+            "value": "ALFA ROMEO",
+            "validations": null
+        },
+        {
+            "id": "2",
+            "value": "ASTON MARTIN",
+            "validations": null
+        },
+        {
+            "id": "4",
+            "value": "AUDI",
+            "validations": null
+        },
+        {
+            "id": "100",
+            "value": "BAIC",
+            "validations": null
+        },
+        {
+            "id": "6",
+            "value": "BENTLEY",
+            "validations": null
+        },
+        {
+            "id": "7",
+            "value": "BMW",
+            "validations": null
+        },
+        {
+            "id": "108",
+            "value": "BORGWARD",
+            "validations": null
+        },
+        {
+            "id": "94",
+            "value": "BRILLIANCE",
+            "validations": null
+        },
+        {
+            "id": "73",
+            "value": "BUGATTI",
+            "validations": null
+        },
+        {
+            "id": "8",
+            "value": "BYD",
+            "validations": null
+        },
+        {
+            "id": "9",
+            "value": "CADILLAC",
+            "validations": null
+        },
+        {
+            "id": "103",
+            "value": "CHANGAN",
+            "validations": null
+        },
+        {
+            "id": "14",
+            "value": "CHERY",
+            "validations": null
+        },
+        {
+            "id": "15",
+            "value": "CHEVROLET",
+            "validations": null
+        },
+        {
+            "id": "10",
+            "value": "CHRYSLER",
+            "validations": null
+        },
+        {
+            "id": "11",
+            "value": "CITROEN",
+            "validations": null
+        },
+        {
+            "id": "12",
+            "value": "CMC",
+            "validations": null
+        },
+        {
+            "id": "16",
+            "value": "DAIHATSU",
+            "validations": null
+        },
+        {
+            "id": "127",
+            "value": "DAYUN",
+            "validations": null
+        },
+        {
+            "id": "17",
+            "value": "DODGE",
+            "validations": null
+        },
+        {
+            "id": "115",
+            "value": "DORCEN",
+            "validations": null
+        },
+        {
+            "id": "110",
+            "value": "FAW",
+            "validations": null
+        },
+        {
+            "id": "19",
+            "value": "FERRARI",
+            "validations": null
+        },
+        {
+            "id": "20",
+            "value": "FIAT",
+            "validations": null
+        },
+        {
+            "id": "80",
+            "value": "FISKER",
+            "validations": null
+        },
+        {
+            "id": "119",
+            "value": "FORCE",
+            "validations": null
+        },
+        {
+            "id": "21",
+            "value": "FORD",
+            "validations": null
+        },
+        {
+            "id": "22",
+            "value": "FOTON",
+            "validations": null
+        },
+        {
+            "id": "95",
+            "value": "GAC",
+            "validations": null
+        },
+        {
+            "id": "101",
+            "value": "GEELY",
+            "validations": null
+        },
+        {
+            "id": "107",
+            "value": "GENESIS",
+            "validations": null
+        },
+        {
+            "id": "23",
+            "value": "GMC",
+            "validations": null
+        },
+        {
+            "id": "24",
+            "value": "GREAT WALL",
+            "validations": null
+        },
+        {
+            "id": "102",
+            "value": "HAVAL",
+            "validations": null
+        },
+        {
+            "id": "26",
+            "value": "HONDA",
+            "validations": null
+        },
+        {
+            "id": "116",
+            "value": "HONGQI",
+            "validations": null
+        },
+        {
+            "id": "30",
+            "value": "HUMMER",
+            "validations": null
+        },
+        {
+            "id": "31",
+            "value": "HYUNDAI",
+            "validations": null
+        },
+        {
+            "id": "32",
+            "value": "INFINITI",
+            "validations": null
+        },
+        {
+            "id": "33",
+            "value": "ISUZU",
+            "validations": null
+        },
+        {
+            "id": "97",
+            "value": "JAC",
+            "validations": null
+        },
+        {
+            "id": "34",
+            "value": "JAGUAR",
+            "validations": null
+        },
+        {
+            "id": "36",
+            "value": "JEEP",
+            "validations": null
+        },
+        {
+            "id": "98",
+            "value": "JENSEN",
+            "validations": null
+        },
+        {
+            "id": "37",
+            "value": "KIA",
+            "validations": null
+        },
+        {
+            "id": "118",
+            "value": "KING LONG",
+            "validations": null
+        },
+        {
+            "id": "84",
+            "value": "KOENIGSEGG",
+            "validations": null
+        },
+        {
+            "id": "77",
+            "value": "KTM",
+            "validations": null
+        },
+        {
+            "id": "38",
+            "value": "LAMBORGHINI",
+            "validations": null
+        },
+        {
+            "id": "41",
+            "value": "LAND ROVER",
+            "validations": null
+        },
+        {
+            "id": "42",
+            "value": "LEXUS",
+            "validations": null
+        },
+        {
+            "id": "124",
+            "value": "LIFAN",
+            "validations": null
+        },
+        {
+            "id": "39",
+            "value": "LINCOLN",
+            "validations": null
+        },
+        {
+            "id": "79",
+            "value": "LOTUS",
+            "validations": null
+        },
+        {
+            "id": "93",
+            "value": "LUXGEN",
+            "validations": null
+        },
+        {
+            "id": "96",
+            "value": "LYKAN",
+            "validations": null
+        },
+        {
+            "id": "106",
+            "value": "MAHINDRA",
+            "validations": null
+        },
+        {
+            "id": "49",
+            "value": "MASERATI",
+            "validations": null
+        },
+        {
+            "id": "111",
+            "value": "MAXUS",
+            "validations": null
+        },
+        {
+            "id": "50",
+            "value": "MAYBACH",
+            "validations": null
+        },
+        {
+            "id": "43",
+            "value": "MAZDA",
+            "validations": null
+        },
+        {
+            "id": "45",
+            "value": "MCLAREN",
+            "validations": null
+        },
+        {
+            "id": "44",
+            "value": "MERCEDES BENZ",
+            "validations": null
+        },
+        {
+            "id": "46",
+            "value": "MERCURY",
+            "validations": null
+        },
+        {
+            "id": "74",
+            "value": "MG",
+            "validations": null
+        },
+        {
+            "id": "48",
+            "value": "MINI",
+            "validations": null
+        },
+        {
+            "id": "47",
+            "value": "MITSUBISHI",
+            "validations": null
+        },
+        {
+            "id": "86",
+            "value": "MORGAN",
+            "validations": null
+        },
+        {
+            "id": "51",
+            "value": "NISSAN",
+            "validations": null
+        },
+        {
+            "id": "52",
+            "value": "OPEL",
+            "validations": null
+        },
+        {
+            "id": "81",
+            "value": "PAGANI",
+            "validations": null
+        },
+        {
+            "id": "53",
+            "value": "PEUGEOT",
+            "validations": null
+        },
+        {
+            "id": "56",
+            "value": "PORSCHE",
+            "validations": null
+        },
+        {
+            "id": "78",
+            "value": "PROTON",
+            "validations": null
+        },
+        {
+            "id": "92",
+            "value": "RAM",
+            "validations": null
+        },
+        {
+            "id": "57",
+            "value": "RENAULT",
+            "validations": null
+        },
+        {
+            "id": "59",
+            "value": "ROLLS ROYCE",
+            "validations": null
+        },
+        {
+            "id": "60",
+            "value": "SAAB",
+            "validations": null
+        },
+        {
+            "id": "114",
+            "value": "SANDSTORM",
+            "validations": null
+        },
+        {
+            "id": "75",
+            "value": "SATURN",
+            "validations": null
+        },
+        {
+            "id": "61",
+            "value": "SEAT",
+            "validations": null
+        },
+        {
+            "id": "62",
+            "value": "SKODA",
+            "validations": null
+        },
+        {
+            "id": "126",
+            "value": "SOUEAST",
+            "validations": null
+        },
+        {
+            "id": "89",
+            "value": "SPYKER",
+            "validations": null
+        },
+        {
+            "id": "63",
+            "value": "SSANGYONG",
+            "validations": null
+        },
+        {
+            "id": "64",
+            "value": "SUBARU",
+            "validations": null
+        },
+        {
+            "id": "65",
+            "value": "SUZUKI",
+            "validations": null
+        },
+        {
+            "id": "104",
+            "value": "TESLA",
+            "validations": null
+        },
+        {
+            "id": "67",
+            "value": "TOYOTA",
+            "validations": null
+        },
+        {
+            "id": "120",
+            "value": "VICTORY",
+            "validations": null
+        },
+        {
+            "id": "69",
+            "value": "VOLKSWAGEN",
+            "validations": null
+        },
+        {
+            "id": "68",
+            "value": "VOLVO",
+            "validations": null
+        },
+        {
+            "id": "71",
+            "value": "WIESMANN",
+            "validations": null
+        },
+        {
+            "id": "99",
+            "value": "ZNA",
+            "validations": null
+        },
+        {
+            "id": "105",
+            "value": "ZOTYE",
+            "validations": null
+        }
+    ],
+    "validations": null
+}

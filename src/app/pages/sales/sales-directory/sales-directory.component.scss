@@ -1,0 +1,66 @@
+.global-search-item {
+    display: flex;
+  }
+
+  .global-search-item-desc {
+    flex: auto;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .global-search-item-count {
+    flex: none;
+  }
+
+ ::ng-deep .ant-btn {
+   background-color: aliceblue;
+ } 
+::ng-deep .searchbtn{
+    min-width: 50px !important;
+    padding: 9px 15px !important;
+    line-height: normal !important;
+    height: auto !important;
+    font-size: 13px !important;
+    border-radius: 4px !important;
+    border: 0 !important;
+    box-shadow: 0px 2px 4px var(--kit-color-primary) !important
+  }
+
+  @media (max-width: 991px) {
+    .searchBarWidth {
+      width: 50% !important;
+      margin-bottom: 15px;
+    }
+  }
+  
+  // $lg-max-width: 991px;
+  
+  @media (max-width: 767px) {}
+  
+  // $lg-max-width: 767px;
+  
+  @media (max-width: 575px) {
+    ::ng-deep .searchbtn {
+      min-width: 50px !important;
+      padding: 8px 15px !important;
+      font-size: 11px !important;
+    }
+  
+    .searchBarWidth {
+      width: 100% !important;
+    }
+  }
+
+
+  .directory-card{
+    background-color: #1F3563 !important;
+    min-height: 14rem;
+    .sales-card{
+        display: block;
+        line-height: 14px;
+        
+    }
+  }
+  .filter-option{
+    background-color: #1F3563 !important;
+  }

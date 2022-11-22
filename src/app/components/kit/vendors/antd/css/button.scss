@@ -1,22 +1,22 @@
 // Import mixins
 @import 'src/app/components/mixins.scss';
 
-.ant-btn {
+.  {
   &:hover,
   &:active,
   &:focus {
     border-color: lighten($blue-light, 0%);
-    color: lighten($blue-light, 0%);
+    color: lighten(#1F3563, 0%);
   }
   &-primary {
-    background: $primary !important;
-    border-color: $primary !important;
+    background: #1F3563 !important;
+    border-color: #1F3563 !important;
 
     &:hover,
     &:active,
     &:focus {
-      background: lighten($blue-light, 0%) !important;
-      border-color: lighten($blue-light, 0%) !important;
+      background: lighten(#1F3563, 0%) !important;
+      border-color: lighten(#1F3563, 0%) !important;
       color: $white;
     }
   }
