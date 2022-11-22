@@ -11,11 +11,12 @@ import { InsuranceCompanyModule } from '../insurance-company/insurance-company.m
 import { CustomerModule } from '../customer/customer.module';
 import { AddBodyTypeComponent } from './add-body-type/add-body-type.component';
 import { AddServiceComponent } from './add-service/add-service.component';
+import { SalesDirectoryComponent } from './sales-directory/sales-directory.component';
 
 
 
 @NgModule({
-  declarations: [ViewSalesComponent, AddSalesComponent, AddVehicleComponent, AddBodyTypeComponent, AddServiceComponent],
+  declarations: [ViewSalesComponent, AddSalesComponent, AddVehicleComponent, AddBodyTypeComponent, AddServiceComponent, SalesDirectoryComponent],
   imports: [
     
  

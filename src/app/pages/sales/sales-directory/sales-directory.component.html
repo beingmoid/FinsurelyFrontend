@@ -1,0 +1,63 @@
+<p>sales-directory works!</p>
+
+<div nz-row>
+    <div nz-col [nzSpan]="24">
+        <div class="example-input">
+            <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixIconButton">
+              <input
+                placeholder="input here"
+                nz-input
+                [(ngModel)]="inputValue"
+                (input)="onChange($event)"
+                [nzAutocomplete]="auto"
+              />
+            </nz-input-group>
+            <ng-template #suffixIconButton>
+              <button nz-button nzType="primary" class="searchbtn" nzSize="large" nzSearch>
+                <span nz-icon nzType="search" nzTheme="outline"></span>
+              </button>
+            </ng-template>
+            <nz-autocomplete #auto>
+              <nz-auto-option class="global-search-item" *ngFor="let option of options" [nzValue]="option.category">
+                Found {{ option.value }} on
+                <a
+                  class="global-search-item-desc"
+                  [href]="'https://s.taobao.com/search?q=' + option.value"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {{ option.category }}
+                </a>
+                <span class="global-search-item-count">{{ option.count }} results</span>
+              </nz-auto-option>
+            </nz-autocomplete>
+          </div>
+    </div>
+</div>
+<div nz-row  class="mt-5">
+    <div nz-col [nzSpan]="20" class="directory-card p-3 ml-2" >
+
+        <div class="ml-2" class="sales-card">
+            <div  class="text-white f-13 font-weight-100">
+                Chassis#
+            </div>
+            <div  class="text-white f-15 fw-700">
+                SV30-0169266
+            </div>
+            <div  class="text-white f-18 lh-12">
+                Policy#: P-2201-30-1011-000050
+            </div>
+            <div nz-col>
+                
+            </div>    
+        </div>
+        </div>
+        
+    <div nz-col [nzSpan]="04" class="directory-
+    card" >
+
+
+        </div>
+
+ 
+</div>
