@@ -12,11 +12,12 @@ import { CustomerModule } from '../customer/customer.module';
 import { AddBodyTypeComponent } from './add-body-type/add-body-type.component';
 import { AddServiceComponent } from './add-service/add-service.component';
 import { SalesDirectoryComponent } from './sales-directory/sales-directory.component';
+import { BulkSalesComponent } from './bulk-sales/bulk-sales.component';
 
 
 
 @NgModule({
-  declarations: [ViewSalesComponent, AddSalesComponent, AddVehicleComponent, AddBodyTypeComponent, AddServiceComponent, SalesDirectoryComponent],
+  declarations: [ViewSalesComponent, AddSalesComponent, AddVehicleComponent, AddBodyTypeComponent, AddServiceComponent, SalesDirectoryComponent, BulkSalesComponent],
   imports: [
     
  

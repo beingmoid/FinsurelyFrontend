@@ -1,0 +1,26 @@
+<div class="row">
+    <button nz-button class="btn-primary">
+        Add New Form
+    </button>
+    
+</div>
+
+{{this.formGroup.value | json }}
+
+<div class="row" >
+
+
+
+    <form [formGroup]="formGroup">
+        <mat-form-field class="col-xl-4"  appearance="fill">
+            <mat-label>
+                Customer
+            </mat-label>
+            <input type="text" matInput formControlName="customerName" placeholder="Customer Name">
+            <mat-error *ngIf="formGroup.controls.customerName?.hasError('required')">
+                Customer Name is required
+            </mat-error>
+        </mat-form-field>
+    </form>
+
+</div>
