@@ -3,7 +3,8 @@
   <div class="col-xl-2 breadcrumbs mb-3">
     <strong>Branch</strong>
   </div>
-  <div class="col-xl-10">
+  <div class="col-xl-4 "></div>
+  <div class="col-xl-6 ">
     <div class="w-20">
       <nz-input-group nzSize="large" [nzPrefix]="suffixIconSearch">
         <input type="text" nz-input [(ngModel)]="search" (ngModelChange)="filter()" placeholder="Search for Branch" />
@@ -19,10 +20,11 @@
 
   <div class="row mb-4">
 
-    <div class="col-xl-2 ">
-      <a nz-button class="float-right" nzType="primary" (click)="showModal()">Add
+    <div class="col-xl-12 ">
+      <a nz-button class="float-right mt-2" nzType="primary" (click)="showModal()">Add
         Branch</a>
     </div>
+    
   </div>
 
   <div class="row">

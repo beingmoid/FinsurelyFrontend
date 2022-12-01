@@ -1,6 +1,6 @@
 <ng-template #prefixTemplateUser><span class="m-2" nz-icon nzType="search"></span></ng-template>
 <ng-template #suffixTemplateInfo>
-  <span class="m-2"  nz-icon  nzType="filter"></span>
+  <span class="m-2" nz-icon nzType="filter"></span>
 </ng-template>
 <div class="row">
   <div class="col-md-2">
@@ -17,16 +17,10 @@
 
             <nz-form-control>
               <nz-input-group [nzSuffix]="suffixTemplateInfo" [nzPrefix]="prefixTemplateUser">
-                <input  nz-input placeholder="Search field" formControlName="searchTerm" style="width:80% ;" />
-                <nz-select
-
-                nzAllowClear
-                 nzMode="multiple"
-                 nzPlaceHolder="Include Search Filters"
-                 [(ngModel)]="selectedSearchFilters"
-                 (ngModelChange)="OnSelectionChange($event)">
-                  <nz-option nzCustomContent
-                   nzLabel="Custom Fields" nzValue="field-string">
+                <input nz-input placeholder="Search field" formControlName="searchTerm" style="width:80% ;" />
+                <nz-select nzAllowClear nzMode="multiple" nzPlaceHolder="Include Search Filters"
+                  [(ngModel)]="selectedSearchFilters" (ngModelChange)="OnSelectionChange($event)">
+                  <nz-option nzCustomContent nzLabel="Custom Fields" nzValue="field-string">
 
                     <span nzCustomContent nz-icon nzType="field-string"></span>
                     Custom Fields
@@ -61,69 +55,69 @@
           </nz-form-item>
         </div>
         <form nz-form [formGroup]="validateForm" class="ant-advanced-search-form">
-        <div nz-row [nzGutter]="24">
+          <div nz-row [nzGutter]="24">
 
 
-          <div nz-col [nzSpan]="8">
-            <nz-form-item *ngIf="customField">
+            <div nz-col [nzSpan]="8">
+              <nz-form-item *ngIf="customField">
 
-              <nz-form-control>
-                <nz-select nzMode="tags" nzPlaceHolder="Select fields" formControlName="searchOptions">
-                  <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value">
-                  </nz-option>
-                </nz-select>
-              </nz-form-control>
-            </nz-form-item>
+                <nz-form-control>
+                  <nz-select nzMode="tags" nzPlaceHolder="Select fields" formControlName="searchOptions">
+                    <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="8">
+              <nz-form-item *ngIf="broker">
+
+                <nz-form-control>
+                  <nz-select nzMode="tags" [nzMaxMultipleCount]="1" nzPlaceHolder="Including Brokers"
+                    formControlName="includeBrokers">
+                    <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="8">
+              <nz-form-item *ngIf="agent">
+
+                <nz-form-control>
+                  <nz-select [nzMaxMultipleCount]="1" nzMode="tags" nzPlaceHolder="Including Agents"
+                    formControlName="includeAgents">
+                    <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="8">
+              <nz-form-item *ngIf="vehicles">
+
+                <nz-form-control>
+                  <nz-select [nzMaxMultipleCount]="1" nzMode="tags" nzPlaceHolder="Including Vehicles"
+                    formControlName="includeVehicles">
+                    <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="16">
+              <nz-form-item *ngIf="branch">
+
+                <nz-form-control>
+                  <nz-select nzMode="tags" [nzMaxMultipleCount]="1" nzPlaceHolder="From Branch"
+                    formControlName="includeBranches">
+                    <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
           </div>
-          <div nz-col [nzSpan]="8">
-            <nz-form-item *ngIf="broker">
-
-              <nz-form-control>
-                <nz-select nzMode="tags" [nzMaxMultipleCount]="1" nzPlaceHolder="Including Brokers"
-                  formControlName="includeBrokers">
-                  <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value">
-                  </nz-option>
-                </nz-select>
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-          <div nz-col [nzSpan]="8">
-            <nz-form-item *ngIf="agent">
-
-              <nz-form-control>
-                <nz-select [nzMaxMultipleCount]="1" nzMode="tags" nzPlaceHolder="Including Agents"
-                  formControlName="includeAgents">
-                  <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value">
-                  </nz-option>
-                </nz-select>
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-          <div nz-col [nzSpan]="8">
-            <nz-form-item *ngIf="vehicles">
-
-              <nz-form-control>
-                <nz-select [nzMaxMultipleCount]="1" nzMode="tags" nzPlaceHolder="Including Vehicles"
-                  formControlName="includeVehicles">
-                  <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value">
-                  </nz-option>
-                </nz-select>
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-          <div nz-col [nzSpan]="16">
-            <nz-form-item *ngIf="branch">
-
-              <nz-form-control>
-                <nz-select nzMode="tags" [nzMaxMultipleCount]="1" nzPlaceHolder="From Branch"
-                  formControlName="includeBranches">
-                  <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value">
-                  </nz-option>
-                </nz-select>
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-        </div>
 
 
           <div nz-row>
@@ -233,13 +227,7 @@
     <div class="col-xl-10">
       <div class="w-25 searchBarWidth">
         <nz-input-group nzSize="large" [nzPrefix]="suffixIconSearch">
-          <input
-            type="text"
-            nz-input
-            [(ngModel)]="search"
-            (ngModelChange)="filter()"
-            placeholder="Search for Sales"
-          />
+          <input type="text" nz-input [(ngModel)]="search" (ngModelChange)="filter()" placeholder="Search for Sales" />
         </nz-input-group>
         <ng-template #suffixIconSearch>
           <i nz-icon nzType="search"></i>
@@ -247,13 +235,9 @@
       </div>
     </div>
 
-    <div class="col-xl-2 mb-5">
-      <div ngbDropdown placement="bottom-right" class="d-inline-block">
-        <button
-          class="btn btn-primary btn-lg ant-btn-primary"
-          id="addNew"
-          ngbDropdownToggle
-        >
+    <div class="col-xl-2 my-3">
+      <div ngbDropdown placement="bottom-right" class="d-inline-block " style="float: right;">
+        <button class="btn btn-primary btn-lg ant-btn-primary " id="addNew" ngbDropdownToggle>
           <span class="pl-4 pr-4">Add New</span>
         </button>
         <div ngbDropdownMenu aria-labelledby="addNew">
@@ -271,7 +255,7 @@
       </div>
 
 
-<div class="row">
+      <div class="row">
         <div class="col-xl-12"></div>
       </div>
     </div>

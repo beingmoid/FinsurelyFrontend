@@ -12,6 +12,11 @@ const routes: Routes = [{
 {
   path:'',
   component:TabsComponent
+},
+{
+  path: 'attendence',
+  loadChildren: ()=>
+  import('src/app/pages/workplace/attendence/attendence.module').then(m=>m.AttendenceModule)
 }];
 
 @NgModule({
@@ -19,3 +24,4 @@ const routes: Routes = [{
   exports: [RouterModule]
 })
 export class WorkplaceRoutingModule { }
+
