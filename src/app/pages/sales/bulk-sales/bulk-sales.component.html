@@ -10,8 +10,18 @@
 <div class="row" >
 
 
-
+<div class="col-xl-12">
     <form [formGroup]="formGroup">
+       
+        <mat-form-field class="col-xl-4"  appearance="fill">
+            <mat-label>
+                Policy Number
+            </mat-label>
+            <input type="text" matInput formControlName="policyNumber" placeholder="Policy number">
+            <mat-error *ngIf="formGroup.controls.policyNumber?.hasError('required')">
+                Policy Number is required
+            </mat-error>
+        </mat-form-field>
         <mat-form-field class="col-xl-4"  appearance="fill">
             <mat-label>
                 Customer
@@ -21,6 +31,9 @@
                 Customer Name is required
             </mat-error>
         </mat-form-field>
+
+      
     </form>
+</div>
 
 </div>

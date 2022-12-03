@@ -107,12 +107,23 @@ ul li {
 .f-18 {
   font-size: 18px;
 }
+.f-20{
+  font-size: 20px;
+}
 .f-22 {
   font-size: 22px;
 }
-
+.f-24{
+  font-size: 24px;
+}
+.f-50{
+  font-size: 50px;
+}
 .fw-500 {
   font-weight: 500;
+}
+.fw-300{
+  font-weight: 300;
 }
 
 .lh-12{
@@ -151,7 +162,13 @@ ul li {
 .color-dark-blue {
   color: #2c394c;
 }
+.clr-blue{
+  color: #054085;
+}
+.clr-black{
+  color: #000000;
 
+}
 .mt--15 {
   margin-top: -15px;
 }
@@ -448,7 +465,7 @@ nz-tabs-nav.ant-tabs-bar .ant-tabs-nav-wrap .ant-tabs-nav .ant-tabs-tab {
 }
 
 nz-input-group.ant-input-affix-wrapper {
-  border-radius: 4px !important;
+  border-radius: 10px !important;
   border: 0 !important;
   // box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03),
   //   0 0 10px 0 rgba(20, 19, 34, 0.02);
@@ -599,8 +616,8 @@ i.anticon-search.anticon {
   padding: 8px 15px !important;
   line-height: normal !important;
   height: auto !important;
-  font-size: 18px !important;
-  border-radius: 4px !important;
+  font-size: 20px !important;
+  border-radius: 10px !important;
   border: 0 !important;
   box-shadow: 0px 2px 4px var(--kit-color-primary) !important;
   font-weight: 600 !important;
