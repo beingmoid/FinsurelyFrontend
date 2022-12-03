@@ -11,16 +11,18 @@ const routes: Routes = [{
 }
 ,
 {
-  path:'announcements',
-  loadChildren: () =>
-  import('src/app/pages/workplace/announcement/announcement.module').then(m=>m.AnnouncementModule)
-}
-
-
-];
+  path:'',
+  component:TabsComponent
+},
+{
+  path: 'attendence',
+  loadChildren: ()=>
+  import('src/app/pages/workplace/attendence/attendence.module').then(m=>m.AttendenceModule)
+}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
 export class WorkplaceRoutingModule { }
+

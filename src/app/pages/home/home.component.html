@@ -1,5 +1,52 @@
-<div class="breadcrumbs">
-    <strong>Home</strong>
+<div class="row">
+
+    <div class="col-xl-2 breadcrumbs mb-3">
+        <strong>Home</strong>
+    </div>
+    <div class="col-xl-4 "></div>
+    <div class="col-xl-4 ">
+        <!-- <div class="w-20 mb-2">
+            <nz-input-group nzSize="large" [nzPrefix]="suffixIconSearch">
+                <input type="text" nz-input [(ngModel)]="search" (ngModelChange)="filter()" placeholder="Search" />
+            </nz-input-group>
+            <ng-template #suffixIconSearch>
+                <i nz-icon nzType="search"></i>
+            </ng-template>
+        </div> -->
+        <!-- <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+            <input type="text" nz-input placeholder="input search text" />
+          </nz-input-group> -->
+          <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
+            <input type="text" nz-input placeholder="input search text" />
+          </nz-input-group>
+          <ng-template #suffixButton>
+            <button nz-button nzType="primary" nzSize="large" nzSearch><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              </svg></button>
+          </ng-template>
+    </div>
+    <div class="col-xl-2">
+        <ul nz-menu nzMode="horizontal">
+            <li nz-submenu nzTitle="" nzIcon="filter" >
+                <ul>
+                    <li nz-menu-group nzTitle="Item 1">
+                        <ul>
+                            <li nz-menu-item> <input type="date" id="birthday1" name="birthday1"></li>
+                            <li nz-menu-item>Option 2</li>
+                        </ul>
+                    </li>
+                    <li nz-menu-group nzTitle="Item 2">
+                        <ul>
+                            <li nz-menu-item>Option 3</li>
+                            <li nz-menu-item>Option 4</li>
+                           
+                          
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
 </div>
 <div>
     <div class="row mb-4">
@@ -27,64 +74,159 @@
         </div>
     </div>
     <div class="row home-top-cards">
-        <div class="col-xl-3">
+        <div class="col-xl-4">
             <div class="card">
                 <div class="card-body d-flex flex-wrap justify-content-between align-items-start bg-alice-blue">
                     <div class="">
-                        <div class="text-dark f-13 font-weight-bold">Payable Amount</div>
-                        <div class="text-dark font-weight-bold font-size-24">{{upcomingEventCount}}</div>
-                        <div class="font-size-12 text-default">Analytics for this month</div>
+                        <div class="clr-blue f-22 fw-400">Profit</div>
+                        <div class="clr-blue fw-600 f-50">{{upcomingEventCount}}</div>
+                        <div class="f-18 clr-black fw-300">Analytics for this month</div>
                     </div>
-                    <div class="">
-                        <img src="assets/images/home/payable.svg" width="50px" alt="Icon" />
+                    <div class="my-auto mx-0">
+                        <img src="assets/images/cards/financial-profit.png" width="70px" alt="Icon" />
+                    </div>
+                    <div class="dropdwnHov">
+
+                        <a nz-dropdown [nzDropdownMenu]="menu">
+
+                            <span nz-icon nzType="down"></span>
+                        </a>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                            <ul nz-menu nzSelectable>
+                                <li nz-menu-item>Today</li>
+                                <li nz-menu-item>Weekly</li>
+                                <li nz-menu-item>Monthly</li>
+                                <li nz-menu-item>Yearly</li>
+                            </ul>
+                        </nz-dropdown-menu>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-3">
+        <div class="col-xl-4">
             <div class="card">
                 <div class="card-body d-flex flex-wrap justify-content-between align-items-start bg-alice-blue">
                     <div class="">
-                        <div class="text-dark f-13 font-weight-bold">Receviable Amount</div>
-                        <div class="text-dark font-weight-bold font-size-24">03</div>
-                        <div class="font-size-12 text-default">Analytics for this month</div>
+                        <div class="clr-blue f-22 fw-400">Sales</div>
+                        <div class="clr-blue fw-600 f-50">03</div>
+                        <div class="f-18 clr-black fw-300">Analytics for this month</div>
                     </div>
                     <div class="">
-                        <img src="assets/images/home/rocket.svg" width="50px" alt="Icon" />
+                        <img src="assets/images/cards/sales.png" width="70px" alt="Icon" />
+                    </div>
+                    <div class="dropdwnHov">
+
+                        <a nz-dropdown [nzDropdownMenu]="menu">
+
+                            <span nz-icon nzType="down"></span>
+                        </a>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                            <ul nz-menu nzSelectable>
+                                <li nz-menu-item>Today</li>
+                                <li nz-menu-item>Weekly</li>
+                                <li nz-menu-item>Monthly</li>
+                                <li nz-menu-item>Yearly</li>
+                            </ul>
+                        </nz-dropdown-menu>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-3">
+
+
+
+    </div>
+    <div class="row home-top-cards">
+        <div class="col-xl-4">
             <div class="card">
                 <div class="card-body d-flex flex-wrap justify-content-between align-items-start bg-alice-blue">
                     <div class="">
-                        <div class="text-dark f-13 font-weight-bold">Sales </div>
-                        <div class="text-dark font-weight-bold font-size-24">{{casesApprocDeadlineCount}}</div>
-                        <div class="font-size-12 text-default">Analytics for this month</div>
+                        <div class="clr-blue f-22 fw-400">Expense</div>
+                        <div class="clr-blue fw-600 f-50">{{casesApprocDeadlineCount}}</div>
+                        <div class="f-18 clr-black fw-300">Analytics for this month</div>
                     </div>
                     <div class="">
-                        <img src="assets/images/home/sale.svg" width="50px" alt="Icon" />
+                        <img src="assets/images/cards/expense-buget.png" width="70px" alt="Icon" />
+                    </div>
+                    <div class="dropdwnHov">
+
+                        <a nz-dropdown [nzDropdownMenu]="menu">
+
+                            <span nz-icon nzType="down"></span>
+                        </a>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                            <ul nz-menu nzSelectable>
+                                <li nz-menu-item>Today</li>
+                                <li nz-menu-item>Weekly</li>
+                                <li nz-menu-item>Monthly</li>
+                                <li nz-menu-item>Yearly</li>
+                            </ul>
+                        </nz-dropdown-menu>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-3">
+        <div class="col-xl-4">
             <div class="card">
                 <div class="card-body d-flex flex-wrap justify-content-between align-items-start bg-alice-blue">
                     <div class="">
-                        <div class="text-dark f-13 font-weight-bold">Expense</div>
-                        <div class="text-dark font-weight-bold font-size-24">{{casesToBeInvoicedCount}}</div>
-                        <div class="font-size-12 text-default">Analytics for this month</div>
+                        <div class="clr-blue f-22 fw-400">Receviable amount</div>
+                        <div class="clr-blue fw-600 f-50">{{casesToBeInvoicedCount}}</div>
+                        <div class="f-18 clr-black fw-300">Analytics for this month</div>
                     </div>
                     <div class="">
-                        <img src="assets/images/home/accounting.svg" width="50px" alt="Icon" />
+                        <img src="assets/images/cards/receive-amount.png" width="70px" alt="Icon" />
+                    </div>
+                    <div class="dropdwnHov">
+
+                        <a nz-dropdown [nzDropdownMenu]="menu">
+
+                            <span nz-icon nzType="down"></span>
+                        </a>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                            <ul nz-menu nzSelectable>
+                                <li nz-menu-item>Today</li>
+                                <li nz-menu-item>Weekly</li>
+                                <li nz-menu-item>Monthly</li>
+                                <li nz-menu-item>Yearly</li>
+                            </ul>
+                        </nz-dropdown-menu>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row home-top-cards">
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-body d-flex flex-wrap justify-content-between align-items-start bg-alice-blue">
+                    <div class="">
+                        <div class="clr-blue f-22 fw-400">Payable amount</div>
+                        <div class="clr-blue fw-600 f-50">{{casesToBeInvoicedCount}}</div>
+                        <div class="f-18 clr-black fw-300">Analytics for this month</div>
+                    </div>
+                    <div class="">
+                        <img src="assets/images/cards/payable-amount.png" width="70px" alt="Icon" />
+                    </div>
+                    <div class="dropdwnHov">
 
+                        <a nz-dropdown [nzDropdownMenu]="menu">
+
+                            <span nz-icon nzType="down"></span>
+                        </a>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                            <ul nz-menu nzSelectable>
+                                <li nz-menu-item>Today</li>
+                                <li nz-menu-item>Weekly</li>
+                                <li nz-menu-item>Monthly</li>
+                                <li nz-menu-item>Yearly</li>
+                            </ul>
+                        </nz-dropdown-menu>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row home-top-cards">
         <div class="col-md-4">
             <div class="card">
@@ -113,7 +255,8 @@
 <!-- Contact   -->
 
 <div>
-    <nz-modal nzFooter="null" nzWidth="700" [(nzVisible)]="isVisibleContact" [nzTitle]="modalTitle" (nzOnCancel)="handleCancelPopUp()" nzMaskClosable="false">
+    <nz-modal nzFooter="null" nzWidth="700" [(nzVisible)]="isVisibleContact" [nzTitle]="modalTitle"
+        (nzOnCancel)="handleCancelPopUp()" nzMaskClosable="false">
         <app-add-contacts></app-add-contacts>
     </nz-modal>
 </div>
@@ -121,7 +264,8 @@
 <!-- Task   -->
 
 <div>
-    <nz-modal nzFooter="null" nzWidth="700" [(nzVisible)]="isVisibleTask" [nzTitle]="modalTitle" (nzOnCancel)="handleCancelPopUp()" nzMaskClosable="false">
+    <nz-modal nzFooter="null" nzWidth="700" [(nzVisible)]="isVisibleTask" [nzTitle]="modalTitle"
+        (nzOnCancel)="handleCancelPopUp()" nzMaskClosable="false">
         <app-add-tasks></app-add-tasks>
     </nz-modal>
 </div>
@@ -129,7 +273,8 @@
 <!-- Team Members   -->
 
 <div>
-    <nz-modal nzFooter="null" nzWidth="700" [(nzVisible)]="isVisibleTeamMember" [nzTitle]="modalTitle" (nzOnCancel)="handleCancelPopUp()" nzMaskClosable="false">
+    <nz-modal nzFooter="null" nzWidth="700" [(nzVisible)]="isVisibleTeamMember" [nzTitle]="modalTitle"
+        (nzOnCancel)="handleCancelPopUp()" nzMaskClosable="false">
         <app-add-team-member></app-add-team-member>
     </nz-modal>
 </div>
@@ -137,7 +282,8 @@
 <!-- Sales   -->
 
 <div>
-    <nz-modal nzFooter="null" nzWidth="1100" (nzOnCancel)="handleCancelPopUp()" nzMaskClosable="false" [nzTitle]="'Add New Sales'">
+    <nz-modal nzFooter="null" nzWidth="1100" (nzOnCancel)="handleCancelPopUp()" nzMaskClosable="false"
+        [nzTitle]="'Add New Sales'">
 
     </nz-modal>
 </div>
@@ -145,7 +291,8 @@
 
 <!-- Events -->
 <div>
-    <nz-modal nzFooter="null" nzWidth="700" [(nzVisible)]="isVisibleEvent" (nzOnCancel)="handleCancelPopUp()" nzMaskClosable="false" [nzTitle]="modalTitle">
+    <nz-modal nzFooter="null" nzWidth="700" [(nzVisible)]="isVisibleEvent" (nzOnCancel)="handleCancelPopUp()"
+        nzMaskClosable="false" [nzTitle]="modalTitle">
         <app-add-event></app-add-event>
     </nz-modal>
 </div>
@@ -159,7 +306,8 @@
         <img class="no-data-img mb-3" src="assets/images/no-data/no-contact.svg" alt="No Contacts">
         <div class="mt-2 f-13">
             No Data Available.
-            <a [hidden]="_permissionService.getRole() == 'Client' || (!canViewContact || !canCreateContact)" href="javascript:void(0)" (click)="showAddContact()" class="kit__utils__link">
+            <a [hidden]="_permissionService.getRole() == 'Client' || (!canViewContact || !canCreateContact)"
+                href="javascript:void(0)" (click)="showAddContact()" class="kit__utils__link">
                 Create New Contact
             </a>
         </div>
@@ -184,7 +332,8 @@
         <img class="no-data-img mb-3" src="assets/images/no-data/no-event.svg" alt="No Events">
         <div class="mt-2 f-13">
             No Data Available.
-            <a [hidden]="_permissionService.getRole() == 'Client'  || (!canViewEvent || !canCreateEvent)" href="javascript:void(0)" (click)="showAddEvent()" class="kit__utils__link">
+            <a [hidden]="_permissionService.getRole() == 'Client'  || (!canViewEvent || !canCreateEvent)"
+                href="javascript:void(0)" (click)="showAddEvent()" class="kit__utils__link">
                 Create New Event
             </a>
         </div>
@@ -196,7 +345,8 @@
         <img class="no-data-img mb-3" src="assets/images/no-data/no-case.svg" alt="No Sales">
         <div class="mt-2 f-13">
             No Data Available.
-            <a [hidden]="_permissionService.getRole() == 'Client' || (!canViewSales || !canCreateSales)" href="javascript:void(0)" (click)="showAddSales()" class="kit__utils__link">
+            <a [hidden]="_permissionService.getRole() == 'Client' || (!canViewSales || !canCreateSales)"
+                href="javascript:void(0)" (click)="showAddSales()" class="kit__utils__link">
                 Create New Sales
             </a>
         </div>
@@ -208,7 +358,8 @@
         <img class="no-data-img mb-3" src="assets/images/no-data/no-case.svg" alt="No Sales">
         <div class="mt-2 f-13">
             No Data Available.
-            <a [hidden]="_permissionService.getRole() == 'Client'  || (!canViewSales || !canCreateSales)" href=" javascript:void(0)" (click)="showAddSales()" class="kit__utils__link">
+            <a [hidden]="_permissionService.getRole() == 'Client'  || (!canViewSales || !canCreateSales)"
+                href=" javascript:void(0)" (click)="showAddSales()" class="kit__utils__link">
                 Create New Sales
             </a>
         </div>

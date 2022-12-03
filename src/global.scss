@@ -107,12 +107,23 @@ ul li {
 .f-18 {
   font-size: 18px;
 }
+.f-20{
+  font-size: 20px;
+}
 .f-22 {
   font-size: 22px;
 }
-
+.f-24{
+  font-size: 24px;
+}
+.f-50{
+  font-size: 50px;
+}
 .fw-500 {
   font-weight: 500;
+}
+.fw-300{
+  font-weight: 300;
 }
 
 .lh-12{
@@ -137,6 +148,11 @@ ul li {
 
 .mat-form-field {
   line-height: 1.2;
+  background: white !important;
+
+}
+.mat-form-field-appearance-fill .mat-form-field-flex{
+  background-color: transparent;
 }
 
 .pt-10px {
@@ -146,7 +162,13 @@ ul li {
 .color-dark-blue {
   color: #2c394c;
 }
+.clr-blue{
+  color: #054085;
+}
+.clr-black{
+  color: #000000;
 
+}
 .mt--15 {
   margin-top: -15px;
 }
@@ -235,7 +257,7 @@ ul li {
 .breadcrumbs>strong {
   // color: #141322;
   color: #054085;
-  font-size: 1.4rem;
+  font-size: 2rem;
 }
 
 .ant-table-column-sorters {
@@ -363,9 +385,11 @@ cui-topbar-search nz-input-group.ant-input-affix-wrapper {
 
 .cui__layout__cardsShadow .card {
   background: transparent;
-  box-shadow: none;
+  // box-shadow: none;
   padding-left: 0;
   padding-right: 0;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px #ddd;
 }
 
 nz-table.card.ant-table-wrapper nz-spin.ant-spin-nested-loading,
@@ -441,10 +465,14 @@ nz-tabs-nav.ant-tabs-bar .ant-tabs-nav-wrap .ant-tabs-nav .ant-tabs-tab {
 }
 
 nz-input-group.ant-input-affix-wrapper {
-  border-radius: 4px !important;
+  border-radius: 10px !important;
   border: 0 !important;
-  box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03),
-    0 0 10px 0 rgba(20, 19, 34, 0.02);
+  // box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03),
+  //   0 0 10px 0 rgba(20, 19, 34, 0.02);
+  box-shadow: 0px 0px 5px rgb(0 0 0 / 25%);
+  // width: 50% !important;
+  // float: right;  
+
 }
 
 .user-tabs.ribbon--alpha {
@@ -588,10 +616,11 @@ i.anticon-search.anticon {
   padding: 8px 15px !important;
   line-height: normal !important;
   height: auto !important;
-  font-size: 13px !important;
-  border-radius: 4px !important;
+  font-size: 20px !important;
+  border-radius: 10px !important;
   border: 0 !important;
   box-shadow: 0px 2px 4px var(--kit-color-primary) !important;
+  font-weight: 600 !important;
 }
 
 .ant-btn-dangerous.ant-btn-primary {
@@ -652,6 +681,8 @@ i.anticon-search.anticon {
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  box-shadow: 0px 0px 5px rgb(0 0 0 / 25%);
+
 }
 
 // popup action btns
@@ -934,6 +965,8 @@ i.anticon-search.anticon {
 
 nz-header.ant-layout-header.cui__layout__header {
   height: 47px;
+  box-shadow: 0px 5px 5px rgb(0 0 0 / 25%);
+
 }
 
 // for create account page sweet alert height
