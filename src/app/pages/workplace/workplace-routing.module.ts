@@ -8,11 +8,16 @@ import { WorkplaceComponent } from './workplace/workplace.component';
 const routes: Routes = [{
   path:'employee',
   component:EmployeeDetailsComponent
-},
+}
+,
 {
-  path:'',
-  component:TabsComponent
-}];
+  path:'announcements',
+  loadChildren: () =>
+  import('src/app/pages/workplace/announcement/announcement.module').then(m=>m.AnnouncementModule)
+}
+
+
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

@@ -17,12 +17,15 @@ import { BenefitsAndDeductionsComponent } from './benefits-and-deductions/benefi
 import { BankDetailsComponent } from './bank-details/bank-details.component';
 import { EmpFilesComponent } from './emp-files/emp-files.component';
 import { EmpStatusComponent } from './emp-status/emp-status.component';
+import { AnnouncementModule } from './announcement/announcement.module';
+//import { ViewAnnouncementsComponent } from './annoucement/view-announcements/view-announcements.component';
 
 
 @NgModule({
   declarations: [EmployeeViewComponent, EmployeeAddComponent, EmployeeDetailsComponent, WorkplaceComponent, TabsComponent, TeamsComponent, EmpBasicDetailComponent, CompensationComponent, VacationPolicyComponent, BenefitsAndDeductionsComponent, BankDetailsComponent, EmpFilesComponent, EmpStatusComponent],
   imports: [
     CommonModule,
+    
     WorkplaceRoutingModule,
     SharedModule
   ]
