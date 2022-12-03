@@ -78,8 +78,10 @@
                 <img src="assets/images/sheets.png" height="30" width="30" />
 
               </div>
-                <nz-table class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small" #filterTable
-                    [nzData]="statement" [nzNoResult]="noData" nzShowSizeChanger [nzPageSize]="pageSize"
+                <nz-table class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small" 
+                 [nzNoResult]="noData" nzShowSizeChanger [nzPageSize]="pageSize"
+                 
+      
                     [nzFooter]="tableFooter" [nzLoading]="loading">
                     <thead>
                         <tr>
@@ -100,8 +102,6 @@
                             <th> Body Type</th>
 
 
-                            <th>Transaction Reference #</th>
-
                             <th>Debit</th>
                             <th>Credit</th>
                             <th>Amount</th>
@@ -110,20 +110,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let data of filterTable.data; let i = index;">
-                            <td>{{i+1}}</td>
-                            <td> {{data.date | date}} </td>
+                        <tr *ngFor="let data of statementList">
+                            <td>  {{data.num}} </td>
+                            <td> {{data.invoiceDate | date}} </td>
 
 
-                            <td> {{data.name}} </td>
+                            <td> {{data.customerName}} </td>
                             <td> {{data.policyNumber}} </td>
                             <td>{{data.policyType}}</td>
+                            <td>{{serviceType}}</td>
                             <td> {{data.insuranceType }} </td>
-                            <td> {{data.service }} </td>
                             <td> {{data.vehicle}} </td>
                             <td> {{data.bodytype}} </td>
-                            <td> {{data.transactionRefNumber}} </td>
-
                             <td> {{data.debit==0?'':data.debit}} </td>
                             <td> {{data.credit==0?'':data.credit}} </td>
                             <td> {{data.amount}} </td>
