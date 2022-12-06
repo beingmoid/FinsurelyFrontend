@@ -8,7 +8,8 @@ import { WorkplaceComponent } from './workplace/workplace.component';
 const routes: Routes = [{
   path:'employee',
   component:EmployeeDetailsComponent
-},
+}
+,
 {
   path:'',
   component:TabsComponent

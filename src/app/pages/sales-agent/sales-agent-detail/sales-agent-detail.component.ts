@@ -43,6 +43,8 @@ export class SalesAgentDetailComponent implements OnInit {
   paymentAndBilling:PaymentAndBilling;
   paymentDue:number;
   cardLoading:boolean;
+  page:number;
+  totalPages:number;
   pageSize=10;
   fullName:string;
   listData:SalesInvoice[]=[];
@@ -145,10 +147,24 @@ export class SalesAgentDetailComponent implements OnInit {
     this.reconModal=false;
   }
 
+
   navigateWithState() {
     var data ={
       params:JSON.stringify(this.customerDetail)}
     this._router.navigateByUrl('/sales-agent/statement', { state:data });
+  }
+  statementList:any[];
+
+  async FetchStatement($event)
+  {
+    console.log($event)
+    this.service.GetSalesAgentStatement(this.userDetailId,this.page,this.pageSize).subscribe(async res=>{
+      if((await res))
+        this.statementList=res.dynamicResult.data;
+        this.totalPages=res.dynamicResult.totalPages;
+        
+        console.log('Logger',res);
+      });
   }
  async ngOnInit(): Promise<void> {
    this._sharedService.formSubmited.subscribe(res=>{
@@ -251,8 +267,17 @@ export class SalesAgentDetailComponent implements OnInit {
       if (!this.userDetailId) {
         this._router.navigate(['/sales-agent'])
       } else {
-        //
-
+        
+        this.page=10;
+        this.service.GetSalesAgentStatement(this.userDetailId,this.page,this.pageSize).subscribe(async res=>{
+          if((await res))
+            this.statementList=res.dynamicResult.data;
+            this.totalPages=res.dynamicResult.totalPages;
+            
+            console.log('Logger',res);
+          });
+        
+        
          await this.service.GetSaleAgentDetail(this.userDetailId).subscribe(async res=>{
         if(res.isSuccessfull){
           this.customerDetail=res.dynamicResult as UserDetailDTO;

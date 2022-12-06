@@ -24,7 +24,8 @@ export class SalesAgentService extends GenericApiService {
   private termsSubject:BehaviorSubject<any[]>= new BehaviorSubject<any[]>(undefined);
  salesInvoiceObserver$: Observable<any[]>= new Observable<PreferredPaymentMethod[]>();
   private  salesInvoiceSubject:BehaviorSubject<any[]>= new BehaviorSubject<any[]>(undefined);
-
+  salesAgentStatementObserver$:Observable<any[]> = new Observable<any[]>();
+  private salesAgentStatementSubject:BehaviorSubject<any[]> = new BehaviorSubject<any[]>(undefined);
 
   constructor(private http: HttpClient) {
     super(http) 
@@ -33,7 +34,9 @@ export class SalesAgentService extends GenericApiService {
     this.preferredPaymentMethodtObserver$=this.preferredPaymentMethodSubject.asObservable();
     this.termsObserver$= this.termsSubject.asObservable();
     this.salesInvoiceObserver$=this.salesInvoiceSubject.asObservable();
+    this.salesAgentStatementObserver$=this.salesAgentStatementSubject.asObservable();
   }
+  //List of sales agents displayed on Sales Agent Listing
   async GetSalesAgents(){
     await this.GetAll(API_URL+API_ENDPOINTS.SalesAgent).subscribe(res=>{
       if(res.dynamicResult){
@@ -42,6 +45,8 @@ export class SalesAgentService extends GenericApiService {
     
     });
   }
+
+  //Update call for salesAgent used in SalesAgent Detail Page
  async updateSalesAgent(id:number,data:UserDetailDTO){
   return await this.Update(id,data,API_URL+API_ENDPOINTS.SalesAgent);
  }
@@ -89,6 +94,10 @@ export class SalesAgentService extends GenericApiService {
   }
   SaveSelection(data:StatementColumns){
     return  this.Post(data,API_URL+API_ENDPOINTS.Auth+'/UpdateStatementConfig');
+  }
+  GetSalesAgentStatement(agentId,pageNo,pageSize)
+  {
+    return this.GetAll(API_URL+API_ENDPOINTS.SalesAgent+`/statement?agentId=${agentId}&pageNo=${pageNo}&pageSize=${pageSize}`);
   }
 
 }

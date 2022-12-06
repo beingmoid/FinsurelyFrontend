@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 import { AccountDetailTypeDTO, AccountDTO, AccountTypeDTO } from 'src/app/models/accountDTO';
 import { API_ENDPOINTS, API_URL } from 'src/app/models/Global';
 import { GenericApiService } from './genericApi.service';
@@ -21,15 +22,21 @@ export class AccountsService extends GenericApiService {
     this.accountDetailObserver$=this.accountDetailSubject$.asObservable();
     this.accountTypeObserver$=this.accountTypeSubject$.asObservable();
   }
+
   GetAccounts(){
-    return this.GetAll(API_URL+API_ENDPOINTS.Accounts).subscribe(res=>{
+    return this.GetAll(API_URL+API_ENDPOINTS.Accounts).pipe(
+      shareReplay(1)
+    ).subscribe(res=>{
       if(res.isSuccessfull){
         this.accountSubject$.next(res.dynamicResult);
       }
     });
   }
   GetAccountsPaginated(page,pageSize){
-    return this.GetAll(API_URL+API_ENDPOINTS.Accounts+`/GetPaginated?page=${page}&pageSize=${pageSize}`).subscribe(res=>{
+    return this.GetAll(API_URL+API_ENDPOINTS.Accounts+`/GetPaginated?page=${page}&pageSize=${pageSize}`)
+    .pipe(
+      shareReplay(1)
+    ).subscribe(res=>{
       if(res.isSuccessfull){
         this.accountSubject$.next(res.dynamicResult);
       }
@@ -44,14 +51,22 @@ export class AccountsService extends GenericApiService {
 
   }
   GetAccountTypeDetails(id:number){
-    return this.GetAll(API_URL+'api/AccountDetailType'+`/FilterList?accountTypeId=${id}`).subscribe(res=>{
+    return this.GetAll(API_URL+'api/AccountDetailType'+`/FilterList?accountTypeId=${id}`)
+    .pipe(
+      shareReplay(1)
+    )
+    .subscribe(res=>{
       if(res.isSuccessfull){
         this.accountDetailSubject$.next(res.dynamicResult);
       }
     });
   }
   GetAccountTypes(){
-    return this.GetAll(API_URL+'api/AccountType').subscribe(res=>{
+    return this.GetAll(API_URL+'api/AccountType')
+    .pipe(
+      shareReplay(1)
+    )
+    .subscribe(res=>{
       if(res.isSuccessfull){
         console.log('success in service');
         this.accountTypeSubject$.next(res.dynamicResult);
