@@ -13,6 +13,8 @@ import { AddBodyTypeComponent } from './add-body-type/add-body-type.component';
 import { AddServiceComponent } from './add-service/add-service.component';
 import { SalesDirectoryComponent } from './sales-directory/sales-directory.component';
 import { BulkSalesComponent } from './bulk-sales/bulk-sales.component';
+import {MatChipsModule} from '@angular/material/chips';
+
 
 
 
@@ -26,6 +28,7 @@ import { BulkSalesComponent } from './bulk-sales/bulk-sales.component';
     CustomerModule,
     CommonModule,
     SharedModule,
+    MatChipsModule
   ],
   exports:[AddVehicleComponent]
 })

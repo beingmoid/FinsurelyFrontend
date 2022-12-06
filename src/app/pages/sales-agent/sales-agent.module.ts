@@ -12,6 +12,8 @@ import { ThousandSuffixesPipe } from 'src/app/pipes/thousand.suffix.pipe';
 import { StatementViewComponent } from './statement-view/statement-view.component';
 import { MomentModule } from 'ngx-moment';
 import { AccountingModule } from '../accounting/accounting.module';
+import {MatChipsModule} from '@angular/material/chips';
+
 
 
 @NgModule({
@@ -23,6 +25,7 @@ import { AccountingModule } from '../accounting/accounting.module';
     TransactionsModule,
     MomentModule,
     AccountingModule,
+    MatChipsModule
   ],
   exports:[AddSalesAgentComponent],
   

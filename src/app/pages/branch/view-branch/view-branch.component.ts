@@ -64,6 +64,9 @@ export class ViewBranchComponent implements OnInit {
   sortValue = null;
   listOfSearchName = [];
 
+  show = false;
+
+  chiplist = [];
 
   filter(listOfSearchName: string[], searchAddress: string): void {
     this.listOfSearchName = listOfSearchName;
@@ -82,9 +85,7 @@ export class ViewBranchComponent implements OnInit {
       this.displayData = data;
     }
   }
-  show = false;
-
-  chiplist = [];
+ 
 
   ngOnInit(): void {
     this.service.branchObserver$.subscribe(res => {

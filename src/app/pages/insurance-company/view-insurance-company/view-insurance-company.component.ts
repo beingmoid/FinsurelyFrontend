@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+// import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserDetailDTO } from 'src/app/models/userDTO';
 import { CustomerService } from 'src/app/services/APIServices/customer.service';
@@ -23,6 +24,7 @@ class FilterObject {
   styleUrls: ['./view-insurance-company.component.scss']
 })
 export class ViewInsuranceCompanyComponent implements OnInit {
+  form: FormGroup;
 
   search: string
   listData: UserDetailDTO[] = []
@@ -36,11 +38,58 @@ export class ViewInsuranceCompanyComponent implements OnInit {
   sortColumnKey: string;
   constructor(private _service:InsuranceCompanyService,
     private _shared:SharedService,
-    private _router:Router) {
+    private _router:Router,private fb: FormBuilder) {
       this._shared.formSubmited.subscribe(res=>{
         this.isVisible=false;
+      });
+      this.form = this.fb.group({
+        dateFrom: new FormControl(null),
+        dateTo: new FormControl(null),
+        branch: new FormControl(null),
+        isPdf: new FormControl(null),
+        isExcel: new FormControl(null)
+  
       })
   }
+  
+  searchAddress: string;
+  // listData: Branch[];
+  nameList = [
+    { text: 'Export as PDF', value: 'PDF', checked: true },
+    { text: 'Export as Excel', value: 'Excel', checked: false }
+  ];
+
+  data = [
+    {
+      name: 'John Brown',
+      age: 32,
+      address: 'New York No. 1 Lake Park'
+    },
+    {
+      name: 'Jim Green',
+      age: 42,
+      address: 'London No. 1 Lake Park'
+    },
+    {
+      name: 'Joe Black',
+      age: 32,
+      address: 'Sidney No. 1 Lake Park'
+    },
+    {
+      name: 'Jim Red',
+      age: 32,
+      address: 'London No. 2 Lake Park'
+    }
+  ];
+  displayData = [...this.data];
+  sortName = null;
+  sortValue = null;
+  listOfSearchName = [];
+
+  show = false;
+
+  chiplist = [];
+
   handleCancel() {
     this.isVisible = false
   }

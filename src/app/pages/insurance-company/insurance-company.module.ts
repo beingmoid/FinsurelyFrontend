@@ -10,6 +10,8 @@ import { TransactionsModule } from '../transactions/transactions.module';
 import { ThousandSuffixesPipe } from 'src/app/pipes/thousand.suffix.pipe';
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { AccountingModule } from '../accounting/accounting.module';
+import {MatChipsModule} from '@angular/material/chips';
+
 
 
 
@@ -21,6 +23,7 @@ import { AccountingModule } from '../accounting/accounting.module';
     InsuranceCompanyRoutingModule,
     TransactionsModule,
     AccountingModule,
+    MatChipsModule
 
     
   

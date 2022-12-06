@@ -1211,3 +1211,95 @@ nz-header.ant-layout-header.cui__layout__header {
 // $sm-max-width: 575px;
 
 // **************************************** Responsiveness Ends *****************************************
+
+// search With Filter
+#SearchFiltr button {
+  padding: 5px !important;
+  margin: 0;
+  min-width: 60px !important;
+  border-radius: 0 10px 10px 0 !important;
+}
+
+#SearchFiltr .ant-table-filter-trigger-container {
+  background: transparent;
+  min-width: 80px;
+  color: red;
+}
+
+#SearchFiltr input[type=text] {
+  background-color: white;
+  border: none;
+  // padding: 10px 15px; 
+  border-radius: 10px 0 0 10px;
+
+}
+#SearchFiltr input[type=search] {
+  background-color: white;
+  border: none;
+  padding: 10px 15px; 
+  border-radius: 10px 0 0 10px;
+
+}
+
+.SearchWithFilter span {
+  color: #054085 !important;
+
+}
+
+.SearchWithFilter {
+  position: absolute;
+  top: 14%;
+  left: 85%;
+  z-index: 1;
+}
+
+.SearchWithFilter ul {
+  padding: 25px 20px;
+  min-width: 17rem;
+  display: unset;
+  transform: translate(-235px, 10px) !important;
+  // border: none;
+
+}
+
+.SearchWithFilter ul li label {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 0.01em;
+  color: #818E9B;
+  padding: 0;
+}
+
+.SearchWithFilter ul li input[type=date] {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid #000000;
+  opacity: 0.75;
+  width: 14rem;
+  padding: 8px 0;
+}
+
+.SearchWithFilter ul li select {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid #000000;
+  opacity: 0.75;
+  border-radius: 0;
+  padding: 0;
+  min-width: 17rem;
+  padding: 8px;
+
+
+}
+.SearchWithFilter ul li input[type=checkbox]{
+  width: 15px;
+  height: 16px;
+
+
+}
+// search With Filter
