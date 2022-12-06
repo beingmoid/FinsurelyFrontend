@@ -5,6 +5,9 @@ import { BranchRoutingModule } from './branch-routing.module';
 import { ViewBranchComponent } from './view-branch/view-branch.component';
 import { AddBranchComponent } from './add-branch/add-branch.component';
 import { SharedModule } from 'src/app/shared.module';
+import { MaterialModule } from 'src/app/material.module';
+import {MatChipsModule} from '@angular/material/chips';
+
 
 
 @NgModule({
@@ -12,7 +15,8 @@ import { SharedModule } from 'src/app/shared.module';
   imports: [
     CommonModule,
     BranchRoutingModule,
-    SharedModule
+    SharedModule,
+    MatChipsModule
   ]
 })
 export class BranchModule { }

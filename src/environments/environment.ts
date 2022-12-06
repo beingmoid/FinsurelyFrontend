@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   authenticated: false,
   hmr: false,
-  api_url: "http://192.168.18.7:5000/"
+  api_url: "https://finsurelybackend.azurewebsites.net/"
 }
 
 /*
