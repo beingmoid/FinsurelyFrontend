@@ -64,8 +64,10 @@
 <div *ngIf="paymentModal">
 <app-add-credit-payment></app-add-credit-payment>
 </div>
+<div class="user-settings-page m-2">
 <div class="row">
     <div class="col-xl-12">
+    <div class="card col-xl-12 user-tabs ribbon--alpha">
         <nz-tabset class="" nzSize="large">
             <nz-tab [nzTitle]="TransactionTabTitle">
              <button   class="primary" (click)="DownloadPDF()"> <img src="assets/images/computer.png"  height="35" width="35"/></button>
@@ -238,6 +240,8 @@
             </nz-tab>
         </nz-tabset>
     </div>
+</div>
+</div>
 </div>
 <ng-template #noData>
     <nz-empty class="m-5" [nzNotFoundImage]="'assets/images/no-data/no-contact.svg'" [nzNotFoundContent]="noDataDescrp">
