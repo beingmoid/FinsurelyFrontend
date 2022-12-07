@@ -97,7 +97,7 @@ export class SalesAgentService extends GenericApiService {
   }
   GetSalesAgentStatement(agentId,pageNo,pageSize)
   {
-    return this.GetAll(API_URL+API_ENDPOINTS.SalesAgent+`/statement?agentId=${agentId}&pageNo=${pageNo}&pageSize=${pageSize}`);
+    return this.GetAll(API_URL+API_ENDPOINTS.SalesAgent+`/statement?Id=${agentId}&page=${pageNo}&itemsPerPage=${pageSize}`);
   }
 
 }
