@@ -61,6 +61,13 @@
 
 </div>
 
+
+<div class="user-settings-page m-2">
+<div class="row">
+    <div class="col-xl-12">
+    <div class="card col-xl-12 user-tabs ribbon--alpha">
+        {{this.dateAndFilters.value | json}}
+        <button nz-button nzType="secondary" (click)="DownloadPDF()">Download PDF Statement</button>
         <nz-tabset class="" nzSize="large">
 
             <nz-tab [nzTitle]="TransactionTabTitle">
@@ -561,7 +568,10 @@
             </nz-tab>
         </nz-tabset>
 
- 
+    </div>
+</div>
+</div>
+</div>
 <ng-template #noData>
     <nz-empty class="m-5" [nzNotFoundImage]="'assets/images/no-data/no-contact.svg'" [nzNotFoundContent]="noDataDescrp">
     </nz-empty>
@@ -652,3 +662,6 @@
 </div>
 
 <app-add-payment></app-add-payment>
+
+
+
