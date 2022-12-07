@@ -13,11 +13,13 @@ import { StatementViewComponent } from './statement-view/statement-view.componen
 import { MomentModule } from 'ngx-moment';
 import { AccountingModule } from '../accounting/accounting.module';
 import {MatChipsModule} from '@angular/material/chips';
+import { TransactionalHistoryComponent } from './transactional-history/transactional-history.component';
+import { AgentProfileComponent } from './agent-profile/agent-profile.component';
 
 
 
 @NgModule({
-  declarations: [ViewSalesAgentComponent, AddSalesAgentComponent, SalesAgentDetailComponent, ReconcileComponent, StatementViewComponent],
+  declarations: [ViewSalesAgentComponent, AddSalesAgentComponent, SalesAgentDetailComponent, ReconcileComponent, StatementViewComponent, TransactionalHistoryComponent, AgentProfileComponent],
   imports: [
     CommonModule,
     SharedModule,

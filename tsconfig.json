@@ -12,7 +12,9 @@
     "importHelpers": true,
     "target": "es6",
     "resolveJsonModule": true,
-
+    "paths": {
+      "primeng/*": ["node_modules/primeng-lts/*"]
+  },
     "allowSyntheticDefaultImports": true,
     "typeRoots": [
       "node_modules/@types"

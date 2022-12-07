@@ -9,7 +9,7 @@ import moment from 'moment';
 export class AppDateFormatPipe extends DatePipe implements PipeTransform {
 
   transform(value: Date, addTime?: any): any {
-    if (value) {
+    if (value) {  
       let date = new Date(moment.utc(value).local().toString());
       if (!addTime)
         return super.transform(date, 'MMMM dd, yyyy');

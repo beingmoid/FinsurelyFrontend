@@ -66,19 +66,7 @@ export class AccountsComponent implements OnInit {
     // private bankAccountService: BankAccountService,
     // public _permissionService: PermissionService
   ) {
-    this.AccountForm = fb.group({
-      id: [0],
-      accountId: [null],
-      accountTypeId:[null,Validators.required],
-      accountDetailTypeId: [null, Validators.required],
-      name: [null, Validators.required],
-      description: [null],
-      number: [null],
-      isSubAccount: [false],
-      defaultTaxCode:[null],
-      asOf:[null],
-      openingBalanceEquity:[null]
-    });
+
 
   }
 
@@ -94,58 +82,19 @@ export class AccountsComponent implements OnInit {
       }
     });
     this._accounts.GetAccountsPaginated(this.page,this.pageSize)
-    this._accounts.accountTypeObserver$.subscribe(res=>{
-      this.isloading=true;
-      console.log('response',res);
-      this.accountTypes=res;
-      this.isloading=false;
-    });
-    this._accounts.GetAccountTypes();
-
-    this._accounts.accountDetailObserver$.subscribe(res=>{
-      if(res){
-        this.isloading=true;
-        this.filterList = res;
-        console.log('Res',res);
-        this.isloading=false;
-      }
-    });
 
     this.isloading=false;
-
-    // this.lookupService.bankAccountTypeObserver$.subscribe(res => {
-    //   if (res)
-    //     this.bankAccountTypes = res
-    // })
-    // // this.lookupService.getBankAccountTypes()
-
-    // this.bankAccountService.GetBankAccounts();
-    // this.bankAccountService.bankAccountsObserver$.subscribe(res => {
-    //   if (res) {
-    //     this.listData = res;
-    //     let index = 0;
-    //     this.listData.forEach(element => {
-    //       element.index = index + 1;
-    //       index++;
-    //     });
-    //     this.listDataCopy = JSON.stringify(this.listData);
-
-    //     let accountId = history.state.accountId;
-    //     if (accountId)
-    //       this.showSingleAccount(this.listData.find(p => p.id == accountId));
-
-    //   }
-    // })
   }
-  LoadDetails($event,item){
-    console.log(item);
-    this._accounts.GetAccountTypeDetails(item.id);
-  }
-  LoadOtherDetails($event,item){
-    this.AccountForm.controls.name.setValue(item.description);
-    this.AccountForm.controls.accountDetailTypeId.setValue(item.id);
-  }
+  // LoadDetails($event,item){
+  //   console.log(item);
+  //   this._accounts.GetAccountTypeDetails(item.id);
+  // }
+  // LoadOtherDetails($event,item){
+  //   this.AccountForm.controls.name.setValue(item.description);
+  //   this.AccountForm.controls.accountDetailTypeId.setValue(item.id);
+  // }
   showModal() {
+
     this.sharedService.openAccountsForm.next(null);
 
   }
@@ -161,14 +110,7 @@ export class AccountsComponent implements OnInit {
   }
   editAccount(data: AccountDTO) {
     this.sharedService.openAccountsForm.next(data);
-    // this.AccountForm.patchValue(data);
-    // this.AccountForm.controls.accountDetailTypeId.setValue(data.accountDetailTypeId);
-    // this.AccountForm.controls.accountTypeId.setValue(data.accountDetailType.accountTypeId);
-    // console.log(data);
-    // this.isEditMode = true;
-    // this.isVisible = true;
-    // this.showAccount = false;
-    // this.accountId=data.id;
+
   }
   handleCancel() {
     this.isVisible = false
@@ -186,13 +128,6 @@ export class AccountsComponent implements OnInit {
       this.saveAccount(data,formDirective);
     }
 
-
-    // if (!this.isEditMode) {
-    //   this.saveBankAccount(data, formDirective);
-    // }
-    // else {
-    //   this.updateBankAccount(data, formDirective);
-    // }
   }
   navigateUrl(data:AccountDTO){
     let id = data.id;
@@ -249,12 +184,7 @@ export class AccountsComponent implements OnInit {
     })
 
   }
-  // EditAccounting(){
-  //   this.showAccount = false;
-  // }
-  // DeleteAccounting(){
-  //   this.showAccount = false;
-  // }
+
   showSingleAccount(data: AccountDTO) {
     this.data = data
     this.showAccount = true;
