@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupDirective, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NzTableQueryParams } from 'ng-zorro-antd';
 import { AccountDetailTypeDTO, AccountDTO, AccountTypeDTO } from 'src/app/models/accountDTO';
@@ -28,7 +28,7 @@ class FilterObject {
   styleUrls: ['./accounts.component.scss']
 })
 export class AccountsComponent implements OnInit {
-
+  form: FormGroup;
   search: string
   listData: AccountDTO[] = []
   filterList:AccountDetailTypeDTO[]=[];
@@ -79,8 +79,31 @@ export class AccountsComponent implements OnInit {
       asOf:[null],
       openingBalanceEquity:[null]
     });
+    this.form = this.fb.group({
+      dateFrom: new FormControl(null),
+      dateTo: new FormControl(null),
+      branch: new FormControl(null),
+      isPdf: new FormControl(null),
+      isExcel: new FormControl(null)
+
+    });
 
   }
+  searchAddress: string;
+  // listData: Branch[];
+  nameList = [
+    { text: 'Export as PDF', value: 'PDF', checked: true },
+    { text: 'Export as Excel', value: 'Excel', checked: false }
+  ];
+
+
+  sortName = null;
+  sortValue = null;
+  listOfSearchName = [];
+
+  show = false;
+
+  chiplist = [];
 
   ngOnInit(): void {
     this.isloading=true;

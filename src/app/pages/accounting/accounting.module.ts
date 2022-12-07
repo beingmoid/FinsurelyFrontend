@@ -8,6 +8,8 @@ import { SharedModule } from 'src/app/shared.module';
 import { AccountingRulesComponent } from './accounting-rules/accounting-rules.component';
 import { AddAccountsComponent } from './add-accounts/add-accounts.component';
 import { StatementComponent } from './statement/statement.component';
+import {MatChipsModule} from '@angular/material/chips';
+
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import { StatementComponent } from './statement/statement.component';
   imports: [
     CommonModule,
     SharedModule,
-    AccountingRoutingModule
+    AccountingRoutingModule,
+    MatChipsModule
+
   ],
   exports:[AddAccountsComponent]
 })
