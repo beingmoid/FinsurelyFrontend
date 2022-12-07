@@ -59,7 +59,7 @@ export class SalesAgentDetailComponent implements OnInit {
   documentId:number;
   reconModal=false;
   reconcilationData:Subject<Reconcilation>= null;
-
+  openingBalance:any;
   customerSubject:Subscription;
   dateStatus='';
   salesAgentStatus='';
@@ -262,6 +262,7 @@ export class SalesAgentDetailComponent implements OnInit {
    })
     this.route.queryParams.subscribe(async params => {
       this.userDetailId = +params['salesAgent'] || 0;
+      this.openingBalance=+params['agentBalance']
 
       // redirect if userDetailId is null or undefined
       if (!this.userDetailId) {
