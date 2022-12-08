@@ -11,6 +11,7 @@ import { Payment } from '../models/refundDTO';
 export class SharedService {
 
   openAccountsForm = new Subject<AccountDTO>();
+  accountsIsVisible=false;
   bodyform = new Subject();
   vehicleForm = new Subject();
   serviceForm = new Subject();

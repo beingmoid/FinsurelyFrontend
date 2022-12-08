@@ -193,7 +193,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of statementList">
-                            <td>  {{data.num}} </td>
+                            <td> {{data.num}} </td>
                             <td> {{data.invoiceDate | date}} </td>
 
 
@@ -298,124 +298,131 @@
                 <div class="row mb-4">
 
                     <div class="col-xl-12">
-                        <mat-vertical-stepper  #stepper>
+                        <mat-vertical-stepper #stepper>
                             <mat-step [stepControl]="SearchForm.controls.from" [editable]="true" state="calendar">
-                              <form [formGroup]="SearchForm"  >
-                                <ng-template matStepLabel>Select your date range  </ng-template>
-                              {{this.SearchForm.value | json }}
-                                <mat-form-field appearance="fill" [formGroup]="SearchForm">
-                                    <mat-label>Enter a date range</mat-label>
-                                    <mat-date-range-input  [rangePicker]="picker13">
-                                      <input matStartDate formControlName="from" placeholder="Start date" (dateChange)="startChange($event)">
-                                      <input matEndDate formControlName="to" placeholder="End date" (dateChange)="endChange($event)">
-                                    </mat-date-range-input>
-                                    <mat-datepicker-toggle matSuffix [for]="picker13" ></mat-datepicker-toggle>
-                                    <mat-date-range-picker #picker13></mat-date-range-picker>
+                                <form [formGroup]="SearchForm">
+                                    <ng-template matStepLabel>Select your date range </ng-template>
+                                    {{this.SearchForm.value | json }}
+                                    <mat-form-field appearance="fill" [formGroup]="SearchForm">
+                                        <mat-label>Enter a date range</mat-label>
+                                        <mat-date-range-input [rangePicker]="picker13">
+                                            <input matStartDate formControlName="from" placeholder="Start date"
+                                                (dateChange)="startChange($event)">
+                                            <input matEndDate formControlName="to" placeholder="End date"
+                                                (dateChange)="endChange($event)">
+                                        </mat-date-range-input>
+                                        <mat-datepicker-toggle matSuffix [for]="picker13"></mat-datepicker-toggle>
+                                        <mat-date-range-picker #picker13></mat-date-range-picker>
 
-                                    <mat-error *ngIf="SearchForm.controls.from.hasError('matStartDateInvalid')">Invalid from date</mat-error>
-                                    <mat-error *ngIf="SearchForm.controls.to.hasError('matEndDateInvalid')">Invalid to date</mat-error>
-                                  </mat-form-field>
+                                        <mat-error *ngIf="SearchForm.controls.from.hasError('matStartDateInvalid')">
+                                            Invalid from date</mat-error>
+                                        <mat-error *ngIf="SearchForm.controls.to.hasError('matEndDateInvalid')">Invalid
+                                            to date</mat-error>
+                                    </mat-form-field>
 
-                                <div>
-                                  <button mat-button matStepperNext (click)="(SearchForm.controls.from.hasError('matStartDateInvalid') &&  SearchForm.controls.to.hasError('matEndDateInvalid'))?stepper.done():stepper">Next</button>
-                                </div>
-                              </form>
+                                    <div>
+                                        <button mat-button matStepperNext
+                                            (click)="(SearchForm.controls.from.hasError('matStartDateInvalid') &&  SearchForm.controls.to.hasError('matEndDateInvalid'))?stepper.done():stepper">Next</button>
+                                    </div>
+                                </form>
                             </mat-step>
                             <mat-step [stepControl]="SearchForm.controls.salesAgentId" [editable]="true" state="agent">
-                              <form [formGroup]="SearchForm">
-                                <ng-template matStepLabel> Select your sales agent for reconciliation </ng-template>
-                                <mat-form-field class="col-xl-4" [formGroup]="SearchForm" appearance="fill">
-                                    <mat-label>
-                                        Sales Agent
-                                    </mat-label>
+                                <form [formGroup]="SearchForm">
+                                    <ng-template matStepLabel> Select your sales agent for reconciliation </ng-template>
+                                    <mat-form-field class="col-xl-4" [formGroup]="SearchForm" appearance="fill">
+                                        <mat-label>
+                                            Sales Agent
+                                        </mat-label>
 
-                                    <input type="text" matInput formControlName="salesAgentId" placeholder="Type to select Sales Agent"
-                                        [matAutocomplete]="auto4">
-                                    <mat-autocomplete #auto4="matAutocomplete" [displayWith]="displaySalesAgent.bind(this)">
-                                        <!-- <button mat-button color="primary" class="add-button" (click)="showCustomerModal()"><mat-icon id="create">add</mat-icon>Add New Customer</button> -->
-                                        <mat-option *ngFor="let option of filtersalesAgents | async" [value]="option.id">
-                                            {{option.displayNameAs}}
-                                        </mat-option>
-                                    </mat-autocomplete>
-                                    <mat-error *ngIf="SearchForm.controls.salesAgentId?.hasError('required')">
-                                        Sales Agent is required
-                                    </mat-error>
-                                </mat-form-field>
+                                        <input type="text" matInput formControlName="salesAgentId"
+                                            placeholder="Type to select Sales Agent" [matAutocomplete]="auto4">
+                                        <mat-autocomplete #auto4="matAutocomplete"
+                                            [displayWith]="displaySalesAgent.bind(this)">
+                                            <!-- <button mat-button color="primary" class="add-button" (click)="showCustomerModal()"><mat-icon id="create">add</mat-icon>Add New Customer</button> -->
+                                            <mat-option *ngFor="let option of filtersalesAgents | async"
+                                                [value]="option.id">
+                                                {{option.displayNameAs}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                        <mat-error *ngIf="SearchForm.controls.salesAgentId?.hasError('required')">
+                                            Sales Agent is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <div>
+                                        <button mat-button matStepperPrevious>Back</button>
+                                        <button mat-button matStepperNext>Next</button>
+                                    </div>
+                                </form>
+                            </mat-step>
+                            <mat-step [stepControl]="SearchForm.controls.isFileUploaded" [editable]="true"
+                                state="upload">
+                                <form [formGroup]="SearchForm">
+                                    <ng-template matStepLabel> Upload your sales agent's sales report in excel format
+                                        for reconciliation </ng-template>
+                                    <nz-upload nzType="drag" [nzMultiple]="false" [nzAction]="uploadUrl"
+                                        (nzChange)="handleChange($event)" class="col-xl-4">
+                                        <p class="ant-upload-drag-icon">
+                                            <i nz-icon nzType="inbox"></i>
+                                        </p>
+                                        <p class="ant-upload-text">Click or drag file to this area to upload</p>
+                                        <p class="ant-upload-hint">
+                                            Support for a single or bulk upload. Strictly prohibit from uploading
+                                            company data or other band files
+                                        </p>
+                                    </nz-upload>
+                                    <div>
+                                        <input [hidden]="true" formControlName="isFileUploaded">
+                                        <button mat-button matStepperPrevious>Back</button>
+                                        <button mat-button matStepperNext>Next</button>
+                                    </div>
+                                </form>
+                            </mat-step>
+                            <mat-step [stepControl]="SearchForm.controls.isColumMapped" [editable]="true"
+                                state="compare">
+                                <form [formGroup]="SearchForm">
+
+
+                                    <ng-template matStepLabel> Do mapping of columns and let reconciliation be started
+                                    </ng-template>
+                                    <div>
+                                        <input [hidden]="true" formControlName="isColumMapped">
+                                        <button mat-button (click)="openReconModal()"> Configure mappings </button>
+                                        <button mat-button matStepperPrevious>Back</button>
+                                        <button mat-button matStepperNext>Next</button>
+                                    </div>
+                                </form>
+                            </mat-step>
+                            <mat-step>
+                                <ng-template matStepLabel>Done</ng-template>
+                                <p>Now are able to fetch report.</p>
                                 <div>
-                                  <button mat-button matStepperPrevious>Back</button>
-                                  <button mat-button matStepperNext>Next</button>
+                                    <button mat-button matStepperPrevious>Back</button>
+                                    <button mat-button (click)="submitReconcilation()">Fetch Report</button>
+                                    <button mat-button (click)="stepper.reset()">Reset</button>
                                 </div>
-                              </form>
-                            </mat-step>
-                            <mat-step [stepControl]="SearchForm.controls.isFileUploaded" [editable]="true" state="upload" >
-                                <form  [formGroup]="SearchForm">
-                                <ng-template matStepLabel> Upload your sales agent's sales report in excel format for reconciliation </ng-template>
-                                <nz-upload
-                                nzType="drag"
-                                [nzMultiple]="false"
-                                [nzAction]="uploadUrl"
-                                (nzChange)="handleChange($event)"
-                                 class="col-xl-4"
-                              >
-                                <p class="ant-upload-drag-icon">
-                                  <i nz-icon nzType="inbox"></i>
-                                </p>
-                                <p class="ant-upload-text">Click or drag file to this area to upload</p>
-                                <p class="ant-upload-hint">
-                                  Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
-                                </p>
-                              </nz-upload>
-                                <div>
-                                    <input [hidden]="true" formControlName="isFileUploaded">
-                                    <button mat-button matStepperPrevious>Back</button>
-                                    <button mat-button matStepperNext>Next</button>
-                                  </div>
-                                </form>
-                            </mat-step>
-                            <mat-step [stepControl]="SearchForm.controls.isColumMapped" [editable]="true" state="compare">
-                                <form [formGroup]="SearchForm" >
-
-
-                                <ng-template matStepLabel> Do mapping of columns and let reconciliation be started </ng-template>
-                                <div>
-                                    <input [hidden]="true" formControlName="isColumMapped">
-                                    <button mat-button (click)="openReconModal()"> Configure mappings </button>
-                                    <button mat-button matStepperPrevious>Back</button>
-                                    <button mat-button matStepperNext>Next</button>
-                                  </div>
-                                </form>
-                            </mat-step>
-                            <mat-step >
-                              <ng-template matStepLabel>Done</ng-template>
-                              <p>Now are able to fetch report.</p>
-                              <div>
-                                <button mat-button matStepperPrevious>Back</button>
-                                <button mat-button (click)="submitReconcilation()">Fetch Report</button>
-                                <button mat-button (click)="stepper.reset()">Reset</button>
-                              </div>
                             </mat-step>
 
-                            <ng-template matStepperIcon="calendar" filled >
+                            <ng-template matStepperIcon="calendar" filled>
                                 <mat-icon [inline]="true" style="color: white;">calendar_today</mat-icon>
-                              </ng-template>
-                              <ng-template matStepperIcon="agent" filled >
+                            </ng-template>
+                            <ng-template matStepperIcon="agent" filled>
                                 <mat-icon [inline]="true" style="color: white;">engineering</mat-icon>
-                              </ng-template>
-                              <ng-template matStepperIcon="upload" filled >
+                            </ng-template>
+                            <ng-template matStepperIcon="upload" filled>
                                 <mat-icon [inline]="true" style="color: white;">cloud_upload</mat-icon>
-                              </ng-template>
-                              <ng-template matStepperIcon="compare" filled >
+                            </ng-template>
+                            <ng-template matStepperIcon="compare" filled>
                                 <mat-icon [inline]="true" style="color: white;">compare</mat-icon>
-                              </ng-template>
-                              <ng-template matStepperIcon="done" filled  >
+                            </ng-template>
+                            <ng-template matStepperIcon="done" filled>
                                 <mat-icon>done</mat-icon>
-                              </ng-template>
+                            </ng-template>
 
-                          </mat-vertical-stepper >
+                        </mat-vertical-stepper>
                     </div>
 
                 </div>
-<!-- Report -->
+                <!-- Report -->
                 <div class="row" *ngIf="ReconReport">
 
                     <div class="col-xl-12">
@@ -423,8 +430,8 @@
                         <div class="card">
                             <div class="card-header bg-alice-blue">
                                 <div class="col-xl-4 d-flex justify-content-start" *ngIf="includeLogo">
-                                    <img src="assets/images/panorama-logo1.png" class="mb-2" style="padding: 0 !important;"
-                                        width="100px" alt="Icon" />
+                                    <img src="assets/images/panorama-logo1.png" class="mb-2"
+                                        style="padding: 0 !important;" width="100px" alt="Icon" />
                                 </div>
                                 <div class="d-flex justify-content-center " *ngIf="includeName">
                                     <div class="text-gray text-center font-size-24">
@@ -443,22 +450,28 @@
                                 </div>
                                 <div class="d-flex justify-content-start">
                                     <div class="text-gray text-center font-size-16">
-                                        Reconcilation for : <span class="font-weight-bold"> {{this.reconcilationReport?.salesAgent?.displayNameAs}}</span>
+                                        Reconcilation for : <span class="font-weight-bold">
+                                            {{this.reconcilationReport?.salesAgent?.displayNameAs}}</span>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start">
                                     <div class="text-gray text-center font-size-16">
-                                        As per following document: <span class="font-weight-bold"> <a [href]="this.reconcilationReport?.documents?.blobURI"> {{this.reconcilationReport?.documents?.blobFileName}} </a></span>
+                                        As per following document: <span class="font-weight-bold"> <a
+                                                [href]="this.reconcilationReport?.documents?.blobURI">
+                                                {{this.reconcilationReport?.documents?.blobFileName}} </a></span>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start">
                                     <div class="text-gray text-center font-size-16">
-                                        Generated Date:  <span class="font-weight-bold">{{this.reconcilationReport?.generatedDate | date}}</span>
+                                        Generated Date: <span
+                                            class="font-weight-bold">{{this.reconcilationReport?.generatedDate |
+                                            date}}</span>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start">
                                     <div class="text-gray text-center font-size-16">
-                                        Number of Sales Policy Missing:  <span class="font-weight-bold"> {{this.reconcilationReport?.noOfSalesMissing | number}}</span>
+                                        Number of Sales Policy Missing: <span class="font-weight-bold">
+                                            {{this.reconcilationReport?.noOfSalesMissing | number}}</span>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start">
@@ -472,20 +485,20 @@
                                 </div>
                                 <div class="d-flex justify-content-start">
                                     <div class="text-gray  text-center font-size-16">
-                                       Color guide:
+                                        Color guide:
                                     </div>
                                 </div>
-                             <div class="d-flex justify-content-start">
-                                <span class="font-weight-bold mt-2 mr-2">  Unmatched data </span>
-                                <span class="box-yellow mr-2">
+                                <div class="d-flex justify-content-start">
+                                    <span class="font-weight-bold mt-2 mr-2"> Unmatched data </span>
+                                    <span class="box-yellow mr-2">
 
-                                </span>
-                                <span class="font-weight-bold mt-2 mr-2"> Empty Cell </span>
+                                    </span>
+                                    <span class="font-weight-bold mt-2 mr-2"> Empty Cell </span>
 
-                                <span class="box-red mr-2">
+                                    <span class="box-red mr-2">
 
-                                </span>
-                             </div>
+                                    </span>
+                                </div>
 
                             </div>
                             <div class="card-body  bg-alice-blue">
@@ -514,8 +527,9 @@
 
                                           </tbody>
                                       </table> -->
-                                        <nz-table class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small" #filterTable
-                                            [nzData]="reconcilationReport.statement" [nzNoResult]="null" [nzFooter]="null">
+                                        <nz-table class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small"
+                                            #filterTable [nzData]="reconcilationReport.statement" [nzNoResult]="null"
+                                            [nzFooter]="null">
                                             <thead>
                                                 <tr>
 
@@ -531,24 +545,49 @@
                                                     <th> CREDIT </th>
                                                     <th> AMOUNT </th>
                                                     <th> BALANCE </th>
-                                                    <th> STATUS  </th>
+                                                    <th> STATUS </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let data of filterTable.data; let i = index;">
 
-                                                    <td [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }"> {{data.invoiceDate | date}} </td>
-                                                    <td [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">{{ data.name }}</td>
-                                                    <td [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }"> {{data.policyNumber}} </td>
-                                                    <td [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }"> {{data.vehicle}} </td>
-                                                    <td [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }"> {{data.transactionRefNumber}} </td>
-                                                    <td [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }"> {{data.insuranceType }} </td>
-                                                    <td [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }"> {{data.memo}} </td>
-                                                    <td [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }"> {{data.debit==0?'':data.debit}} </td>
-                                                    <td [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }"> {{data.credit==0?'':data.credit}} </td>
-                                                    <td [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }"> {{data.amount}} </td>
-                                                    <td [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }"> {{data.balance}} </td>
-                                                    <td [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }"> <img [src]="data?.rejected==false?'assets/images/approve-icon.png':'assets/images/reject-icon.png'" width="30"/> </td>
+                                                    <td
+                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                        {{data.invoiceDate | date}} </td>
+                                                    <td
+                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                        {{ data.name }}</td>
+                                                    <td
+                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                        {{data.policyNumber}} </td>
+                                                    <td
+                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                        {{data.vehicle}} </td>
+                                                    <td
+                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                        {{data.transactionRefNumber}} </td>
+                                                    <td
+                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                        {{data.insuranceType }} </td>
+                                                    <td
+                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                        {{data.memo}} </td>
+                                                    <td
+                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                        {{data.debit==0?'':data.debit}} </td>
+                                                    <td
+                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                        {{data.credit==0?'':data.credit}} </td>
+                                                    <td
+                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                        {{data.amount}} </td>
+                                                    <td
+                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                        {{data.balance}} </td>
+                                                    <td
+                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                        <img [src]="data?.rejected==false?'assets/images/approve-icon.png':'assets/images/reject-icon.png'"
+                                                            width="30" /> </td>
 
 
 
@@ -639,7 +678,7 @@
 </ng-template>
 <ng-template #ReconcardTitle>
     <div class="font-size-24">
-        Reconcilation Process     <i nz-icon nzType="reconciliation" nzTheme="outline" style="color: #109CF1;"></i>
+        Reconcilation Process <i nz-icon nzType="reconciliation" nzTheme="outline" style="color: #109CF1;"></i>
     </div>
 </ng-template>
 <ng-template #basicDetails>
@@ -702,10 +741,10 @@
     </nz-modal>
 </div>
 <div class="add-account-modal-div">
-    <nz-modal nzFooter="null" nzWidth="1800" [(nzVisible)]="reconModal" nzMaskClosable="false" [nzTitle]="ReconcardTitle"
-        (nzOnCancel)="reconHandleCancel()">
+    <nz-modal nzFooter="null" nzWidth="1800" [(nzVisible)]="reconModal" nzMaskClosable="false"
+        [nzTitle]="ReconcardTitle" (nzOnCancel)="reconHandleCancel()">
 
-       <app-reconcile [fileUrl]="fileUrl" [Agent]="Agent"></app-reconcile>
+        <app-reconcile [fileUrl]="fileUrl" [Agent]="Agent"></app-reconcile>
     </nz-modal>
 </div>
 

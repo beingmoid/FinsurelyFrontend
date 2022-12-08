@@ -1,3 +1,4 @@
+
 <div class="add-account-modal-div">
     <nz-modal nzFooter="null" nzWidth="700" [(nzVisible)]="isVisible" nzMaskClosable="false"
         [nzTitle]="isEditMode ? 'Update Account':'Create New Account'" (nzOnCancel)="handleCancel()">
@@ -8,7 +9,7 @@
                 <mat-form-field class="form-group col-xl-6">
                     <mat-label>Account Type</mat-label>
                     <mat-select formControlName="accountTypeId" >
-                        <mat-option *ngFor="let item of accountTypes" [value]="item.id"
+                        <mat-option *ngFor="let item of this.accountTypesObserver$ | async" [value]="item.id"
                         (onSelectionChange)="LoadDetails($event, item)"
                         >{{item.name}}</mat-option>
                     </mat-select>
@@ -21,7 +22,7 @@
                 <mat-form-field class="form-group col-xl-6">
                     <mat-label>Account Detail Type</mat-label>
                     <mat-select formControlName="accountDetailTypeId">
-                        <mat-option *ngFor="let item of filterList"
+                        <mat-option *ngFor="let item of this.accountDetailTypeObserver$ | async"
                         
                         (onSelectionChange)="LoadOtherDetails($event, item)"
                         [value]="item.id">

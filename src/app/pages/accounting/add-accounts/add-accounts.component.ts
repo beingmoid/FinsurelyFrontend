@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { AccountDetailTypeDTO, AccountDTO, AccountTypeDTO } from 'src/app/models/accountDTO';
 import { BankAccountDTO } from 'src/app/models/bankAccountDTO';
 import { AlertService } from 'src/app/services/alert.service';
@@ -40,11 +40,13 @@ export class AddAccountsComponent implements OnInit {
   sortColumnKey: string;
   listDataCopy: string;
   pageSize: number = 10;
-
+accountTypesObserver$:Observable<any>;
+accountDetailTypeObserver$:Observable<any>;
   showAccount: boolean = false;
   get f() { return this.AccountForm.controls }
   get ifSubAccount(){ return this.f.isSubAccount.value as boolean}
   // get subAccount()
+  formObserver$:Observable<any>;
   constructor(
     private fb: FormBuilder,
     private _notification: AlertService,
@@ -54,7 +56,12 @@ export class AddAccountsComponent implements OnInit {
     // private bankAccountService: BankAccountService,
     // public _permissionService: PermissionService
   ) {
-    this.AccountForm = fb.group({
+
+
+  }
+
+  async ngOnInit(): Promise<void> {
+    this.AccountForm = this.fb.group({
       id: [0],
       accountId: [null],
       accountTypeId:[null,Validators.required],
@@ -67,10 +74,11 @@ export class AddAccountsComponent implements OnInit {
       asOf:[null],
       openingBalanceEquity:[null]
     });
-
-  }
-
-  ngOnInit(): void {
+    this.formObserver$=this.sharedService.openAccountsForm.asObservable();
+    this.accountDetailTypeObserver$=this._accounts.accountDetailObserver$;
+    this.accountTypesObserver$=this._accounts.accountTypeObserver$;
+    await this._accounts.GetAccountTypes();
+    
     this.sharedService.openAccountsForm.subscribe(res=>{
       if(res){
         this.editAccount(res);
@@ -79,52 +87,10 @@ export class AddAccountsComponent implements OnInit {
         this.isVisible=true;
       }
     })
-    this._accounts.accountObserver$.subscribe(res=>{
-      if(res){
-        this.listData = res;
-        console.log('Res',res);
-      }
-    });
-    this._accounts.GetAccountsPaginated(1,10);
-    this._accounts.accountTypeObserver$.subscribe(res=>{
-
-      console.log('response',res);
-      this.accountTypes=res;
-
-    });
-    this._accounts.GetAccountTypes();
-
-    this._accounts.accountDetailObserver$.subscribe(res=>{
-      if(res){
-        this.filterList = res;
-        console.log('Res',res);
-      }
-    });
+  
     
     
-    // this.lookupService.bankAccountTypeObserver$.subscribe(res => {
-    //   if (res)
-    //     this.bankAccountTypes = res
-    // })
-    // // this.lookupService.getBankAccountTypes()
-
-    // this.bankAccountService.GetBankAccounts();
-    // this.bankAccountService.bankAccountsObserver$.subscribe(res => {
-    //   if (res) {
-    //     this.listData = res;
-    //     let index = 0;
-    //     this.listData.forEach(element => {
-    //       element.index = index + 1;
-    //       index++;
-    //     });
-    //     this.listDataCopy = JSON.stringify(this.listData);
-
-    //     let accountId = history.state.accountId;
-    //     if (accountId)
-    //       this.showSingleAccount(this.listData.find(p => p.id == accountId));
-
-    //   }
-    // })
+    
   }
   LoadDetails($event,item){
     console.log(item);
@@ -174,6 +140,7 @@ export class AddAccountsComponent implements OnInit {
     }
     else{
       this.saveAccount(data,formDirective);
+     
     }
 
    
@@ -205,7 +172,7 @@ export class AddAccountsComponent implements OnInit {
       if (res.isSuccessfull) {
         formDirective.resetForm();
         this.isVisible = false;
-        this._accounts.GetAccounts();
+    
         this._notification.success("Account Updated Successfully");
       } else {
         this._notification.error("Error while updating account!")

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { Router } from '@angular/router';
+import { Memoize } from 'src/app/directives/memoize.decorator';
 import { UserDetailDTO } from 'src/app/models/userDTO';
 import { CustomerService } from 'src/app/services/APIServices/customer.service';
 import { SalesAgentService } from 'src/app/services/APIServices/sales-agent.service';
@@ -41,14 +42,7 @@ export class ViewSalesAgentComponent implements OnInit {
       this._shared.formSubmited.subscribe(res=>{
         this.isVisible=false;
       });
-      this.form = this.fb.group({
-        dateFrom: new FormControl(null),
-        dateTo: new FormControl(null),
-        branch: new FormControl(null),
-        isPdf: new FormControl(null),
-        isExcel: new FormControl(null)
-  
-      })
+
 
   }
   searchAddress: string;
@@ -93,6 +87,14 @@ export class ViewSalesAgentComponent implements OnInit {
     this.isVisible = false
   }
   ngOnInit(): void {
+    this.form = this.fb.group({
+      dateFrom: new FormControl(null),
+      dateTo: new FormControl(null),
+      branch: new FormControl(null),
+      isPdf: new FormControl(null),
+      isExcel: new FormControl(null)
+
+    })
     this._service.salesAgentObserver$.subscribe(res=>{
       this.totalPayable=0;
       if(res){
@@ -138,12 +140,12 @@ export class ViewSalesAgentComponent implements OnInit {
       });
     }
   }
-
+  @Memoize()
   showSingleSalesAgent(data: UserDetailDTO) {
 
     let id = data.id;
     if (id) {
-      this._router.navigate(['sales-agent/view'], { queryParams: { salesAgent: id } })
+      this._router.navigate(['sales-agent/view'], { queryParams: { salesAgent: id,agentBalance:data.openBalance } })
     }
   }
 }
