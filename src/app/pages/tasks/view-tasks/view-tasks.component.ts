@@ -6,8 +6,12 @@ import { AlertService } from 'src/app/services/alert.service';
 import { TaskService } from 'src/app/services/APIServices/task.service';
 import { PermissionService } from 'src/app/services/permission.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+
+
 
 class FilterObject {
+
   constructor(private data: CaseTaskDTO) { }
   index: number = this.data.index;
   taskName: string = this.data.taskName;
@@ -39,17 +43,66 @@ export class ViewTasksComponent implements OnInit, OnDestroy {
   listDataCopy: string;
   pageSize: number = 10;
   sub: Subscription;
+  form: FormGroup;
 
   constructor(private _notification: AlertService, 
     private _taskService: TaskService, 
     private _sharedService: SharedService, 
     public _permissionService: PermissionService ,
     private route: Router ,
-    private ActivateRoute: ActivatedRoute) {
+    private ActivateRoute: ActivatedRoute,
+    private fb: FormBuilder) {
     this._taskService.isViewed.subscribe(x => {
       this.loadData();
     });
+    this.form = this.fb.group({
+      dateFrom: new FormControl(null),
+      dateTo: new FormControl(null),
+      branch: new FormControl(null),
+      isPdf: new FormControl(null),
+      isExcel: new FormControl(null)
+
+    })
   }
+
+  searchAddress: string;
+  // listData: Branch[];
+  nameList = [
+    { text: 'Export as PDF', value: 'PDF', checked: true },
+    { text: 'Export as Excel', value: 'Excel', checked: false }
+  ];
+
+  data = [
+    {
+      name: 'John Brown',
+      age: 32,
+      address: 'New York No. 1 Lake Park'
+    },
+    {
+      name: 'Jim Green',
+      age: 42,
+      address: 'London No. 1 Lake Park'
+    },
+    {
+      name: 'Joe Black',
+      age: 32,
+      address: 'Sidney No. 1 Lake Park'
+    },
+    {
+      name: 'Jim Red',
+      age: 32,
+      address: 'London No. 2 Lake Park'
+    }
+  ];
+  displayData = [...this.data];
+  sortName = null;
+  sortValue = null;
+  listOfSearchName = [];
+
+  show = false;
+
+  chiplist = [];
+
 
   ngOnInit(): void {
     this.loadData();

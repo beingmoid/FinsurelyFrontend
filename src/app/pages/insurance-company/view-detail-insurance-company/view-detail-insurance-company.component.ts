@@ -1,5 +1,5 @@
 import { Component, DoCheck, OnChanges, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DOC_ORIENTATION, NgxImageCompressService } from 'ngx-image-compress';
 import { Subject } from 'rxjs/internal/Subject';
@@ -46,6 +46,7 @@ comissions:ComissionRates[]=[];
   report:AccountsReceviableReport;
   statement:Statement[]=[];
   paymentModal=false;
+
   constructor(private _router: Router,
     private _sharedService:SharedService,
     private route: ActivatedRoute,
@@ -67,8 +68,55 @@ comissions:ComissionRates[]=[];
         rates:[null],
         isActive:[null]
       });
+      this.form = this.fb.group({
+        dateFrom: new FormControl(null),
+        dateTo: new FormControl(null),
+        branch: new FormControl(null),
+        isPdf: new FormControl(null),
+        isExcel: new FormControl(null)
+  
+      })
 
     }
+
+  searchAddress: string;
+  // listData: Branch[];
+  nameList = [
+    { text: 'Export as PDF', value: 'PDF', checked: true },
+    { text: 'Export as Excel', value: 'Excel', checked: false }
+  ];
+
+  data = [
+    {
+      name: 'John Brown',
+      age: 32,
+      address: 'New York No. 1 Lake Park'
+    },
+    {
+      name: 'Jim Green',
+      age: 42,
+      address: 'London No. 1 Lake Park'
+    },
+    {
+      name: 'Joe Black',
+      age: 32,
+      address: 'Sidney No. 1 Lake Park'
+    },
+    {
+      name: 'Jim Red',
+      age: 32,
+      address: 'London No. 2 Lake Park'
+    }
+  ];
+  displayData = [...this.data];
+  sortName = null;
+  sortValue = null;
+  listOfSearchName = [];
+
+  show = false;
+
+  chiplist = [];
+
     showModal(){
       this._sharedService.sentPaymentForm.next(null);
     }

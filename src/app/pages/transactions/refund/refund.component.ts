@@ -3,6 +3,8 @@ import { Subject } from 'rxjs/internal/Subject';
 import { Payment, Refund } from 'src/app/models/refundDTO';
 import { RefundServiceService } from 'src/app/services/APIServices/refund-service.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+
 class FilterObject {
   constructor(private data: Payment) { }
 
@@ -13,14 +15,62 @@ class FilterObject {
   styleUrls: ['./refund.component.scss']
 })
 export class RefundComponent implements OnInit {
+  form: FormGroup;
 
   constructor(private sharedService:SharedService,
-    private refundService:RefundServiceService) {
+    private refundService:RefundServiceService, private fb: FormBuilder) {
 
     this.sharedService.closeForm.subscribe(res=>{
       this.modalView=false;
     });
+    this.form = this.fb.group({
+      dateFrom: new FormControl(null),
+      dateTo: new FormControl(null),
+      branch: new FormControl(null),
+      isPdf: new FormControl(null),
+      isExcel: new FormControl(null)
+
+    })
    }
+
+   searchAddress: string;
+   // listData: Branch[];
+   nameList = [
+     { text: 'Export as PDF', value: 'PDF', checked: true },
+     { text: 'Export as Excel', value: 'Excel', checked: false }
+   ];
+ 
+   data = [
+     {
+       name: 'John Brown',
+       age: 32,
+       address: 'New York No. 1 Lake Park'
+     },
+     {
+       name: 'Jim Green',
+       age: 42,
+       address: 'London No. 1 Lake Park'
+     },
+     {
+       name: 'Joe Black',
+       age: 32,
+       address: 'Sidney No. 1 Lake Park'
+     },
+     {
+       name: 'Jim Red',
+       age: 32,
+       address: 'London No. 2 Lake Park'
+     }
+   ];
+   displayData = [...this.data];
+   sortName = null;
+   sortValue = null;
+   listOfSearchName = [];
+ 
+   show = false;
+ 
+   chiplist = [];
+
   observerRefund:Subject<Refund> = new Subject<Refund>();
   search:string;
   isVisible=false;
