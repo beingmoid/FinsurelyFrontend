@@ -16,6 +16,8 @@ import { SalesService } from 'src/app/services/APIServices/sales.service';
 import { InsuranceType } from 'src/app/models/insuranceTypeDTO';
 import { AccountDTO } from 'src/app/models/accountDTO';
 import { AccountsService } from 'src/app/services/APIServices/accounts.service';
+import { RefundServiceService } from 'src/app/services/APIServices/refund-service.service';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-add-refund',
@@ -33,13 +35,16 @@ insuranceCompanys:UserDetailDTO[]=[];
 paymentMethod:PaymentMethod[];
 filteredInsuranceCompanies:Observable<UserDetailDTO[]>;
 filterPolicyType:Observable<PolicyType[]>;
+filterAccounts:Observable<AccountDTO[]>
 PolicyType:PolicyType[];
 isEditMode=false;
 insuranceTypeSelect:InsuranceType[]=[];
 Accounts:AccountDTO[];
   constructor(private fb:FormBuilder,
+    private refundService:RefundServiceService,
     private SalesAgentService:SalesAgentService,
     private insuranceService:InsuranceCompanyService,
+    private alert:AlertService,
     private PolicyTypeService:PolicyTypeService,
     private service:SalesService,
     private accountsService:AccountsService) {
@@ -57,6 +62,7 @@ Accounts:AccountDTO[];
       policyNumber:[null,Validators.required],
       insuranceCompanyId:[null,Validators.required],
       policyTypeId:[null,Validators.required],
+      accountId:[null,Validators.required]
 
     });
    }
@@ -103,6 +109,13 @@ Accounts:AccountDTO[];
       this.insuranceTypeSelect=res as InsuranceType[];
     });
     this.service.GetInsuranceTypes();
+    this.filterAccounts= this.form.controls.accountId.valueChanges.pipe(
+    
+      startWith(''),
+        map(value => typeof value === 'string' ? value : value),
+      map(address => address ? this._filterAccounts(address) : this.Accounts?.slice())
+  
+    );
     this.filterPolicyType= this.form.controls.policyTypeId.valueChanges.pipe(
 
       startWith(''),
@@ -133,7 +146,26 @@ Accounts:AccountDTO[];
 
 
   submitForm(form:FormGroupDirective){
+    console.log(form);
+    let refund = this.form.value as Refund;
+    this.refundService.CreateRefund(refund).subscribe(res=>{
+      if(res.isSuccessfull){
+        this.alert.success("Refund Succesfully Added")
+      }
+    });    if(!form.dirty){
 
+      console.log('working step#1')
+ 
+        if(refund){
+                console.log('working step#2')
+         
+        }
+        else{
+          this.alert.warn("User input error!");
+        }
+    }
+    else
+      return;
   }
 
 
@@ -152,7 +184,12 @@ Accounts:AccountDTO[];
 
 
   //#region utilities
+  displayAccounts(id) {
 
+    if(this.Accounts && id){
+      return this.Accounts.find(x=>x.id===id).name;
+    }
+  }
   displayCompanyFn(id) {
 
     if(this.insuranceCompanys && id){
@@ -178,6 +215,9 @@ Accounts:AccountDTO[];
       return this.salesAgents.find(x=>x.id===id).displayNameAs;
     }
     // return this.insuranceCompanys? this.insuranceCompanys.filter(x=>x.id==id).displayNameAs:undefined;
+  }
+  private _filterAccounts(value: string) {
+    return this.Accounts? this.Accounts?.filter(option => option.name?.toLowerCase().includes(value?value.toString().toLowerCase():"")):[];
   }
 
   private _filterSalesAgent(value: string) {

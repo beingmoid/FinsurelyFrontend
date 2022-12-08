@@ -46,7 +46,7 @@
                         Payment Due
                     </div>
                     <div class="font-size-24 text-gray-5">
-                        {{this.paymentDue}} AED
+                        {{this.openingBalance}} AED
                     </div>
                 </div>
                 <div class="col-xl-2">
@@ -66,7 +66,7 @@
 <div class="row">
     <div class="col-xl-12">
     <div class="card col-xl-12 user-tabs ribbon--alpha">
-        {{this.dateAndFilters.value | json}}
+  
         <button nz-button nzType="secondary" (click)="DownloadPDF()">Download PDF Statement</button>
         <nz-tabset class="" nzSize="large">
 

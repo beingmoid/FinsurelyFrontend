@@ -28,7 +28,7 @@ class FilterObject {
   styleUrls: ['./accounts.component.scss']
 })
 export class AccountsComponent implements OnInit {
-  form: FormGroup;
+  
   search: string
   listData: AccountDTO[] = []
   filterList:AccountDetailTypeDTO[]=[];
@@ -84,8 +84,15 @@ export class AccountsComponent implements OnInit {
   show = false;
 
   chiplist = [];
-
+  form: FormGroup;
   ngOnInit(): void {
+    this.form= this.fb.group({
+      dateFrom:new FormControl(null),
+      dateTo:new FormControl(null),
+      branch:new FormControl(null),
+      isPdf:new FormControl(null),
+    isExcel:new FormControl(null) 
+     });
     this.isloading=true;
     this._accounts.accountObserver$.subscribe(res=>{
       if(res){
