@@ -153,6 +153,12 @@ const routes: Routes = [
         loadChildren: () =>
           import('src/app/pages/reports/reports.module').then(m => m.ReportsModule),
       },
+      {
+        path: 'service',
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+        import('src/app/pages/service/service.module').then(m => m.ServiceModule),
+      }
     ],
   },
   {

@@ -1,0 +1,54 @@
+<div class="row">
+
+  <div class="col-xl-2 breadcrumbs mb-3">
+    <strong>{{name}}</strong>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xl-12">
+    <button nz-button nzType="primary" (click)="openModal()">Add Service</button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xl-12">
+    <div>
+      <nz-table [nzData]="list" [nzLoading]="isLoaded" #rowSelectionTable [nzPageSize]="pageSize" nzShowSizeChanger>
+
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Actions</th>
+
+          </tr>
+
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of rowSelectionTable.data ; index as i">
+            <td>{{i}}</td>
+            <td>{{item?.name}}</td>
+            <td><i nz-icon nzType="edit" nz-tooltip nzTooltipTitle="Edit Contact"
+                (click)="$event.stopPropagation(editService(item))" nzTheme="fill" class="text-success"
+               ></i>
+
+              <nz-divider nzType="vertical"></nz-divider>
+
+              <i nz-icon nzType="delete" nz-tooltip nzTooltipTitle="Delete Contact"
+                (click)="$event.stopPropagation(deleteService(item))" nzTheme="fill" class="text-danger"
+               ></i>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+
+</div>
+
+<nz-modal nzWidth="1000" [(nzVisible)]="isVisible" (nzOnCancel)="closeModal()">
+
+  <app-add-service [inputServiceObserver]="service">
+
+  </app-add-service>
+</nz-modal>
