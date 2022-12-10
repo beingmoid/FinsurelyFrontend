@@ -20,7 +20,7 @@ export class AddServiceComponent implements OnInit {
   policyType: PolicyType[];
   filteredPolicyType: Observable<PolicyType[]>;
   id = 0;
-  service:Service;
+  service: Service;
   constructor(private fb: FormBuilder, private _service: PolicyTypeService, private _alertService: AlertService, private _sharedService: SharedService, private _serviceService: ServiceService) { }
 
   ngOnInit(): void {
@@ -29,20 +29,17 @@ export class AddServiceComponent implements OnInit {
         policyTypeId: [null],
         name: [null, Validators.required],
       }
-    ) 
+    )
 
-if(this.inputServiceObserver){
-  console.log('first',this.inputServiceObserver);
-  this.inputServiceObserver.subscribe((res)=>{
-    console.log('second',res)
-    if(res){
-      console.log('third', res)
-      this.service=res;
-      this.form.patchValue(res);
-      this.id=res.id;
+    if (this.inputServiceObserver) {
+      this.inputServiceObserver.subscribe((res) => {
+        if (res) {
+          this.service = res;
+          this.form.patchValue(res);
+          this.id = res.id;
+        }
+      })
     }
-  })
-}
 
     this._service.PolicyTypeObserver$.subscribe((res) => {
       this.policyType = res as PolicyType[];
@@ -50,7 +47,7 @@ if(this.inputServiceObserver){
     );
 
     this._service.GetPolicyType();
- 
+
     this.filteredPolicyType = this.form.controls.policyTypeId.valueChanges.pipe(
       startWith(''),
       map(value => typeof value === 'string' ? value : value),
@@ -69,16 +66,15 @@ if(this.inputServiceObserver){
     }
   }
   onSubmit(formDirective: FormGroupDirective) {
-    debugger;
     var data = this.form.value as Service;
     // data.id=parseInt(this.id) ;
     if (this.form.invalid) {
       return;
     }
     else {
-      if(this.id>0){
-        data.id=this.id;
-        this._serviceService.UpdateService(this.id ,data).subscribe((res) => {
+      if (this.id > 0) {
+        data.id = this.id;
+        this._serviceService.UpdateService(this.id, data).subscribe((res) => {
           if (res.isSuccessfull) {
             formDirective.resetForm();
             this._alertService.success('Policy Type Updated Successfully.');
@@ -87,7 +83,7 @@ if(this.inputServiceObserver){
           }
         })
       }
-      else{
+      else {
         data.id = 0;
         this._serviceService.SaveService(data).subscribe((res) => {
           if (res.isSuccessfull) {
@@ -98,7 +94,7 @@ if(this.inputServiceObserver){
           }
         })
       }
-     
+
     }
   }
 
