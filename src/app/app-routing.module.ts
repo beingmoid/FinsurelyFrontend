@@ -74,7 +74,7 @@ const routes: Routes = [
         canActivate:[AuthGuard],
         loadChildren:()=> import('src/app/pages/reports/reports.module').then(m=>m.ReportsModule),
       },
-   
+
       {
         path: 'calendar',
         canActivate: [AuthGuard],
@@ -196,7 +196,7 @@ const routes: Routes = [
       useHash: true,
       preloadingStrategy: AppPreloader,
     }),
-    
+
   ],
   providers: [AppPreloader],
   exports: [RouterModule],
