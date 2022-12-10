@@ -1,12 +1,13 @@
 <div class="row">
 
-  <div class="col-xl-2 breadcrumbs mb-3">
+  <div class="col-xl-4 breadcrumbs mb-3">
     <strong>{{name}}</strong>
   </div>
 </div>
+
 <div class="row">
   <div class="col-xl-12">
-    <button nz-button nzType="primary" (click)="openModal()">Add Service</button>
+    <button nz-button nzType="primary" class="float-right mb-3" (click)="openModal()">Add Service</button>
   </div>
 </div>
 
@@ -46,7 +47,7 @@
 
 </div>
 
-<nz-modal nzWidth="1000" [(nzVisible)]="isVisible" (nzOnCancel)="closeModal()">
+<nz-modal nzWidth="1000" [(nzVisible)]="isVisible" (nzOnCancel)="closeModal()" [nzTitle]="isEditMode?'Update Service':'Add New Service' ">
 
   <app-add-service [inputServiceObserver]="service">
 

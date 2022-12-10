@@ -18,10 +18,11 @@ export class ViewServiceComponent implements OnInit {
   isLoaded = true;
   pageSize = 20;
   isVisible = false;
-  service:Subject<Service>=new Subject();
+  isEditMode = false;
+  service: Subject<Service> = new Subject();
 
   serviceObserver$: Observable<Service[]>
-  constructor(private _service: ServiceService, private _sharedService: SharedService, private _alertService:AlertService) {
+  constructor(private _service: ServiceService, private _sharedService: SharedService, private _alertService: AlertService) {
 
   }
 
@@ -45,23 +46,30 @@ export class ViewServiceComponent implements OnInit {
 
   openModal() {
     this.isVisible = true;
+    this.isEditMode= false;
   }
   closeModal() {
     this.isVisible = false;
   }
-  editService(data){
+  editService(data) {
     console.log(data)
-this.service.next(data);
-this.isVisible=true;
+    this.service.next(data);
+    this.isVisible = true;
+    this.isEditMode =true;
   }
-  deleteService(data){
-this._service.DeleteService(data.id).subscribe((res)=>{
-  if(res.isSuccessfull){
-
-    this._alertService.success('Service SuccessFully Deleted');
-    this._service.GetService();
-  }
-});
+  deleteService(data) {
+    this._alertService.confirm('Are you sure you want to delete this?').then((res)=>{
+      if(res.isConfirmed){
+        this._service.DeleteService(data.id).subscribe((res) => {
+          if (res.isSuccessfull) {
+    
+            this._alertService.success('Service SuccessFully Deleted');
+            this._service.GetService();
+          }
+        });
+      }
+    })
+  
   }
 
 }
