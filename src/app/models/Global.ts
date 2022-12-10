@@ -79,5 +79,6 @@ export const API_ENDPOINTS = {
     BenefitAndDeduction:'api/BenefitsAndDeduction',
     EmployeeBenefitsAndDeductions:'api/BenefitsAndDeduction/EmployeeBenefitsAndDeductions',
     BankDetails:'api/BankDetails',
-    Branch:'api/Branch'
+    Branch:'api/Branch',
+    ExpenseCategory:'api/ExpenseCategory',
 }

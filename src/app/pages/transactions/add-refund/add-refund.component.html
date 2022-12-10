@@ -10,6 +10,7 @@
 
   </div>
 </div>
+{{this.form.value | json}}
   <form
     [formGroup]="form"
     (ngSubmit)="submitForm(formDirective)"
@@ -210,8 +211,23 @@
         Refunded Amount To Sales Agent is required
       </mat-error>
     </mat-form-field>
-  </form>
-  <div class="flex">
+    <mat-form-field class="col-xl-4"  >
+      <mat-label> Credit Account </mat-label>
+      <input type="text" matInput formControlName="AccountId"
+          placeholder="Type to select credit account" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayAccounts.bind(this)">
+          <!-- <button mat-button color="primary" class="add-button" (click)="showCustomerModal()"><mat-icon id="create">add</mat-icon>Add New Customer</button> -->
+          <mat-option *ngFor="let option of filterAccounts | async" [value]="option.id">
+              {{option.name}} | {{option.description}}
+          </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="form.controls.accountId?.hasError('required')">
+          Credit Account is required
+      </mat-error>
+  </mat-form-field>
+    <div class="flex">
       <button nz-button nzType="primary" type="submit"> {{isEditMode?'Update Refund Transaction':'Issue a new Refund Transaction'}} </button>
   </div>
+  </form>
+
 

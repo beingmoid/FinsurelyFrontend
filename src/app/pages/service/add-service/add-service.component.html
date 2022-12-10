@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="row">
+        <!-- {{this.form.value | json}} -->
+        <form [formGroup]="form" (ngSubmit)="onSubmit(formDirective)" novalidate #formDirective="ngForm"
+            class="col-xl-12">
+
+            <mat-form-field class="col-xl-12">
+                <mat-label>
+                    Policy Type
+                </mat-label>
+                <input type="text" [matAutocomplete]="auto" matInput placeholder="Policy Type"
+                    formControlName="policyTypeId">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayPolicyType.bind(this)">
+                    <mat-option [value]="item.id"
+                        *ngFor="let item of filteredPolicyType | async">{{item.name}}</mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field class="col-xl-12">
+                <mat-label>
+                    Name
+                </mat-label>
+                <input type="text" matInput placeholder="Service Name" formControlName="name">
+            </mat-form-field>
+
+            <div class="text-center">
+                <button nz-button nzType="primary" class="" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

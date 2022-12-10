@@ -24,8 +24,8 @@ export class ServiceService extends GenericApiService {
     return this.Post(data, API_URL + API_ENDPOINTS.Service);
   }
 
-  UpdateService(data: Service) {
-    return this.Update(data.id, data, API_URL + API_ENDPOINTS.Service);
+  UpdateService(id, data: Service) {
+    return this.Update(id.toString(), data, API_URL + API_ENDPOINTS.Service);
   }
 
   GetService() {
