@@ -42,6 +42,7 @@ comissions:ComissionRates[]=[];
   form2:FormGroup;
   tpl:string;
   nonTpl:string;
+  openingBalance:number;
   // customerObserverSubject:Subject<UserDetailDTO> = new Subject();
   report:AccountsReceviableReport;
   statement:Statement[]=[];
@@ -74,7 +75,7 @@ comissions:ComissionRates[]=[];
         branch: new FormControl(null),
         isPdf: new FormControl(null),
         isExcel: new FormControl(null)
-  
+
       })
 
     }
@@ -123,6 +124,8 @@ comissions:ComissionRates[]=[];
  async ngOnInit(): Promise<void> {
     this.route.queryParams.subscribe(async params => {
       this.userDetailId  =await +params['salesAgent'] || 0;
+
+
       this._sharedService.formSubmited.subscribe(async x=> {
         this.isVisible=false;
         await this.service.GetSaleAgentDetail(this.userDetailId).subscribe(res=>{
@@ -145,6 +148,10 @@ comissions:ComissionRates[]=[];
         this._router.navigate(['/sales-agent'])
       } else {
         //
+
+        this.service.GetBalance(this.userDetailId).subscribe(res=>{
+          this.openingBalance=res.dynamicResult.balance
+        });
         this.service.GetRates(this.userDetailId).subscribe(res=>{
           if(res){
             this.comissions= res.dynamicResult as ComissionRates[];

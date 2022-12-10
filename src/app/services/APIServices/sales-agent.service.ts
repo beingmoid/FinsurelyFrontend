@@ -28,7 +28,7 @@ export class SalesAgentService extends GenericApiService {
   private salesAgentStatementSubject:BehaviorSubject<any[]> = new BehaviorSubject<any[]>(undefined);
 
   constructor(private http: HttpClient) {
-    super(http) 
+    super(http)
     this.salesAgentSelectListObserver$=this.salesAgentSelectListSubject.asObservable();
     this.salesAgentObserver$=this.salesAgentSubject.asObservable();
     this.preferredPaymentMethodtObserver$=this.preferredPaymentMethodSubject.asObservable();
@@ -42,7 +42,7 @@ export class SalesAgentService extends GenericApiService {
       if(res.dynamicResult){
         this.salesAgentSelectListSubject.next(res.dynamicResult)
       }
-    
+
     });
   }
 
@@ -98,6 +98,9 @@ export class SalesAgentService extends GenericApiService {
   GetSalesAgentStatement(agentId,pageNo,pageSize)
   {
     return this.GetAll(API_URL+API_ENDPOINTS.SalesAgent+`/statement?Id=${agentId}&page=${pageNo}&itemsPerPage=${pageSize}`);
+  }
+  GetBalance(id){
+    return this.GetAll(API_URL+API_ENDPOINTS.SalesAgent+"/GetBalance?id="+id);
   }
 
 }

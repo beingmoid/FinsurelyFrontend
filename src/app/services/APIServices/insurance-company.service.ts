@@ -28,7 +28,7 @@ export class InsuranceCompanyService extends GenericApiService {
 
 
   constructor(private http: HttpClient) {
-    super(http) 
+    super(http)
     this.salesAgentSelectListObserver$=this.salesAgentSelectListSubject.asObservable();
     this.salesAgentObserver$=this.salesAgentSubject.asObservable();
     this.preferredPaymentMethodtObserver$=this.preferredPaymentMethodSubject.asObservable();
@@ -69,6 +69,9 @@ export class InsuranceCompanyService extends GenericApiService {
      this.GetAll(API_URL+API_ENDPOINTS.Comissionrate).subscribe(res=>{
       this.ComissionSubject.next(res.dynamicResult);
     });
+  }
+  GetBalance(id){
+    return this.GetAll(API_URL+API_ENDPOINTS.InsuranceCompany+"/GetBalance?id="+id);
   }
   saveComissionRate(data){
     return this.Post(data,API_URL+API_ENDPOINTS.Comissionrate);

@@ -46,7 +46,7 @@
                         Payment Due
                     </div>
                     <div class="font-size-24 text-gray-5">
-                        {{this.openingBalance}} AED
+                        {{this.openingBalance | thousandSuff}} AED
                     </div>
                 </div>
                 <div class="col-xl-2">
@@ -80,7 +80,7 @@
                     <div class="col-xl-2 "></div>
                     <div class="col-xl-6 ">
                       <div class="w-20 mb-3" id="SearchFiltr">
-                  
+
                         <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
                           <input type="search" nz-input placeholder="input search text" />
                         </nz-input-group>
@@ -94,7 +94,7 @@
                           <div>
                             <ul class="dropdown-menu" *ngIf="show">
                               <form [formGroup]="form">
-                               
+
                                 <li>
                                   <mat-form-field appearance="fill">
                                     <mat-label>Enter a date range</mat-label>
@@ -104,7 +104,7 @@
                                     </mat-date-range-input>
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-date-range-picker #picker></mat-date-range-picker>
-                  
+
                                   </mat-form-field>
                                 </li>
                                 <li>
@@ -134,36 +134,36 @@
                                     </label>
                                   </div>
                                 </li>
-                  
+
                               </form>
                             </ul>
                           </div>
-                  
+
                         </div>
                       </div>
                       <mat-chip-list aria-label="Fish selection">
-                  
+
                         <mat-chip *ngIf="this.form.value.dateFrom"> From {{this.form.value.dateFrom | date }} To {{this.form.value.dateTo | date }}  <mat-icon matChipRemove>cancel</mat-icon> </mat-chip>
-                  
+
                         <mat-chip *ngIf="this.form.value.branch">{{this.form.value.branch }} <mat-icon matChipRemove>cancel</mat-icon></mat-chip>
                         <mat-chip *ngIf="this.form.value.isPdf">Export PDF <mat-icon matChipRemove>cancel</mat-icon></mat-chip>
                         <mat-chip *ngIf="this.form.value.isExcel">Export Excel <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
                       </mat-chip-list>
                     </div>
-                  
-                  
+
+
                   </div>
 
-<!-- 
+<!--
               <div class="right" (click)="DownloadXCL()" nz-tooltip nzTooltipTitle="Download Excel Statement">
                 <img src="assets/images/sheets.png" height="30" width="30" />
 
               </div> -->
-                <nz-table class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small" 
+                <nz-table class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small"
                  [nzNoResult]="noData" nzShowSizeChanger [nzPageSize]="pageSize"
-                 
-      
+
+
                     [nzFooter]="tableFooter" [nzLoading]="loading">
                     <thead>
                         <tr>
