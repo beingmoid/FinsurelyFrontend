@@ -93,14 +93,8 @@ const routes: Routes = [
         loadChildren: () =>
           import('src/app/pages/accounting/accounting.module').then(m => m.AccountingModule),
       },
-      // {
-      //   path: 'expense',
-      //   canActivate: [AuthGuard],
-      //   loadChildren: () =>
-      //     import('src/app/pages/expense/expense.module').then(m => m.ExpenseModule),
-      // },
       {
-        path: 'team',
+        path: 'expenses',
         canActivate: [AuthGuard],
         loadChildren: () =>
           import('src/app/pages/expenses/expenses.module').then(m => m.ExpensesModule),
