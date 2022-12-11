@@ -25,6 +25,17 @@
 
             </mat-form-field>
             <mat-form-field class="col-xl-4" [formGroup]="SalesForm" appearance="fill">
+                <mat-label>
+                    Chassis#
+                </mat-label>
+
+                <input type="text" matInput formControlName="chassisNumber" placeho`lder="Input Chassis#"
+                    >
+
+
+
+            </mat-form-field>
+            <mat-form-field class="col-xl-4" [formGroup]="SalesForm" appearance="fill">
 
                 <mat-label>
                     Insurance Company
@@ -160,53 +171,13 @@
                 <input type="text" matInput  formControlName="commission"  placeholder="Comission%">
 
             </mat-form-field>
-            <!-- <mat-form-field class="col-xl-4"  [formGroup]="saleLine"appearance="fill" >
-                <mat-label>
-                    Comission Rate
-                </mat-label>
-                <input type="text" matInput [readonly]="true" formControlName="commissionRate"  placeholder="Comission Rates">
-
-            </mat-form-field> -->
-            <!-- <mat-form-field class="col-xl-4" [formGroup]="saleLine" appearance="fill" >
-                <mat-label>
-                    NET
-                </mat-label>
-                <input type="text" matInput [readonly]="true" formControlName="net" placeholder="NET Rate"  >
-            </mat-form-field>
-            <mat-form-field class="col-xl-4" [formGroup]="saleLine" appearance="fill" >
-                <mat-label>
-                    VAT
-                </mat-label>
-                <input type="text" matInput [readonly]="true" formControlName="vat"  placeholder="VAT Charges">
-            </mat-form-field>
-            <mat-form-field class="col-xl-4" [formGroup]="saleLine" appearance="fill">
-                <mat-label>
-                    Total Price without vat
-                </mat-label>
-                <input type="text" matInput [readonly]="true"   formControlName="total" >
-
-            </mat-form-field> -->
-
             <mat-form-field class="col-xl-4" [formGroup]="saleLine" appearance="fill">
                 <mat-label>
                     Sales Price
                 </mat-label>
                 <input type="text" matInput  formControlName="salesPrice" placeholder="Enter Sales Price">
             </mat-form-field>
-            <!-- <mat-form-field class="col-xl-4"  appearance="fill">
-                <mat-label>
-                   Amount Payable to Insurance Company
-                </mat-label>
-                <input type="text" matInput [readonly]="true"   [formControl]="AmountPayable" >
 
-            </mat-form-field>
-            <mat-form-field class="col-xl-4"  appearance="fill">
-                <mat-label>
-                   Amount Receviable from Sales Agent
-                </mat-label>
-                <input type="text" matInput [readonly]="true"   [formControl]="AmountReceviable" >
-
-            </mat-form-field>-->
 
             <mat-form-field class="col-xl-4" [formGroup]="saleLine" appearance="fill">
                 <mat-label>

@@ -15,7 +15,7 @@ export class AddServiceComponent implements OnInit {
 
   constructor(private fb:FormBuilder,private service:ServiceService,
     private sharedService:SharedService,
-    private alert:AlertService) { 
+    private alert:AlertService) {
 
     this.form=this.fb.group({
       policyTypeId:[null,Validators.required],
@@ -28,7 +28,7 @@ export class AddServiceComponent implements OnInit {
   get f(){return this.form as FormGroup};
   ngOnInit(): void {
   }
-  
+
 
 
   OnSubmit(form:FormGroupDirective){
@@ -38,7 +38,7 @@ export class AddServiceComponent implements OnInit {
     this.SaveService(form);
   }
 
-  
+
   SaveService(form:FormGroupDirective){
     var data = this.form.value as Service;
     this.service.SaveService(data).subscribe(res=>{
@@ -54,6 +54,6 @@ export class AddServiceComponent implements OnInit {
         this.alert.error('Error while saving ..!');
       }
     })
-    
+
   }
 }
