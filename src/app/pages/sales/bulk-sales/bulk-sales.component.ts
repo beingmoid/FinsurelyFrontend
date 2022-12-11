@@ -5,6 +5,7 @@ import { map, startWith } from 'rxjs/operators';
 import { BodyType, PolicyType, Service } from 'src/app/models/bodyType';
 import { Branch } from 'src/app/models/branchDTO';
 import { InsuranceType } from 'src/app/models/insuranceTypeDTO';
+import { PaymentMethod } from 'src/app/models/preferredPaymentMethodDTO';
 import { Vehicle } from 'src/app/models/TransactionsDTO';
 import { UserDetailDTO } from 'src/app/models/userDTO';
 import { BodytypeService } from 'src/app/services/APIServices/bodytype.service';
@@ -38,7 +39,7 @@ export class BulkSalesComponent implements OnInit {
 
   formGroups:FormGroup[]=[];
   vehicle: Vehicle[];
-  paymentMethod: import("i:/Finsurely/Afnan/afnaninsurancefrontend/src/app/models/preferredPaymentMethodDTO").PaymentMethod[];
+  paymentMethod: PaymentMethod[];
   branch: Branch[];
   BodyType: BodyType[];
   PolicyType: PolicyType[];
@@ -80,36 +81,36 @@ export class BulkSalesComponent implements OnInit {
         startWith(''),
           map(value => typeof value === 'string' ? value : value),
         map(address => address ? this._filterPolicyType(address) : this.PolicyType?.slice())
-    
+
       );
       this.filteredBodyType= value.controls.bodyTypeId.valueChanges.pipe(
-    
+
         startWith(''),
           map(value => typeof value === 'string' ? value : value),
         map(address => address ? this._filterBodyType(address) : this.BodyType?.slice())
-    
+
       );
       this.filterService= value.controls.serviceId.valueChanges.pipe(
-    
+
         startWith(''),
           map(value => typeof value === 'string' ? value : value),
         map(address => address ? this._filterService(address) : this.Service?.slice())
-    
+
       );
       this.filterPolicyType= value.controls.insuranceCompanyId.valueChanges.pipe(
-    
+
         startWith(''),
           map(value => typeof value === 'string' ? value : value),
         map(address => address ? this._filterBodyType(address) : this.BodyType?.slice())
-    
+
       );
-    
-    
+
+
     });
 
       //#endregion
 
-   
+
       //#region API Calls
       this.SalesAgentService.GetSalesAgents();
     this.insuranceService.salesAgentSelectListObserver$.subscribe(res=>{
@@ -118,9 +119,9 @@ export class BulkSalesComponent implements OnInit {
     });
 
 
- 
 
-      this.insuranceService.GetSalesAgents();
+
+      this.insuranceService.GetSalesAgents();``
   this.service.insuraceTypeObserver$.subscribe(res=>{
     this.insuranceTypeSelect=res as InsuranceType[];
   });
@@ -284,7 +285,7 @@ export class BulkSalesComponent implements OnInit {
     }
   }
   //#endregion
- 
+
   private _filterInsuranceCompany(value: string) {
     if(value)
       return this.insuranceCompanies? this.insuranceCompanies?.filter(option => option.displayNameAs?.toLowerCase().includes(value.toString().toLowerCase())):[];
