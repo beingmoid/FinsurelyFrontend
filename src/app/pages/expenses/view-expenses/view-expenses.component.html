@@ -1,1 +1,128 @@
-<p>view-expenses works!</p>
+<div class="row">
+
+  <div class="col-xl-2 breadcrumbs mb-3">
+    <strong>Expenses</strong>
+  </div>
+  <div class="col-xl-4 "></div>
+  <div class="col-xl-6 ">
+    <div class="w-20 mb-3" id="SearchFiltr">
+
+      <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+        <input type="search" nz-input placeholder="input search text" />
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="primary" nzSearch><span nz-icon nzType="search"></span></button>
+      </ng-template>
+      <div class="SearchWithFilter dropdown-container ">
+        <a class="dropdown-toggle click-dropdown" (click)="show=!show">
+          <span nz-icon nzType="filter" nzTheme="outline"></span>
+        </a>
+        <div>
+          <ul class="dropdown-menu" *ngIf="show">
+            <form [formGroup]="form">
+
+              <li>
+                <mat-form-field appearance="fill">
+                  <mat-label>Enter a date range</mat-label>
+                  <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate formControlName="dateFrom" placeholder="Start date">
+                    <input matEndDate formControlName="dateTo" placeholder="End date">
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker></mat-date-range-picker>
+
+                </mat-form-field>
+              </li>
+              <li>
+                <label for="date">Branch</label> <br>
+                <select class="form-select" formControlName="branch" aria-label="">
+                  <option value="0" selected="">Ajman</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </li>
+              <li class="mt-2">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked
+                    formControlName="isPdf">
+                  <label class="form-check-label" for="flexCheckDefault" style="font-size: 15px;">
+                    Export as PDF
+                  </label>
+                </div>
+              </li>
+              <li>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"
+                    formControlName="isExcel">
+                  <label class="form-check-label" for="flexCheckChecked" style="font-size: 15px;">
+                    Export as Excel
+                  </label>
+                </div>
+              </li>
+
+            </form>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+    <mat-chip-list aria-label="Fish selection">
+
+      <mat-chip *ngIf="this.form.value.dateFrom"> From {{this.form.value.dateFrom | date }} To {{this.form.value.dateTo
+        | date }} <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+
+      <mat-chip *ngIf="this.form.value.branch">{{this.form.value.branch }} <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <mat-chip *ngIf="this.form.value.isPdf">Export PDF <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <mat-chip *ngIf="this.form.value.isExcel">Export Excel <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+
+
+</div>
+
+
+
+<div class="row mb-4">
+
+  <div class="col-xl-12 ">
+    <a nz-button class="float-right mt-2" nzType="primary" (click)="showModal()">Add
+      Branch</a>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-xl-4">
+      <div class="card">
+          <div class="card-body d-flex flex-wrap justify-content-between align-items-start bg-alice-blue">
+              <div class="">
+                  <div class="clr-blue f-22 fw-400">Expenses</div>
+                  <div class="clr-blue fw-600 f-50">500K AED</div>
+                  <div class="f-18 clr-black fw-300">Analytics for this month</div>
+              </div>
+              <div class="my-auto mx-0">
+                  <img src="assets/images/cards/Expense accounts.png" width="70px" alt="Icon" />
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="col-xl-4">
+    <div class="card">
+        <div class="card-body d-flex flex-wrap justify-content-between align-items-start bg-alice-blue">
+            <div class="">
+                <div class="clr-blue f-22 fw-400">Payroll</div>
+                <div class="clr-blue fw-600 f-50">20,500K AED</div>
+                <div class="f-18 clr-black fw-300">Analytics for this month</div>
+            </div>
+            <div class="my-auto mx-0">
+                <img src="assets/images/cards/payroll.png" width="70px" alt="Icon" />
+            </div>
+        </div>
+    </div>
+</div>
+  </div>
