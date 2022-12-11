@@ -1,39 +1,120 @@
-<div class="row">
-    <button nz-button class="btn-primary">
-        Add New Form
-    </button>
-    
-</div>
+<ng-container *ngFor="let form of formGroups; let i = index;">
 
-{{this.formGroup.value | json }}
-
-<div class="row" >
-
-
-<div class="col-xl-12">
-    <form [formGroup]="formGroup">
-       
-        <mat-form-field class="col-xl-4"  appearance="fill">
+<div>
+  <div class="height-50 d-flex flex-column head" style="background-image: url('assets/images/content/stars.jpg')">
+    <div class="card-header card-header-flex border-bottom-0">
+      <div class="d-flex flex-column justify-content-center">
+        <h5 class="mb-0 text-white">Create new Innsurance Policy Invoice</h5>
+      </div>
+      <div class="ml-auto d-flex flex-column justify-content-center">
+        <div class="dropdown d-inline-block">
+          <button class="btn btn-primary ant-btn-primary" (click)="AddFormGroup()" style="box-shadow: none !important;">
+            <span> <i class="fa fa-plus"></i></span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="mt-auto mb-3">
+      <div class="text-white font-size-24 font-weight-bold pl-4">Sales Policy Entry# {{i+1}}</div>
+    </div>
+  </div>
+  <div class="card card-borderless">
+    <div class="card-header border-bottom-0">
+      <div class="d-flex mb-1">
+        <div class="text-dark text-uppercase font-weight-bold mr-auto">New Policy</div>
+   {{form.value | json }}
+      </div>
+    </div>
+       <div class="card-body">
+        <form [formGroup]="form">
+          <mat-form-field class="col-xl-4" [formGroup]="this.saleLineItem(form)" >
             <mat-label>
                 Policy Number
             </mat-label>
-            <input type="text" matInput formControlName="policyNumber" placeholder="Policy number">
-            <mat-error *ngIf="formGroup.controls.policyNumber?.hasError('required')">
-                Policy Number is required
-            </mat-error>
+            <input type="text" matInput formControlName="policyNumber"  placeholder="Policy number">
+            <mat-error *ngIf="this.saleLineItem(form).policyNumber?.hasError('required')">
+              Policy Number is required
+          </mat-error>
         </mat-form-field>
-        <mat-form-field class="col-xl-4"  appearance="fill">
-            <mat-label>
-                Customer
-            </mat-label>
-            <input type="text" matInput formControlName="customerName" placeholder="Customer Name">
-            <mat-error *ngIf="formGroup.controls.customerName?.hasError('required')">
+        <mat-form-field class="col-xl-4" >
+          <mat-label>
+              Customer Name
+          </mat-label>
+
+          <input type="text" matInput formControlName="customerName" placeholder="Input Customer Name"
+              >
+              <mat-error *ngIf="this.saleLineItem(form).customerName?.hasError('required')">
                 Customer Name is required
             </mat-error>
-        </mat-form-field>
 
-      
-    </form>
-</div>
+
+      </mat-form-field>
+        <mat-form-field class="col-xl-4">
+          <mat-label>
+              Chassis#
+          </mat-label>
+
+          <input type="text" matInput formControlName="chassisNumber" placeholder="Input Chassis#"
+              >
+
+
+
+      </mat-form-field>
+      <mat-form-field class="col-xl-4">
+
+        <mat-label>
+            Insurance Company
+        </mat-label>
+
+        <input type="text" matInput formControlName="insuranceCompanyId"
+            placeholder="Type to select Insurance Company" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayCompanyFn.bind(this)">
+          <mat-option disabled> Please type something to find relevant results</mat-option>
+            <mat-option *ngFor="let option of filteredInsuranceCompanies | async" [value]="option.id">
+                {{option.displayNameAs}}
+            </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="this.saleLineItem(form).insuranceCompanyId?.hasError('required')">
+            Insurance Company is required
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="col-xl-4">
+      <mat-label>
+       Insurance Type
+      </mat-label>
+      <mat-select formControlName="insuranceTypeId" placeholder="Select Insurance Type" (selectionChange)="getCommissionRates($event)">
+
+          <mat-option *ngFor="let item of insuranceTypeSelect" [value]="item.id">
+              {{item.name}}
+          </mat-option>
+      </mat-select>
+      <mat-error *ngIf="this.saleLineItem(form).insuranceTypeId?.hasError('required')">
+          Insurance Type is required
+      </mat-error>
+  </mat-form-field>
+  <mat-form-field class="col-xl-4">
+    <mat-label>
+        Policy Type
+    </mat-label>
+    <mat-select formControlName="policyTypeId" (selectionChange)="onPolicyTypeSelection($event)">
+        <mat-option [value]="item.id" *ngFor="let item of this.PolicyType  ">
+
+            {{item.name}}
+        </mat-option>
+    </mat-select>
+<mat-error *ngIf="this.saleLineItem(form).vehicleId?.hasError('required')">
+    Policy Type is required
+</mat-error>
+</mat-form-field>
+
+        </form>
+      </div>
+  </div>
 
 </div>
+</ng-container>
+
+
+
+
+

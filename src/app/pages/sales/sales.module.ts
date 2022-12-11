@@ -14,6 +14,7 @@ import { AddServiceComponent } from './add-service/add-service.component';
 import { SalesDirectoryComponent } from './sales-directory/sales-directory.component';
 import { BulkSalesComponent } from './bulk-sales/bulk-sales.component';
 import {MatChipsModule} from '@angular/material/chips';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 
@@ -21,14 +22,15 @@ import {MatChipsModule} from '@angular/material/chips';
 @NgModule({
   declarations: [ViewSalesComponent, AddSalesComponent, AddVehicleComponent, AddBodyTypeComponent, AddServiceComponent, SalesDirectoryComponent, BulkSalesComponent],
   imports: [
-    
- 
+
+
     SalesRoutingModule,
     InsuranceCompanyModule,
     CustomerModule,
     CommonModule,
     SharedModule,
-    MatChipsModule
+    MatChipsModule,
+
   ],
   exports:[AddVehicleComponent]
 })
