@@ -35,9 +35,9 @@ export class BulkSalesComponent implements OnInit {
 
   insuranceTypeSelect:InsuranceType[]=[];
 
-  salesAgents:UserDetailDTO[];
+  salesAgents:UserDetailDTO[] ;
 
-  formGroups:FormGroup[]=[];
+  formGroups:FormGroup[]=[] ;
   vehicle: Vehicle[];
   paymentMethod: PaymentMethod[];
   branch: Branch[];
