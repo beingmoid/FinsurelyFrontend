@@ -20,7 +20,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of rowSelectionTable.data" >
+              <tr *ngFor="let item of list" >
                 <td>{{item.name}}</td>
               
               </tr>
@@ -30,5 +30,5 @@
   </div>
 
   <nz-modal nzWidth="1000" [(nzVisible)]="isVisible" (nzOnCancel)="closeModal()" >
-<app-add-expense-category ></app-add-expense-category>
+<app-add-expense-category></app-add-expense-category>
   </nz-modal>

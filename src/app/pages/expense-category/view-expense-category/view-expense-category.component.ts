@@ -29,6 +29,7 @@ list :ExpenseCategory[];
 this._service.ExpenseCategoryObserver$.subscribe((res)=>{
   this.list= res as ExpenseCategory[];
 })
+this._service.GetExpenseCategory();
     this._sharedService.formSubmited.subscribe((res)=>{
       this.isVisible = false;
     })

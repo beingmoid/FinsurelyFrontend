@@ -1,0 +1,57 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xl-12">
+
+            {{ form.value | json }}
+
+            <form [formGroup]="form" novalidate #formDirective="ngForm" class="col-xl-12"
+                (ngSubmit)="onSubmit(formDirective)">
+
+                <mat-form-field class="col-xl-4">
+                    <mat-label>Name</mat-label>
+                    <input type="text " matInput placeholder="Enter Name" formControlName="name">
+                </mat-form-field>
+
+                <mat-form-field class="col-xl-4">
+                    <mat-label>Branch</mat-label>
+                    <input type="text" matInput [matAutocomplete]="auto" formControlName="branchId" placeholder="Select Branch">
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayBranchType.bind(this)">
+                        <mat-option [value]="item.id"
+                        *ngFor="let item of filterBranchType | async">{{item.branchName}}</mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+                <mat-form-field class="col-xl-4">
+                    <mat-label>Start date</mat-label>
+                    <input type="date" matInput formControlName="startDate">
+                </mat-form-field>
+
+                <mat-form-field class="col-xl-4">
+                    <mat-label>End Date</mat-label>
+                    <input type="date" matInput formControlName="endDate">
+                </mat-form-field>
+
+                <mat-form-field class="col-xl-4">
+                    <mat-label>Status</mat-label>
+                    <input type="" matInput formControlName="status">
+                </mat-form-field>
+
+                <mat-form-field class="col-xl-4">
+                    <mat-label>Salary</mat-label>
+                    <input type="number" matInput placeholder="Enter Salary" formControlName="salary">
+                </mat-form-field>
+                <mat-form-field class="col-xl-4">
+                    <mat-label>Total Paid For This Year</mat-label>
+                    <input type="number" matInput placeholder="Enter Amount" formControlName="totalPaidForThisYear">
+                </mat-form-field>
+
+
+                <div class="text-center">
+                    <button nz-button nzType="primary" class="" type="submit">Submit</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>

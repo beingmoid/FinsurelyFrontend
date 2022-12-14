@@ -72,8 +72,11 @@ export class AddServiceComponent implements OnInit {
       return;
     }
     else {
+
+
       if (this.id > 0) {
         data.id = this.id;
+      
         this._serviceService.UpdateService(this.id, data).subscribe((res) => {
           if (res.isSuccessfull) {
             formDirective.resetForm();
@@ -85,6 +88,7 @@ export class AddServiceComponent implements OnInit {
       }
       else {
         data.id = 0;
+        
         this._serviceService.SaveService(data).subscribe((res) => {
           if (res.isSuccessfull) {
             formDirective.resetForm();

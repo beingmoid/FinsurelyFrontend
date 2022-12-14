@@ -1,5 +1,7 @@
 <div class="container">
     <div class="row">
+{{form.value | json}}
+
         <form [formGroup]="form" class="col-xl-12" (ngSubmit)="onSubmit(formDirective)" novalidate #formDirective="ngForm">
             
             <mat-form-field class="col-xl-12">
