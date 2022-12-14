@@ -78,7 +78,7 @@ accountDetailTypeObserver$:Observable<any>;
     this.accountDetailTypeObserver$=this._accounts.accountDetailObserver$;
     this.accountTypesObserver$=this._accounts.accountTypeObserver$;
     await this._accounts.GetAccountTypes();
-    
+
     this.sharedService.openAccountsForm.subscribe(res=>{
       if(res){
         this.editAccount(res);
@@ -87,10 +87,10 @@ accountDetailTypeObserver$:Observable<any>;
         this.isVisible=true;
       }
     })
-  
-    
-    
-    
+
+
+
+
   }
   LoadDetails($event,item){
     console.log(item);
@@ -140,10 +140,10 @@ accountDetailTypeObserver$:Observable<any>;
     }
     else{
       this.saveAccount(data,formDirective);
-     
+
     }
 
-   
+
     // if (!this.isEditMode) {
     //   this.saveBankAccount(data, formDirective);
     // }
@@ -154,7 +154,7 @@ accountDetailTypeObserver$:Observable<any>;
 
   saveAccount(data: AccountDTO, formDirective: FormGroupDirective) {
     data.id = 0;
-  
+
     this._accounts.SaveAccount(data).subscribe(res => {
       if (res.isSuccessfull) {
         formDirective.resetForm();
@@ -172,7 +172,7 @@ accountDetailTypeObserver$:Observable<any>;
       if (res.isSuccessfull) {
         formDirective.resetForm();
         this.isVisible = false;
-    
+
         this._notification.success("Account Updated Successfully");
       } else {
         this._notification.error("Error while updating account!")
@@ -192,7 +192,7 @@ accountDetailTypeObserver$:Observable<any>;
           else{
             this._notification.error('Error while deleting account!')
           }
-          
+
         });
       } else {
         return;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { forkJoin, merge, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { BodyType, PolicyType, Service } from 'src/app/models/bodyType';
 import { Branch } from 'src/app/models/branchDTO';
@@ -30,7 +30,33 @@ export class BulkSalesComponent implements OnInit {
   filterPolicyType:Observable<PolicyType[]>;
   filteredBodyType:Observable<BodyType[]>;
   filterService:Observable<Service[]>;
+  filterSalesAgent:Observable<UserDetailDTO[]>;
+  filterVehicle:Observable<Vehicle[]>;
+  filterBranch:Observable<Branch[]>;
   //endRegions
+
+  isVisible=false;
+  isVisible2=false;
+  isVisible3=false;
+
+  showModal(){
+    this.isVisible=true;
+  }
+  showModal2(){
+    this.isVisible2=true;
+  }
+  showModal3(){
+    this.isVisible3=true;
+  }
+  handleCancel(){
+    this.isVisible=false;
+  }
+  handleCancel2(){
+    this.isVisible2=false;
+  }
+  handleCancel3(){
+    this.isVisible3=false;
+  }
 
 
   insuranceTypeSelect:InsuranceType[]=[];
@@ -104,24 +130,93 @@ export class BulkSalesComponent implements OnInit {
         map(address => address ? this._filterBodyType(address) : this.BodyType?.slice())
 
       );
+      this.filterSalesAgent= value.controls.salesInvoicePersonId.valueChanges.pipe(
+
+        startWith(''),
+          map(value => typeof value === 'string' ? value : value),
+        map(address => address ? this._filterSalesAgent(address) : this.salesAgents?.slice())
+
+      );
+        this.filterVehicle=((this.saleLineItem(value).controls['vehilcleId']) as FormControl).valueChanges.pipe(
+
+          startWith(''),
+          map(value => typeof value === 'string' ? value : value),
+          map(address => address ? this._filterVehicle(address) : this.vehicle?.slice())
+        );
+
+        this.filterBranch=value.controls.branchId.valueChanges.pipe(
+
+          startWith(''),
+          map(value => typeof value === 'string' ? value : value),
+          map(make => make ? this._filterBranch(make) : this.branch?.slice())
+        );
+        let valueItem=(this.saleLineItem(value) as FormGroup);
+
+       let grossObservable$= valueItem.controls.gross.valueChanges;
+        let commissionObservable$=valueItem.controls.commission.valueChanges;
+
+      merge([grossObservable$,commissionObservable$]).subscribe(results=>{
+
+        console.log(results);
+        console.log((this.saleLineItem(value).controls.commission.value),this.saleLineItem(value).controls.gross.value)
+
+
+
+
+
+
+
+
+      });
+
+        (this.saleLineItem(value).controls.commission as FormControl).valueChanges.subscribe(res=>{
+
+
+          console.log(res);
+          let commission=  parseFloat((this.saleLineItem(value).controls.commission.value))/100;
+          console.log(commission);
+          let premiumPrice = parseFloat(this.saleLineItem(value).controls.gross.value);
+          if(premiumPrice>0){
+            let PriceWithoutvat = premiumPrice/1.05;
+            console.log('Price without VAT',PriceWithoutvat)
+
+            let commisionRate = PriceWithoutvat*commission;
+            // let VAT = (commisionRate*0.05); Ahmed Calculation
+            let VAT = premiumPrice-PriceWithoutvat;
+            this.saleLineItem(value).controls.vat.setValue(VAT.toFixed(2));
+            console.log('VAT',VAT)
+            this.saleLineItem(value).controls.commissionRate.setValue(commisionRate.toFixed(2));
+            console.log('COMMISSION RATE',commisionRate.toFixed(2));
+            let NET =((PriceWithoutvat-commisionRate)+VAT).toFixed(2);
+            console.log('NET',NET);
+
+            this.saleLineItem(value).controls.net.setValue(NET);
+
+            this.saleLineItem(value).controls.total.setValue(PriceWithoutvat.toFixed(2));
+          }
+        });
+        // end of call back
+
+
 
 
     });
+
+
 
       //#endregion
 
 
       //#region API Calls
+      this.SalesAgentService.salesAgentSelectListObserver$.subscribe(res=>{
+        this.salesAgents=res;
+      });
       this.SalesAgentService.GetSalesAgents();
     this.insuranceService.salesAgentSelectListObserver$.subscribe(res=>{
       this.insuranceCompanies=res;
       console.log(this.insuranceCompanies);
     });
-
-
-
-
-      this.insuranceService.GetSalesAgents();``
+      this.insuranceService.GetSalesAgents();
   this.service.insuraceTypeObserver$.subscribe(res=>{
     this.insuranceTypeSelect=res as InsuranceType[];
   });
@@ -140,6 +235,7 @@ export class BulkSalesComponent implements OnInit {
       this.branch= res as Branch[];
     }
   });
+  this.BranchService.GetBranch();
   this.BodyTypeService.bodyTypeObserver$.subscribe(res=>{
     this.BodyType = res as BodyType[];
   })
@@ -151,7 +247,7 @@ export class BulkSalesComponent implements OnInit {
   this.ServiceService.ServiceObserver$.subscribe(res=>{
     this.Service = res as Service[];
   });
-
+  this.ServiceService.GetService();
 
 
       this.insuranceService.GetSalesAgents();
@@ -202,7 +298,7 @@ export class BulkSalesComponent implements OnInit {
    saleLineItem(form):any{
 
     let item = form.controls['saleLineItem'] as FormArray;
-    return item.controls[0] as FormGroup  ;
+    return item.controls[0] as FormGroup   ;
   }
 
   get formGroup():FormGroup {
