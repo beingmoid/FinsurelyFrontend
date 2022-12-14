@@ -1,1 +1,123 @@
-<p>payroll works!</p>
+
+<div class="row">
+  <div class="col-xl-6"></div>
+  <div class="col-xl-6">
+    <div class="w-20 mb-3" id="SearchFiltr">
+
+      <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+        <input type="search" nz-input placeholder="input search text" />
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="primary" nzSearch><span nz-icon nzType="search"></span></button>
+      </ng-template>
+      <div class="SearchWithFilter dropdown-container ">
+        <a class="dropdown-toggle click-dropdown" (click)="show=!show">
+          <span nz-icon nzType="filter" nzTheme="outline"></span>
+        </a>
+        <div>
+          <ul class="dropdown-menu" *ngIf="show">
+            <form [formGroup]="form">
+
+              <li>
+                <mat-form-field appearance="fill">
+                  <mat-label>Enter a date range</mat-label>
+                  <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate formControlName="dateFrom" placeholder="Start date">
+                    <input matEndDate formControlName="dateTo" placeholder="End date">
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker></mat-date-range-picker>
+
+                </mat-form-field>
+              </li>
+              <li>
+                <label for="date">Branch</label> <br>
+                <select class="form-select" formControlName="branch" aria-label="">
+                  <option value="0" selected="">Ajman</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </li>
+              <li class="mt-2">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked
+                    formControlName="isPdf">
+                  <label class="form-check-label" for="flexCheckDefault" style="font-size: 15px;">
+                    Export as PDF
+                  </label>
+                </div>
+              </li>
+              <li>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"
+                    formControlName="isExcel">
+                  <label class="form-check-label" for="flexCheckChecked" style="font-size: 15px;">
+                    Export as Excel
+                  </label>
+                </div>
+              </li>
+
+            </form>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+    <mat-chip-list aria-label="Fish selection">
+
+      <mat-chip *ngIf="this.form.value.dateFrom"> From {{this.form.value.dateFrom | date }} To {{this.form.value.dateTo
+        | date }} <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+
+      <mat-chip *ngIf="this.form.value.branch">{{this.form.value.branch }} <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <mat-chip *ngIf="this.form.value.isPdf">Export PDF <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <mat-chip *ngIf="this.form.value.isExcel">Export Excel <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+
+</div>
+
+<div class="row mb-4">
+
+  <div class="col-xl-12 ">
+    <a nz-button class="float-right mt-2" nzType="primary" (click)="showModal()">Add Payroll</a>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12">
+      <nz-table  [nzData]="list" class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small" #filterTable
+       nzShowSizeChanger [nzPageSize]="pageSize" >
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Branch</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Salary</th>
+            <th>Total Paid For This Year</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of list">
+            <td>{{item.name}}</td>
+            <td>{{item.branch.name}}</td>
+            <td>{{item.startDate}}</td>
+            <td>{{item.endDate}}</td>
+            <td>{{item.salary}}</td>
+            <td>{{item.totalPaidForThisYear}}</td>
+          
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+
+  <nz-modal nzWidth="1000" [(nzVisible)]="isVisible" (nzOnCancel)="closeModal()" [nzTitle]="isEditMode?'Update Payroll':'Add New Payroll' ">
+<app-add-payroll></app-add-payroll>
+  </nz-modal>

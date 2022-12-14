@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-add-receipts',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-receipts.component.scss']
 })
 export class AddReceiptsComponent implements OnInit {
+form:FormGroup;
 
   constructor() { }
 

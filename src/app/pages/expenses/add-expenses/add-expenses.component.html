@@ -1,1 +1,62 @@
-<p>add-expenses works!</p>
+<div class="container">
+    <div class="row">
+
+        <div class="col-xl-12">
+            <!-- {{form.value | json}} -->
+
+            <form [formGroup]="form" novalidate #formDirective="ngForm" class="col-xl-12"
+                (ngSubmit)="onSubmit(formDirective)">
+
+                <mat-form-field class="col-xl-4">
+                    <mat-label>Expense Name</mat-label>
+                    <input type="text " matInput placeholder="Enter Expense Name" formControlName="expenseName">
+                    <mat-error *ngIf="form.controls.ExpenseName?.hasError('required')">
+                        Expense Name is required
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="col-xl-4">
+                    <mat-label>Expense Date</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="expenseDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                 </mat-form-field>
+
+                <mat-form-field class="col-xl-4">
+                    <mat-label>Expense Category</mat-label>
+                    <mat-select formControlName="expenseCategoryId" placeholder="Select Expense Category">
+                        <mat-option *ngFor="let item of expenseCategory" [value]="item.id">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form.controls.expenseCategory?.hasError('required')">
+                        Expense Category is required
+                    </mat-error>
+                </mat-form-field>
+
+
+                <mat-form-field class="col-xl-4">
+                    <mat-label>Expense Amount</mat-label>
+                    <input type="number" matInput placeholder="Enter Expense Amount" formControlName="expenseAmount">
+                </mat-form-field>
+
+                <mat-form-field class="col-xl-4">
+                    <mat-label>Bank Account</mat-label>
+                    <input type="text" matInput [matAutocomplete]="auto" placeholder="Account Type"
+                        formControlName="accountId">
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayAccountType.bind(this)">
+                        <mat-option [value]="item.id"
+                            *ngFor="let item of filterAccountType | async">{{item.name}}</mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+
+                <div class="text-center">
+                    <button nz-button nzType="primary" class="" type="submit">Submit</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>

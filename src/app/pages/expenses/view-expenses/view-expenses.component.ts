@@ -1,15 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Observable, Subject } from 'rxjs';
+import { Expenses } from 'src/app/models/expensesDTO';
+import { AlertService } from 'src/app/services/alert.service';
+import { ExpensesService } from 'src/app/services/APIServices/expenses.service';
+import { SharedService } from 'src/app/services/shared.service';
+import { ExpensesModule } from '../expenses.module';
 
 @Component({
   selector: 'app-view-expenses',
   templateUrl: './view-expenses.component.html',
   styleUrls: ['./view-expenses.component.scss']
 })
-export class ViewExpensesComponent implements OnInit {
+export class ViewExpensesComponent implements OnInit, OnDestroy {
   form: FormGroup;
+  list: Expenses[];
+  isVisible = false;
+  isEditMode = false;
+  expense : Subject<Expenses> = new Subject();
+  expenseObserver$ :Observable<Expenses[]>;
 
-  constructor(private fb: FormBuilder) {
+
+  constructor(private fb: FormBuilder, private _service: ExpensesService , private _alertService: AlertService ,private _sharedService: SharedService) {
 
     this.form = this.fb.group({
       dateFrom: new FormControl(null),
@@ -23,7 +35,6 @@ export class ViewExpensesComponent implements OnInit {
   pageSize = 20;
 
   searchAddress: string;
-  // listData: Branch[];
   nameList = [
     { text: 'Export as PDF', value: 'PDF', checked: true },
     { text: 'Export as Excel', value: 'Excel', checked: false }
@@ -61,9 +72,51 @@ export class ViewExpensesComponent implements OnInit {
   chiplist = [];
 
   ngOnInit(): void {
+    this._service.ExpensesObserver$.subscribe((res) => {
+      this.list = res;
+
+    })
+    this._service.GetExpenses();
+    this._sharedService.formSubmited.subscribe(res=>{
+      this.isVisible = false;
+    })
+
+
   }
 
+ngOnDestroy(): void {
+  console.log('OnDestroy')
+  this.form.reset();
+
+}
+
   showModal() {
+    this.isVisible = true;
+    this.isEditMode = false
+  }
+
+  closeModal() {
+    this.isVisible = false;
+    
+  }
+  
+  editExpense(data){
+    this.expense.next(data);
+    this.isVisible= true;
+    this.isEditMode =true;
+  }
+  deleteExpense(data){
+    this._alertService.confirm('Are you sure you want to delete this?').then((res)=>{
+      if(res.isConfirmed){
+        this._service.DeleteExpenses(data.id).subscribe((res) => {
+          if (res.isSuccessfull) {
+    
+            this._alertService.success('Expense SuccessFully Deleted');
+            this._service.GetExpenses();
+          }
+        });
+      }
+    })
 
   }
 }
