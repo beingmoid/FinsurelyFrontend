@@ -26,7 +26,7 @@ export class AddContactsComponent implements OnInit, OnDestroy {
   buttonLoading = false
   isClientAccountCreated = false
   file: any;
-
+  directive:FormGroupDirective;
   contactTypeSubject: Subscription;
   languagesSubject: Subscription;
   countriesSubject: Subscription;
@@ -210,7 +210,7 @@ export class AddContactsComponent implements OnInit, OnDestroy {
     this._contactService.saveContacts(this.file, data).subscribe(res => {
       this.buttonLoading = false
       if (res.isSuccessfull) {
-      
+
         this.alert.success('Contact Saved Successfully!')
         this._homeService.getHomeData();
       }
@@ -223,7 +223,7 @@ export class AddContactsComponent implements OnInit, OnDestroy {
     this._contactService.editContact(this.file, data).subscribe(res => {
       this.buttonLoading = false
       if (res.isSuccessfull) {
-      
+
         this.alert.success('Contact Updated Successfully!')
       }
       else

@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { AccountDTO } from 'src/app/models/accountDTO';
 import { ExpenseCategory } from 'src/app/models/ExpenseCategoryDTO';
@@ -19,10 +19,11 @@ import { SharedService } from 'src/app/services/shared.service';
 })
 export class AddExpensesComponent implements OnInit {
   @Input() inputExpenseObserver?: Subject<Expenses>;
-
+  @ViewChild('formDirective') formGroupDirective:FormGroupDirective;
   form: FormGroup;
   expenseCategory: ExpenseCategory[];
   filterAccountType: Observable<AccountDTO[]>;
+  childSubscription:Subscription;
   account: AccountDTO[];
   id = 0;
   expense: Expenses;
@@ -35,6 +36,12 @@ export class AddExpensesComponent implements OnInit {
     private _sharedService: SharedService,
     private _alertService: AlertService) {
 
+
+
+  }
+
+  ngOnInit(): void {
+
     this.form = this.fb.group({
       expenseName: new FormControl(null, Validators.required),
       expenseDate: new FormControl(null, Validators.required),
@@ -43,11 +50,7 @@ export class AddExpensesComponent implements OnInit {
       accountId: new FormControl(null, Validators.required),
 
 
-    })
-
-  }
-
-  ngOnInit(): void {
+    });
     this._service.ExpenseCategoryObserver$.subscribe((res) => {
       this.expenseCategory = res;
     })
@@ -58,14 +61,25 @@ export class AddExpensesComponent implements OnInit {
     })
     this._accountService.GetAccounts();
 
+    console.log(this.inputExpenseObserver);
     if (this.inputExpenseObserver) {
-      this.inputExpenseObserver.subscribe((res) => {
+
+   this.childSubscription=   this.inputExpenseObserver.subscribe((res) => {
+
+
+        console.log('child pa data pohcha',res);
         this.expense = res;
         this.form.patchValue(res);
-        console.log(res);
         this.id = res.id;
       })
     }
+    else{
+      console.log('add case');
+      this.formGroupDirective.resetForm();
+      this.form.reset();
+
+    }
+
 
     this.filterAccountType = this.form.controls.accountId.valueChanges.pipe(
       startWith(''),
@@ -74,7 +88,12 @@ export class AddExpensesComponent implements OnInit {
     )
 
   }
+  ngOnDestroy(): void {
 
+    this.formGroupDirective.resetForm();
+
+  }
+  
   private _filterAccountType(value: string) {
     if (value) {
       return this.account ? this.account?.filter(Option => Option.name?.toLowerCase().includes(value.toString().toLocaleLowerCase())) : [];
@@ -114,7 +133,7 @@ export class AddExpensesComponent implements OnInit {
             this._alertService.success('Expense Inserted Successfully.');
             this._expensesService.GetExpenses();
             this._sharedService.formSubmited.next(res);
-            
+
           }
         })
       }
@@ -123,11 +142,7 @@ export class AddExpensesComponent implements OnInit {
 
 
 
-    this._expensesService.SaveExpenses(data).subscribe((res) => {
-      if (res.isSuccessfull) {
 
-      }
-    })
 
 
 

@@ -66,7 +66,7 @@ export const getMenuData: any[] = [
         title: 'Expenses',
         key: 'expense',
         icon: 'fa fa-credit-card-alt',
-        url: '/expense',
+        url: '/expenses',
     },
     {
         title: 'Accounting',

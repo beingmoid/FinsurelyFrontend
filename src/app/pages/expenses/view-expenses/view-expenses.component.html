@@ -162,9 +162,9 @@
                       <td><i nz-icon nzType="edit" nz-tooltip nzTooltipTitle="Edit Contact"
                         (click)="$event.stopPropagation(editExpense(item))" nzTheme="fill" class="text-success"
                        ></i>
-        
+
                       <nz-divider nzType="vertical"></nz-divider>
-        
+
                       <i nz-icon nzType="delete" nz-tooltip nzTooltipTitle="Delete Contact"
                         (click)="$event.stopPropagation(deleteExpense(item))" nzTheme="fill" class="text-danger"
                        ></i>
@@ -200,7 +200,14 @@
 <ng-template #receiptTitle>
   <span class=" font-weight-light font-size-16">Receipts</span>
 </ng-template>
+<ng-template #tmpl>
+  <nz-modal  nzWidth="1000" [(nzVisible)]="isVisible" (nzOnCancel)="closeModal()" [nzTitle]="isEditMode?'Update Expense':'Add New Expense' ">
+    <app-add-expenses #formComponent  [inputExpenseObserver]="expense"></app-add-expenses>
+  </nz-modal>
+</ng-template>
+<ng-container *ngTemplateOutlet="tmpl">
 
-<nz-modal nzWidth="1000" [(nzVisible)]="isVisible" (nzOnCancel)="closeModal()" [nzTitle]="isEditMode?'Update Expense':'Add New Expense' "> 
-  <app-add-expenses [inputExpenseObserver]="expense"></app-add-expenses>
-</nz-modal>
+</ng-container>
+
+
+

@@ -1,10 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { Observable, Subject } from 'rxjs';
 import { Expenses } from 'src/app/models/expensesDTO';
 import { AlertService } from 'src/app/services/alert.service';
 import { ExpensesService } from 'src/app/services/APIServices/expenses.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { AddExpensesComponent } from '../add-expenses/add-expenses.component';
 import { ExpensesModule } from '../expenses.module';
 
 @Component({
@@ -12,7 +14,7 @@ import { ExpensesModule } from '../expenses.module';
   templateUrl: './view-expenses.component.html',
   styleUrls: ['./view-expenses.component.scss']
 })
-export class ViewExpensesComponent implements OnInit, OnDestroy {
+export class ViewExpensesComponent implements OnInit,AfterViewInit {
   form: FormGroup;
   list: Expenses[];
   isVisible = false;
@@ -21,7 +23,9 @@ export class ViewExpensesComponent implements OnInit, OnDestroy {
   expenseObserver$ :Observable<Expenses[]>;
 
 
-  constructor(private fb: FormBuilder, private _service: ExpensesService , private _alertService: AlertService ,private _sharedService: SharedService) {
+@ViewChild('formComponent') formComponent:AddExpensesComponent;
+
+  constructor(private modelService:NzModalService,private fb: FormBuilder, private _service: ExpensesService , private _alertService: AlertService ,private _sharedService: SharedService) {
 
     this.form = this.fb.group({
       dateFrom: new FormControl(null),
@@ -31,6 +35,13 @@ export class ViewExpensesComponent implements OnInit, OnDestroy {
       isExcel: new FormControl(null)
 
     })
+
+  }
+  ngAfterViewInit(): void {
+    // this.child.afterClose.subscribe(res=>{
+    //   console.log('working');
+
+    // })
   }
   pageSize = 20;
 
@@ -71,6 +82,8 @@ export class ViewExpensesComponent implements OnInit, OnDestroy {
 
   chiplist = [];
 
+
+
   ngOnInit(): void {
     this._service.ExpensesObserver$.subscribe((res) => {
       this.list = res;
@@ -84,24 +97,25 @@ export class ViewExpensesComponent implements OnInit, OnDestroy {
 
   }
 
-ngOnDestroy(): void {
-  console.log('OnDestroy')
-  this.form.reset();
-
-}
 
   showModal() {
     this.isVisible = true;
     this.isEditMode = false
+
   }
 
   closeModal() {
     this.isVisible = false;
-    
+    this.formComponent.ngOnDestroy();
+
   }
-  
-  editExpense(data){
+
+  editExpense(data:Expenses){
+
+
     this.expense.next(data);
+    // console.log('Parent ka subject',this.expense);
+    // console.log('Parent sa Data gya',data);
     this.isVisible= true;
     this.isEditMode =true;
   }
@@ -110,7 +124,7 @@ ngOnDestroy(): void {
       if(res.isConfirmed){
         this._service.DeleteExpenses(data.id).subscribe((res) => {
           if (res.isSuccessfull) {
-    
+
             this._alertService.success('Expense SuccessFully Deleted');
             this._service.GetExpenses();
           }
