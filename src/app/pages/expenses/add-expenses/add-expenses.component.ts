@@ -71,7 +71,7 @@ export class AddExpensesComponent implements OnInit {
       this.branch = res;
     })
     this._branchService.GetBranch();
-    
+
 
     console.log(this.inputExpenseObserver);
     if (this.inputExpenseObserver) {
@@ -153,7 +153,7 @@ export class AddExpensesComponent implements OnInit {
           if (res.isSuccessfull) {
             formDirective.resetForm();
             this._alertService.success('Expense Updated Successfully.');
-            this._expensesService.GetExpenses();
+            this._expensesService.GetPaginatedExpense();
             this._sharedService.formSubmited.next(res);
           }
         })
@@ -164,7 +164,7 @@ export class AddExpensesComponent implements OnInit {
           if (res.isSuccessfull) {
             formDirective.resetForm();
             this._alertService.success('Expense Inserted Successfully.');
-            this._expensesService.GetExpenses();
+            this._expensesService.GetPaginatedExpense();
             this._sharedService.formSubmited.next(res);
 
           }

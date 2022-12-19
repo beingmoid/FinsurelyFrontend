@@ -25,7 +25,7 @@ GetExpenses(){
     this.ExpensesSubject$.next(res.dynamicResult);
   })
 }
-GetPaginatedExpense(pageNo,pageSize){
+GetPaginatedExpense(pageNo=1,pageSize=10){
   this.GetAll(API_URL + API_ENDPOINTS.Expenses+`/GetPaginated?page=${pageNo}&itemsPerPage=${pageSize}`).subscribe(res=>{
     this.ExpensesSubject$.next((res.dynamicResult as PaginatedData<Expenses>));
 

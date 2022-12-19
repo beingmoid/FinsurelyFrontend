@@ -7,7 +7,7 @@ import { SharedModule } from 'src/app/shared.module';
 import { PayrollComponent } from './payroll/payroll.component';
 import { AddExpensesComponent } from './add-expenses/add-expenses.component';
 import { AddPayrollComponent } from './add-payroll/add-payroll.component';
-import { AddReceiptsComponent } from './add-receipts/add-receipts.component';
+
 import { MaterialModule } from 'src/app/material.module';
 
 
