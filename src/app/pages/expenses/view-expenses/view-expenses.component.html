@@ -139,7 +139,7 @@
             <div class="row">
               <div class="col-xl-12">
                 <nz-table [nzData]="list" class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small"
-                  #filterTable nzShowSizeChanger [nzPageSize]="pageSize">
+                  #filterTable nzShowSizeChanger [(nzPageSize)]="pageSize" [(nzPageIndex)]="page">
                   <thead>
                     <tr>
                       <th style="padding-left:2% !important">#</th>
@@ -147,28 +147,33 @@
                       <th>Expense Date</th>
                       <th>Expense Category</th>
                       <th>Expense Amount</th>
+                      <th>Branch</th>
                       <th>Bank Account</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let item of list; let i =index">
-                      <td style="padding-left:2% !important" >{{i+1}}</td>
+                      <td style="padding-left:1% !important">{{i+1}}</td>
                       <td>{{item.expenseName}}</td>
                       <td>{{item.expenseDate | date}}</td>
                       <td>{{item.expenseCategory.name}}</td>
+
+
+
+
+
                       <td>{{item.expenseAmount}}</td>
-                      <td>{{item.accountId}}</td>
+                      <td>{{item.branch.branchName}}</td>
+                      <td>{{item.account.name}}</td>
                       <td><i nz-icon nzType="edit" nz-tooltip nzTooltipTitle="Edit Contact"
-                        (click)="$event.stopPropagation(editExpense(item))" nzTheme="fill" class="text-success"
-                       ></i>
+                          (click)="$event.stopPropagation(editExpense(item))" nzTheme="fill" class="text-success"></i>
 
-                      <nz-divider nzType="vertical"></nz-divider>
+                        <nz-divider nzType="vertical"></nz-divider>
 
-                      <i nz-icon nzType="delete" nz-tooltip nzTooltipTitle="Delete Contact"
-                        (click)="$event.stopPropagation(deleteExpense(item))" nzTheme="fill" class="text-danger"
-                       ></i>
-                    </td>
+                        <i nz-icon nzType="delete" nz-tooltip nzTooltipTitle="Delete Contact"
+                          (click)="$event.stopPropagation(deleteExpense(item))" nzTheme="fill" class="text-danger"></i>
+                      </td>
 
                     </tr>
                   </tbody>
@@ -180,9 +185,6 @@
 
           <nz-tab [nzTitle]="payrollTitle">
             <app-payroll></app-payroll>
-          </nz-tab>
-          <nz-tab [nzTitle]="receiptTitle">
-            <app-receipts></app-receipts>
           </nz-tab>
         </nz-tabset>
       </div>
@@ -197,17 +199,13 @@
 <ng-template #payrollTitle>
   <span class=" font-weight-light font-size-16">Payroll</span>
 </ng-template>
-<ng-template #receiptTitle>
-  <span class=" font-weight-light font-size-16">Receipts</span>
-</ng-template>
+
 <ng-template #tmpl>
-  <nz-modal  nzWidth="1000" [(nzVisible)]="isVisible" (nzOnCancel)="closeModal()" [nzTitle]="isEditMode?'Update Expense':'Add New Expense' ">
-    <app-add-expenses #formComponent  [inputExpenseObserver]="expense"></app-add-expenses>
+  <nz-modal nzWidth="1000" [(nzVisible)]="isVisible" (nzOnCancel)="closeModal()"
+    [nzTitle]="isEditMode?'Update Expense':'Add New Expense' ">
+    <app-add-expenses #formComponent [inputExpenseObserver]="expense"></app-add-expenses>
   </nz-modal>
 </ng-template>
 <ng-container *ngTemplateOutlet="tmpl">
 
 </ng-container>
-
-
-

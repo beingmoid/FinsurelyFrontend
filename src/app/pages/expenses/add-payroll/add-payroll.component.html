@@ -23,27 +23,34 @@
 
                 <mat-form-field class="col-xl-4">
                     <mat-label>Start date</mat-label>
-                    <input type="date" matInput formControlName="startDate">
+                    <input matInput [matDatepicker]="picker" formControlName="startDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
 
                 <mat-form-field class="col-xl-4">
                     <mat-label>End Date</mat-label>
-                    <input type="date" matInput formControlName="endDate">
-                </mat-form-field>
+                    <input matInput [matDatepicker]="picker" formControlName="endDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>                </mat-form-field>
 
                 <mat-form-field class="col-xl-4">
                     <mat-label>Status</mat-label>
-                    <input type="" matInput formControlName="status">
+                    <mat-select formControlName="status">
+                        <mat-option value="1">Active</mat-option>
+                        <mat-option value="2">Deactive</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                
+                <mat-form-field class="col-xl-4">
+                    <mat-label>Expense Account</mat-label>
+                    <input type="text" matInput formControlName="expenseAccountId" [matAutocomplete]="auto1" placeholder="Select Expense Account">
+                    <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayExpenseAccountType.bind(this)">
+                        <mat-option [value]="item.id"
+                        *ngFor="let item of filterExpenseAccountType | async">{{item.expenseAccountId}}</mat-option>
+                    </mat-autocomplete>
                 </mat-form-field>
 
-                <mat-form-field class="col-xl-4">
-                    <mat-label>Salary</mat-label>
-                    <input type="number" matInput placeholder="Enter Salary" formControlName="salary">
-                </mat-form-field>
-                <mat-form-field class="col-xl-4">
-                    <mat-label>Total Paid For This Year</mat-label>
-                    <input type="number" matInput placeholder="Enter Amount" formControlName="totalPaidForThisYear">
-                </mat-form-field>
 
 
                 <div class="text-center">

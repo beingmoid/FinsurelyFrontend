@@ -1,9 +1,18 @@
+import { AccountDTO } from "./accountDTO";
+import { Branch } from "./branchDTO";
 
 export class payroll{
     name: string;
-    branch: object;
+    branch: Branch;
+    branchId: number;
     startDate: Date;
     endDate: Date;
-    salary: number;
-    totalPaidForThisYear: number;
+    status:PayrollStatus;
+    expenseAccount:AccountDTO;
+    expenseAccountId: number;
+  
+}
+export enum PayrollStatus{
+    active= 1,
+    deactive,
 }

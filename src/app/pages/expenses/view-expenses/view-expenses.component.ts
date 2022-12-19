@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { NzModalRef, NzModalService } from 'ng-zorro-antd';
+import { NzModalRef, NzModalService, NzTableQueryParams } from 'ng-zorro-antd';
 import { Observable, Subject } from 'rxjs';
 import { Expenses } from 'src/app/models/expensesDTO';
 import { AlertService } from 'src/app/services/alert.service';
@@ -21,11 +21,26 @@ export class ViewExpensesComponent implements OnInit,AfterViewInit {
   isEditMode = false;
   expense : Subject<Expenses> = new Subject();
   expenseObserver$ :Observable<Expenses[]>;
+  page=1;
+  pageSize=10;
+  isloading=true;
+
+  // onQueryParamsChange(params: NzTableQueryParams): void {
+  //   this.isloading=true;
+
+
+  // this._expenseService.GetAccountsPaginated(this.page,this.pageSize);
+  // }
 
 
 @ViewChild('formComponent') formComponent:AddExpensesComponent;
 
-  constructor(private modelService:NzModalService,private fb: FormBuilder, private _service: ExpensesService , private _alertService: AlertService ,private _sharedService: SharedService) {
+  constructor(private modelService:NzModalService,
+    private fb: FormBuilder,
+    private _service: ExpensesService,
+    private _alertService: AlertService,
+    private _sharedService: SharedService,
+    private _expenseService: ExpensesService) {
 
     this.form = this.fb.group({
       dateFrom: new FormControl(null),
@@ -43,7 +58,6 @@ export class ViewExpensesComponent implements OnInit,AfterViewInit {
 
     // })
   }
-  pageSize = 20;
 
   searchAddress: string;
   nameList = [

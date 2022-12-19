@@ -12,6 +12,7 @@ import { GenericApiService } from './genericApi.service';
 export class PayrollService extends GenericApiService {
 PayrollObserver$ : Observable<payroll[]>;
 PayrollSubject$: BehaviorSubject<payroll[]> =new BehaviorSubject<payroll[]>(undefined);
+  id: number;
 
   constructor(private http: HttpClient) {
     super(http);
