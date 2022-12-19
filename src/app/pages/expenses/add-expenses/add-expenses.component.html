@@ -40,11 +40,21 @@
                     <input type="number" matInput placeholder="Enter Expense Amount" formControlName="expenseAmount">
                 </mat-form-field>
 
+              
+                <mat-form-field class="col-xl-4">
+                    <mat-label>Branch</mat-label>
+                    <input type="text" matInput [matAutocomplete]="auto" formControlName="branchId" placeholder="Select Branch">
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayBranchType.bind(this)">
+                        <mat-option [value]="item.id"
+                        *ngFor="let item of filterBranchType | async">{{item.branchName}}</mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
                 <mat-form-field class="col-xl-4">
                     <mat-label>Bank Account</mat-label>
-                    <input type="text" matInput [matAutocomplete]="auto" placeholder="Account Type"
+                    <input type="text" matInput [matAutocomplete]="auto2" placeholder="Account Type"
                         formControlName="accountId">
-                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayAccountType.bind(this)">
+                    <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayAccountType.bind(this)">
                         <mat-option [value]="item.id"
                             *ngFor="let item of filterAccountType | async">{{item.name}}</mat-option>
                     </mat-autocomplete>

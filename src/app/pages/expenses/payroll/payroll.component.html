@@ -98,8 +98,7 @@
             <th>Branch</th>
             <th>Start Date</th>
             <th>End Date</th>
-            <th>Salary</th>
-            <th>Total Paid For This Year</th>
+  
             <th>Actions</th>
           </tr>
         </thead>
@@ -109,8 +108,17 @@
             <td>{{item.branch.name}}</td>
             <td>{{item.startDate}}</td>
             <td>{{item.endDate}}</td>
-            <td>{{item.salary}}</td>
-            <td>{{item.totalPaidForThisYear}}</td>
+            <td><i nz-icon nzType="edit" nz-tooltip nzTooltipTitle="Edit Contact"
+              (click)="$event.stopPropagation(editPayroll(item))" nzTheme="fill" class="text-success"
+             ></i>
+
+            <nz-divider nzType="vertical"></nz-divider>
+
+            <i nz-icon nzType="delete" nz-tooltip nzTooltipTitle="Delete Contact"
+              (click)="$event.stopPropagation(deletePayroll(item))" nzTheme="fill" class="text-danger"
+             ></i>
+          </td>
+       
           
           </tr>
         </tbody>
