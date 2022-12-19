@@ -6,6 +6,7 @@ import { Expenses } from 'src/app/models/expensesDTO';
 import { API_ENDPOINTS, API_URL } from 'src/app/models/Global';
 import { BaseResponse } from 'src/app/models/IApiResponse';
 import { PaginatedData } from 'src/app/models/paginatedResponse';
+import { Search } from 'src/app/models/search';
 import { GenericApiService } from './genericApi.service';
 
 @Injectable({
@@ -40,6 +41,9 @@ UpdateExpenses(id, data){
 return this.Update(id, data, API_URL + API_ENDPOINTS.Expenses)
 }
 
+GetExcel(data:Search){
+  return this.Post(data,API_URL+API_ENDPOINTS.Expenses+"/GetExcel");
+}
 DeleteExpenses(id): Observable<BaseResponse>{
 return this.Delete(id, API_URL + API_ENDPOINTS.Expenses)
 }

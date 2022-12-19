@@ -158,6 +158,22 @@ export class ViewExpensesComponent implements OnInit {
       this.totalCount = res?.totalCount;
       this.TableTitle = `Total ${this.totalCount}# of expenses are been found on search`
       this.isloading = false;
+      var excelObj= this.form.value as Search;
+      excelObj.page=this.page;
+      excelObj.itemsPerPage=this.pageSize;
+      if(this.form.value.downloadExcel){
+
+        this._service.GetExcel(excelObj).subscribe(res=>{
+          if(res.isSuccessfull){
+            window.open(res.dynamicResult.filePath,"_blank")
+          }
+
+
+      });
+
+      }
+
+
       console.log(res);
     });
     this.TableTitle = ""
