@@ -19,7 +19,8 @@ export class PayrollComponent implements OnInit {
   isEditMode = false;
   payroll: Subject<payroll> = new Subject();
   payrollObserver$: Observable<payroll[]>;
-
+  active = `<span nz-icon nzType="check" nzTheme="outline"></span>`;
+  deactive = `<span nz-icon nzType="close" nzTheme="outline"></span>`;
 
   constructor(private fb: FormBuilder,
     private _payrollService: PayrollService,
@@ -81,7 +82,7 @@ export class PayrollComponent implements OnInit {
       this.list = res;
     })
     this._payrollService.GetPayroll();
-    this._sharedService.formSubmited.subscribe(res=>{
+    this._sharedService.formSubmited.subscribe(res => {
       this.isVisible = false;
     })
 

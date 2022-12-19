@@ -42,6 +42,7 @@ export class AddPayrollComponent implements OnInit {
       endDate: new FormControl(null, Validators.required),
       status: new FormControl(null, Validators.required),
       expenseAccountId: new FormControl(null, Validators.required),
+      isRecurring: new FormControl(null, Validators.required)
 
 
     })
@@ -65,7 +66,7 @@ export class AddPayrollComponent implements OnInit {
       map(value => typeof value === 'string' ? value : value),
       map(branch => branch ? this._filterBranchType(branch) : this.branch?.slice())
     )
-    this.filterExpenseAccountType = this.form.controls.accountId.valueChanges.pipe(
+    this.filterExpenseAccountType = this.form.controls.expenseAccountId.valueChanges.pipe(
       startWith(''),
       map(value => typeof value === 'string' ? value : value),
       map(account => account ? this._filterExpenseAccountType(account) : this.account?.slice())
@@ -92,7 +93,7 @@ export class AddPayrollComponent implements OnInit {
   }
   displayExpenseAccountType(id) {
     if (this.account && id) {
-      return this.account.find(x => x.id === id)?.accountId;
+      return this.account.find(x => x.id === id)?.name;
     }
   }
 
