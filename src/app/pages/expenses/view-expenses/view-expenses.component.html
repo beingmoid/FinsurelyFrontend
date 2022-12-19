@@ -138,8 +138,10 @@
                   </mat-chip>
                   <mat-chip *ngIf="this.form.value.downloadExcel"
 
-                  (click)="this.form.controls.downloadExcel.setValue(null)"
-                  matChipRemove >Export Excel <mat-icon matChipRemove>cancel</mat-icon>
+
+                   >Export Excel <mat-icon
+                   (click)="this.form.controls.downloadExcel.setValue(null)"
+                   matChipRemove>cancel</mat-icon>
                   </mat-chip>
                 </mat-chip-list>
               </div>
