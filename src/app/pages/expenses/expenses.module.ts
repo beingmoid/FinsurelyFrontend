@@ -9,6 +9,7 @@ import { ReceiptsComponent } from './receipts/receipts.component';
 import { AddExpensesComponent } from './add-expenses/add-expenses.component';
 import { AddPayrollComponent } from './add-payroll/add-payroll.component';
 import { AddReceiptsComponent } from './add-receipts/add-receipts.component';
+import { MaterialModule } from 'src/app/material.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { AddReceiptsComponent } from './add-receipts/add-receipts.component';
   imports: [
     CommonModule,
     ExpensesRoutingModule,
-    SharedModule
+    SharedModule,
+    MaterialModule
   ]
 })
 export class ExpensesModule { }

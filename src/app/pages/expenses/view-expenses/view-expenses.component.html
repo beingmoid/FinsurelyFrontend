@@ -48,14 +48,18 @@
 
             <div class="row">
               <div class="col-xl-6"></div>
+
               <div class="col-xl-6">
+
+
+                <form [formGroup]="form">
                 <div class="w-20 mb-3" id="SearchFiltr">
 
                   <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-                    <input type="search" nz-input placeholder="input search text" />
+                    <input type="search" nz-input formControlName="searchQuery" placeholder="input search text" />
                   </nz-input-group>
                   <ng-template #suffixIconButton>
-                    <button nz-button nzType="primary" nzSearch><span nz-icon nzType="search"></span></button>
+                    <button nz-button nzType="primary" nzSearch (click)="Search()"><span nz-icon nzType="search"></span></button>
                   </ng-template>
                   <div class="SearchWithFilter dropdown-container ">
                     <a class="dropdown-toggle click-dropdown" (click)="show=!show">
@@ -63,14 +67,14 @@
                     </a>
                     <div>
                       <ul class="dropdown-menu" *ngIf="show">
-                        <form [formGroup]="form">
+
 
                           <li>
                             <mat-form-field appearance="fill">
                               <mat-label>Enter a date range</mat-label>
                               <mat-date-range-input [rangePicker]="picker">
-                                <input matStartDate formControlName="dateFrom" placeholder="Start date">
-                                <input matEndDate formControlName="dateTo" placeholder="End date">
+                                <input matStartDate formControlName="from" placeholder="Start date">
+                                <input matEndDate formControlName="to" placeholder="End date">
                               </mat-date-range-input>
                               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                               <mat-date-range-picker #picker></mat-date-range-picker>
@@ -79,17 +83,16 @@
                           </li>
                           <li>
                             <label for="date">Branch</label> <br>
-                            <select class="form-select" formControlName="branch" aria-label="">
-                              <option value="0" selected="">Ajman</option>
-                              <option value="1">One</option>
-                              <option value="2">Two</option>
-                              <option value="3">Three</option>
+                            <select class="form-select" formControlName="branchId" aria-label="">
+                                  <option *ngFor="let item of branchList" [value]="item.id">
+                                    {{item.branchName}}
+                                  </option>
                             </select>
                           </li>
                           <li class="mt-2">
                             <div class="form-check">
                               <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked
-                                formControlName="isPdf">
+                                formControlName="downloadPDF">
                               <label class="form-check-label" for="flexCheckDefault" style="font-size: 15px;">
                                 Export as PDF
                               </label>
@@ -98,32 +101,45 @@
                           <li>
                             <div class="form-check">
                               <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"
-                                formControlName="isExcel">
+                                formControlName="downloadExcel">
                               <label class="form-check-label" for="flexCheckChecked" style="font-size: 15px;">
                                 Export as Excel
                               </label>
                             </div>
                           </li>
 
-                        </form>
+
                       </ul>
+
                     </div>
 
                   </div>
+
                 </div>
+              </form>
                 <mat-chip-list aria-label="Fish selection">
 
-                  <mat-chip *ngIf="this.form.value.dateFrom"> From {{this.form.value.dateFrom | date }} To
-                    {{this.form.value.dateTo
-                    | date }} <mat-icon matChipRemove>cancel</mat-icon>
+                  <mat-chip *ngIf="this.form.value.from"> From {{this.form.value.from | date }} To
+                    {{this.form.value.to
+                    | date }} <mat-icon matChipRemove
+
+                    (click)=" this.form.controls.from.setValue(null);this.form.controls.to.setValue(null)"
+                    >cancel</mat-icon>
                   </mat-chip>
 
-                  <mat-chip *ngIf="this.form.value.branch">{{this.form.value.branch }} <mat-icon
+                  <mat-chip *ngIf="this.form.value.branchId">{{getBranchName(this.form.value.branchId)}} <mat-icon
+                    (click)="this.form.controls.branchId.setValue(null)"
                       matChipRemove>cancel</mat-icon>
                   </mat-chip>
-                  <mat-chip *ngIf="this.form.value.isPdf">Export PDF <mat-icon matChipRemove>cancel</mat-icon>
+                  <mat-chip *ngIf="this.form.value.downloadPDF">Export PDF <mat-icon
+
+                    (click)=" this.form.controls.downloadPDF.setValue(null)"
+                    matChipRemove>cancel</mat-icon>
                   </mat-chip>
-                  <mat-chip *ngIf="this.form.value.isExcel">Export Excel <mat-icon matChipRemove>cancel</mat-icon>
+                  <mat-chip *ngIf="this.form.value.downloadExcel"
+
+                  (click)=" this.form.controls.downloadExcel.setValue(null)"
+                  >Export Excel <mat-icon matChipRemove>cancel</mat-icon>
                   </mat-chip>
                 </mat-chip-list>
               </div>
@@ -138,8 +154,42 @@
 
             <div class="row">
               <div class="col-xl-12">
-                <nz-table [nzData]="list" class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small"
-                  #filterTable nzShowSizeChanger [nzPageSize]="pageSize">
+                <!-- <nz-table [nzData]="list" class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small"
+                [nzFrontPagination]="false"
+                [nzTotal]="totalCount"
+
+                [nzData]="list"
+                [nzNoResult]="noData"
+                nzShowSizeChanger
+                nzShowTotal
+                [(nzPageSize)]="pageSize"
+                [(nzPageIndex)]="page"
+                [nzTableLayout]="'auto'"
+                [nzBordered]="true"
+                [nzLoading]="isloading"
+                [nzSize]="'small'"
+
+
+
+                  #filterTable nzShowSizeChanger [nzPageSize]="itemsPerPage"> -->
+                  <nz-table class="card" #rowSelectionTable
+
+                  [nzFrontPagination]="false"
+                  [nzTotal]="totalCount"
+
+                  [nzData]="list"
+                  [nzNoResult]="noData"
+                  nzShowSizeChanger
+                  [(nzPageSize)]="pageSize"
+                  [(nzPageIndex)]="page"
+                  [nzTableLayout]="'auto'"
+                  [nzBordered]="true"
+                  [nzLoading]="isloading"
+                  [nzSize]="'small'"
+                  (nzPageIndexChange)="onQueryParamsChange($event)"
+                  (nzPageSizeChange)="onQueryParamsChange($event)"
+                  [nzTitle]="tableTitle"
+                      >
                   <thead>
                     <tr>
                       <th style="padding-left:2% !important">#</th>
@@ -211,3 +261,20 @@
 
 
 
+<ng-template #noData>
+  <nz-empty class="m-5" [nzNotFoundImage]="'assets/images/no-data/no-account.svg'" [nzNotFoundContent]="noDataDescrp">
+  </nz-empty>
+</ng-template>
+<ng-template #noDataDescrp>
+  <div class="m-4">
+      No Data Available.
+      <!-- <a *ngIf="_permissionService.canCreate" (click)="showModal()" class="kit__utils__link">
+          Create New Account
+      </a> -->
+  </div>
+</ng-template>
+<ng-template #tableTitle>
+
+  <span class="font-weight-bold font-size-16" *ngIf="!isSearch">{{TableTitle}}</span>
+  <span class="font-weight-bold font-size-16" *ngIf="isSearch">{{TableTitle}}</span>
+</ng-template>

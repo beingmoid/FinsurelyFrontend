@@ -206,11 +206,7 @@ export class AddSalesComponent implements OnInit {
   this.ServiceService.ServiceObserver$.subscribe(res=>{
     this.Service = res as Service[];
   });
-  // this.ServiceService.GetService();
-
-  // policyTypeId:[null,Validators.required],
-  // bodyTypeId:[null],
-  // serviceId:[null],
+  
   this.filterPolicyType= this.SalesForm.controls.policyTypeId.valueChanges.pipe(
 
     startWith(''),

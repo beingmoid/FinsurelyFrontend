@@ -492,5 +492,7 @@ export class ViewSalesComponent implements OnInit {
     this.isEditMode = true;
     this.salesObserverSubject.next(data);
   }
-  DeleteSales() {}
+  DeleteSales() {
+    
+  }
 }
