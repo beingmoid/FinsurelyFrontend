@@ -6,10 +6,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./view-attendence.component.scss']
 })
 export class ViewAttendenceComponent implements OnInit {
+  isVisible = false;
+  isEditMode = false;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  openModal() {
+    this.isVisible = true;
+    this.isEditMode= false;
+  }
+  closeModal() {
+    this.isVisible = false;
+  }
+  
 }

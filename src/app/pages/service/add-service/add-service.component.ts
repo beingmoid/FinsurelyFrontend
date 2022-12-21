@@ -21,7 +21,12 @@ export class AddServiceComponent implements OnInit {
   filteredPolicyType: Observable<PolicyType[]>;
   id = 0;
   service: Service;
-  constructor(private fb: FormBuilder, private _service: PolicyTypeService, private _alertService: AlertService, private _sharedService: SharedService, private _serviceService: ServiceService) { }
+  constructor(private fb: FormBuilder,
+    private _service: PolicyTypeService,
+    private _alertService: AlertService,
+    private _sharedService: SharedService,
+    private _serviceService: ServiceService
+  ) { }
 
   ngOnInit(): void {
     this.form = this.fb.group(
@@ -76,7 +81,7 @@ export class AddServiceComponent implements OnInit {
 
       if (this.id > 0) {
         data.id = this.id;
-      
+
         this._serviceService.UpdateService(this.id, data).subscribe((res) => {
           if (res.isSuccessfull) {
             formDirective.resetForm();
@@ -88,7 +93,7 @@ export class AddServiceComponent implements OnInit {
       }
       else {
         data.id = 0;
-        
+
         this._serviceService.SaveService(data).subscribe((res) => {
           if (res.isSuccessfull) {
             formDirective.resetForm();

@@ -1,1 +1,22 @@
-<p>view-attendence works!</p>
+<div class="row">
+
+    <div class="col-xl-4 breadcrumbs mb-3">
+      <strong>Workplace</strong>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xl-12">
+      <button nz-button nzType="primary" class="float-right mb-3" (click)="openModal()">Add Attendence</button>
+    </div>
+  </div>
+  
+  
+  <ng-template #attendence>
+    <nz-modal nzWidth="1000" [(nzVisible)]="isVisible" (nzOnCancel)="closeModal()"
+      [nzTitle]="isEditMode?'Update Attendence':'Add New Attendence' ">
+      <app-add-attendence></app-add-attendence>
+    </nz-modal>
+  </ng-template>
+  
+  <ng-container *ngTemplateOutlet="attendence"></ng-container>
+  

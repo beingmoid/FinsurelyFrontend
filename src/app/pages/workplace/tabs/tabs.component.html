@@ -5,9 +5,9 @@
     <nz-tab [nzTitle]="Employees">
         <app-employee-view></app-employee-view>
     </nz-tab>
-    <!-- <nz-tab [nzTitle]="Teams">
+    <nz-tab [nzTitle]="Teams">
         <app-teams></app-teams>
-    </nz-tab> -->
+    </nz-tab>
 </nz-tabset>
 
 
@@ -24,6 +24,8 @@
         <nz-divider nzType="vertical"></nz-divider> Workplace Manager
     </div>
 </ng-template>
+
+
 <ng-template #Employees>
     <div class="font-size-16 font-weight-light">
         <i nz-icon >
@@ -39,6 +41,6 @@
 
             <img src="assets/images/home/delegate.svg" style="margin-bottom: 5px;" width="30px" alt="Icon" />
         </i>
-        <nz-divider nzType="vertical"></nz-divider> Teams 
+        <nz-divider nzType="vertical"></nz-divider> Roles 
     </div>
 </ng-template>

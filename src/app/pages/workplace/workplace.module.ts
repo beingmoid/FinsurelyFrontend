@@ -18,6 +18,7 @@ import { BankDetailsComponent } from './bank-details/bank-details.component';
 import { EmpFilesComponent } from './emp-files/emp-files.component';
 import { EmpStatusComponent } from './emp-status/emp-status.component';
 import { AnnouncementModule } from './announcement/announcement.module';
+import { ViewAnnouncementsComponent } from './announcement/view-announcements/view-announcements.component';
 //import { ViewAnnouncementsComponent } from './annoucement/view-announcements/view-announcements.component';
 
 
@@ -27,7 +28,8 @@ import { AnnouncementModule } from './announcement/announcement.module';
     CommonModule,
     
     WorkplaceRoutingModule,
-    SharedModule
+    SharedModule,
+    
   ]
 })
 export class WorkplaceModule { }

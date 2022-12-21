@@ -1,1 +1,21 @@
-<p>view-announcements works!</p>
+<div class="row">
+
+  <div class="col-xl-4 breadcrumbs mb-3">
+    <strong>Workplace</strong>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xl-12">
+    <button nz-button nzType="primary" class="float-right mb-3" (click)="openModal()">Add Announcement</button>
+  </div>
+</div>
+
+
+<ng-template #announcement>
+  <nz-modal nzWidth="1000" [(nzVisible)]="isVisible" (nzOnCancel)="closeModal()"
+    [nzTitle]="isEditMode?'Update announcement':'Add New Announcement' ">
+    <app-add-announcement></app-add-announcement>
+  </nz-modal>
+</ng-template>
+
+<ng-container *ngTemplateOutlet="announcement"></ng-container>
