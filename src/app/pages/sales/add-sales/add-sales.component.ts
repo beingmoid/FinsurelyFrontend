@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormGroupDirective, RequiredValidator, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -27,7 +27,7 @@ import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autoc
   templateUrl: './add-sales.component.html',
   styleUrls: ['./add-sales.component.scss']
 })
-export class AddSalesComponent implements OnInit {
+export class AddSalesComponent implements OnInit,OnDestroy {
   @Input()  inputObserver?:Subject<SalesInvoice>;
   @ViewChild(MatAutocompleteTrigger) autocompleteTrigger: MatAutocompleteTrigger;
   sysdate = moment().format('MMMM Do YYYY, h:mm a');
@@ -106,6 +106,9 @@ export class AddSalesComponent implements OnInit {
     this.AmountReceviable=this.fb.control('');
 
    }
+  ngOnDestroy(): void {
+
+  }
    isLoading=false;
    comission:number=0;
    ComissionRate:ComissionRates;
@@ -206,7 +209,7 @@ export class AddSalesComponent implements OnInit {
   this.ServiceService.ServiceObserver$.subscribe(res=>{
     this.Service = res as Service[];
   });
-  
+
   this.filterPolicyType= this.SalesForm.controls.policyTypeId.valueChanges.pipe(
 
     startWith(''),
@@ -586,4 +589,5 @@ export class AddSalesComponent implements OnInit {
       }
     });
   }
+
 }

@@ -493,6 +493,6 @@ export class ViewSalesComponent implements OnInit {
     this.salesObserverSubject.next(data);
   }
   DeleteSales() {
-    
+
   }
 }
