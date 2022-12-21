@@ -91,7 +91,7 @@ export class AddSalesAgentComponent implements OnInit {
         if (res) {
           this.isEditMode = true;
           this._data = res;
-          this.SalesAgentForm.controls.userDetails.patchValue(this._data);
+          this.SalesAgentForm.patchValue(this._data);
           this.salesAgentId = this._data.id;
           this.SalesInvoice = res.salesInvoicePersons;
         }

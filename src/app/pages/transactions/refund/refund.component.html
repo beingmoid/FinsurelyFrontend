@@ -134,9 +134,9 @@
                     <td><i nz-icon nzType="edit" nz-tooltip nzTooltipTitle="Edit Contact"
                         (click)="$event.stopPropagation(editRefund(data))" nzTheme="fill" class="text-success"
                        ></i>
-        
+
                       <nz-divider nzType="vertical"></nz-divider>
-        
+
                       <i nz-icon nzType="delete" nz-tooltip nzTooltipTitle="Delete Contact"
                         (click)="$event.stopPropagation(deleteRefund(data))" nzTheme="fill" class="text-danger"
                        ></i>
@@ -154,7 +154,7 @@
     </nz-empty>
 </ng-template>
 
-<ng-template>
+<ng-template #tmpl>
 <nz-modal nzFooter="null" nzHeader="Issue a Refund Transaction" [nzCloseIcon]="cancelIcon" [nzBodyStyle] nzWidth="1000"
     [(nzVisible)]="isVisible" nzMaskClosable="false" (nzOnCancel)="closeModal()">
     <div>
@@ -162,6 +162,9 @@
     </div>
 </nz-modal>
 </ng-template>
+<ng-container  *ngTemplateOutlet="tmpl">
+
+</ng-container>
 
 <ng-template #noDataDescrp>
     <div class="m-4">

@@ -63,10 +63,7 @@ isLoaded = true;
     this.form=this.fb.group({
       refundDate:[null,Validators.required],
       agentId:[null,Validators.required],
-      paymentMethodId:[null,Validators.required],
       vehilcleId:[null,Validators.required],
-      messageOnReceipt:[null,Validators.required],
-      messageOnStatement:[null,Validators.required],
       amountForSalesAgent:[null,Validators.required],
       amountForBroker:[null,Validators.required],
       insuranceTypeId:[null],
@@ -77,7 +74,7 @@ isLoaded = true;
 
       customerName: [null, Validators.required],
       companyName:[null, Validators.required],
-      
+
 
     });
    }
@@ -103,7 +100,7 @@ isLoaded = true;
    console.log("l2")
     })
 
-   
+
 
     this.accountsService.accountObserver$.subscribe(res=>{
       this.Accounts=res as AccountDTO[];
@@ -139,11 +136,11 @@ isLoaded = true;
     });
     this.service.GetInsuranceTypes();
     this.filterAccounts= this.form.controls.accountId.valueChanges.pipe(
-    
+
       startWith(''),
         map(value => typeof value === 'string' ? value : value),
       map(address => address ? this._filterAccounts(address) : this.Accounts?.slice())
-  
+
     );
     this.form.controls.accountId.valueChanges.subscribe(res=>{
       console.log(res);
@@ -181,13 +178,14 @@ isLoaded = true;
     var data = this.form.value as Refund;
     // data.id=parseInt(this.id) ;
     if (this.form.invalid) {
+      console.log('form invalid')
       return;
     }
       else {
 
         if (this.id > 0) {
           data.id = this.id;
-        
+
           this.refundService.UpdateRefund(this.id, data).subscribe((res) => {
             if (res.isSuccessfull) {
               formDirective.resetForm();
@@ -199,7 +197,7 @@ isLoaded = true;
         }
         else {
           data.id = 0;
-          
+
           this.refundService.SaveRefund(data).subscribe((res) => {
             if (res.isSuccessfull) {
               formDirective.resetForm();
@@ -209,10 +207,10 @@ isLoaded = true;
             }
           })
         }
-  
+
       }
-        
-   
+
+
   }
 
 

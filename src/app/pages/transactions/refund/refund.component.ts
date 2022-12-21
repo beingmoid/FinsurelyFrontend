@@ -45,7 +45,7 @@ export class RefundComponent implements OnInit {
      { text: 'Export as PDF', value: 'PDF', checked: true },
      { text: 'Export as Excel', value: 'Excel', checked: false }
    ];
- 
+
    data = [
      {
        name: 'John Brown',
@@ -72,9 +72,9 @@ export class RefundComponent implements OnInit {
    sortName = null;
    sortValue = null;
    listOfSearchName = [];
- 
+
    show = false;
- 
+
    chiplist = [];
 
   observerRefund:Subject<Refund> = new Subject<Refund>();
@@ -95,7 +95,7 @@ export class RefundComponent implements OnInit {
   ngOnInit(): void {
     this.sharedService.formSubmited.subscribe((res) => {
       this.isVisible = false;
-    }); 
+    });
 
     this.refundService.refundObserver$.subscribe(res=>{
       this.listData= res as Refund[];
@@ -121,14 +121,14 @@ export class RefundComponent implements OnInit {
       if(res.isConfirmed){
         this.refundService.deleteRefund(data.id).subscribe((res) => {
           if (res.isSuccessfull) {
-    
+
             this._alertService.success('Refund SuccessFully Deleted');
             this.refundService.GetRefunds();
           }
         });
       }
     })
-  
+
   }
 
 }
