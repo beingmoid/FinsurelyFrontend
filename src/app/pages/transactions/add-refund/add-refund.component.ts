@@ -18,6 +18,8 @@ import { AccountDTO } from 'src/app/models/accountDTO';
 import { AccountsService } from 'src/app/services/APIServices/accounts.service';
 import { RefundServiceService } from 'src/app/services/APIServices/refund-service.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { ServiceService } from 'src/app/services/APIServices/service.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-add-refund',
@@ -40,6 +42,13 @@ PolicyType:PolicyType[];
 isEditMode=false;
 insuranceTypeSelect:InsuranceType[]=[];
 Accounts:AccountDTO[];
+id=0;
+isVisible = false;
+list: Refund[]
+isLoaded = true;
+
+
+
   constructor(private fb:FormBuilder,
     private refundService:RefundServiceService,
     private SalesAgentService:SalesAgentService,
@@ -47,7 +56,9 @@ Accounts:AccountDTO[];
     private alert:AlertService,
     private PolicyTypeService:PolicyTypeService,
     private service:SalesService,
-    private accountsService:AccountsService) {
+    private accountsService:AccountsService,
+    private _serviceService: ServiceService,
+    private _sharedService:SharedService ) {
 
     this.form=this.fb.group({
       refundDate:[null,Validators.required],
@@ -62,7 +73,11 @@ Accounts:AccountDTO[];
       policyNumber:[null,Validators.required],
       insuranceCompanyId:[null,Validators.required],
       policyTypeId:[null,Validators.required],
-      accountId:[null,Validators.required]
+      accountId:[null,Validators.required],
+
+      customerName: [null, Validators.required],
+      companyName:[null, Validators.required],
+      
 
     });
    }
@@ -78,8 +93,22 @@ Accounts:AccountDTO[];
   }
   ngOnInit(): void {
 
+    this._sharedService.formSubmited.subscribe((res) => {
+      this.isVisible = false;
+    });
+
+    console.log('L1' )
+    this.observerRefund.subscribe((res)=>{
+      this.form.patchValue(res);
+   console.log("l2")
+    })
+
+   
+
     this.accountsService.accountObserver$.subscribe(res=>{
       this.Accounts=res as AccountDTO[];
+
+      console.log("account",  this.Accounts)
     });
     this.accountsService.GetAccounts();
 
@@ -116,6 +145,9 @@ Accounts:AccountDTO[];
       map(address => address ? this._filterAccounts(address) : this.Accounts?.slice())
   
     );
+    this.form.controls.accountId.valueChanges.subscribe(res=>{
+      console.log(res);
+    });
     this.filterPolicyType= this.form.controls.policyTypeId.valueChanges.pipe(
 
       startWith(''),
@@ -145,27 +177,42 @@ Accounts:AccountDTO[];
   }
 
 
-  submitForm(form:FormGroupDirective){
-    console.log(form);
-    let refund = this.form.value as Refund;
-    this.refundService.CreateRefund(refund).subscribe(res=>{
-      if(res.isSuccessfull){
-        this.alert.success("Refund Succesfully Added")
-      }
-    });    if(!form.dirty){
-
-      console.log('working step#1')
- 
-        if(refund){
-                console.log('working step#2')
-         
-        }
-        else{
-          this.alert.warn("User input error!");
-        }
-    }
-    else
+  submitForm(formDirective:FormGroupDirective){
+    var data = this.form.value as Refund;
+    // data.id=parseInt(this.id) ;
+    if (this.form.invalid) {
       return;
+    }
+      else {
+
+        if (this.id > 0) {
+          data.id = this.id;
+        
+          this.refundService.UpdateRefund(this.id, data).subscribe((res) => {
+            if (res.isSuccessfull) {
+              formDirective.resetForm();
+              this.alert.success('Refund Type Updated Successfully.');
+              this.refundService.GetRefunds();
+              this._sharedService.formSubmited.next(res);
+            }
+          })
+        }
+        else {
+          data.id = 0;
+          
+          this.refundService.SaveRefund(data).subscribe((res) => {
+            if (res.isSuccessfull) {
+              formDirective.resetForm();
+              this.alert.success('Refund Type Inserted Successfully.');
+              this.refundService.GetRefunds();
+              this._sharedService.formSubmited.next(res);
+            }
+          })
+        }
+  
+      }
+        
+   
   }
 
 

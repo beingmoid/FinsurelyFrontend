@@ -15,12 +15,13 @@ import { SalesDirectoryComponent } from './sales-directory/sales-directory.compo
 import { BulkSalesComponent } from './bulk-sales/bulk-sales.component';
 import {MatChipsModule} from '@angular/material/chips';
 import { BrowserModule } from '@angular/platform-browser';
+import { SalesDetailComponent } from './sales-detail/sales-detail.component';
 
 
 
 
 @NgModule({
-  declarations: [ViewSalesComponent, AddSalesComponent, AddVehicleComponent, AddBodyTypeComponent, AddServiceComponent, SalesDirectoryComponent, BulkSalesComponent],
+  declarations: [ViewSalesComponent, AddSalesComponent, AddVehicleComponent, AddBodyTypeComponent, AddServiceComponent, SalesDirectoryComponent, BulkSalesComponent, SalesDetailComponent],
   imports: [
 
 

@@ -34,7 +34,7 @@ export class ViewServiceComponent implements OnInit {
 
     this._service.ServiceObserver$.subscribe(
       (res) => {
-        if (res) {
+        if (res) {  
           this.list = res;
           this.isLoaded = false;
           console.log(this.list)

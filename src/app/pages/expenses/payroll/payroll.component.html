@@ -103,12 +103,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of list">
-          <td>{{item.name}}</td>
+        <tr *ngFor="let item of list" >
+          <td style="padding-left: 1% !important; ">{{item.name}}</td>
           <td>{{item.branch.branchName}}</td>
           <td>{{item.startDate}}</td>
           <td>{{item.endDate}}</td>
-          <td >{{item.status}}</td>
+          <td *ngIf="item.status === 1" ><span nz-icon nzType="check-circle"  nzTheme="fill" [nzIconfont]="larger"></span></td>
+          <td *ngIf="item.status === 2" ><span nz-icon nzType="close-circle" nzTheme="fill"></span></td>
+
           <td>{{item.expenseAccount.name}}</td>
 
           <td><i nz-icon nzType="edit" nz-tooltip nzTooltipTitle="Edit Contact"

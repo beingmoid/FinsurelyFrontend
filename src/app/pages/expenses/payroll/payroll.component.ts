@@ -19,8 +19,7 @@ export class PayrollComponent implements OnInit {
   isEditMode = false;
   payroll: Subject<payroll> = new Subject();
   payrollObserver$: Observable<payroll[]>;
-  active = `<span nz-icon nzType="check" nzTheme="outline"></span>`;
-  deactive = `<span nz-icon nzType="close" nzTheme="outline"></span>`;
+
 
   constructor(private fb: FormBuilder,
     private _payrollService: PayrollService,
@@ -96,7 +95,7 @@ export class PayrollComponent implements OnInit {
     this.isVisible = false;
   }
 
-  editExpense(data: payroll) {
+  editPayroll(data: payroll) {
 
 
     this.payroll.next(data);
@@ -105,7 +104,7 @@ export class PayrollComponent implements OnInit {
     this.isVisible = true;
     this.isEditMode = true;
   }
-  deleteExpense(data) {
+  deletePayroll(data) {
     this._alertService.confirm('Are you sure you want to delete this?').then((res) => {
       if (res.isConfirmed) {
         this._payrollService.DeletePayroll(data.id).subscribe((res) => {
