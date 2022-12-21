@@ -1,233 +1,162 @@
 <div class="row">
   <div class="col-xl-6">
 
-          <i nz-icon nzType="sync" nzTheme="outline"></i> <nz-divider nzType="vertical"></nz-divider>   Issue a Refund
+    <i nz-icon nzType="sync" nzTheme="outline"></i> <nz-divider nzType="vertical"></nz-divider> Issue a Refund
 
   </div>
   <div class="col-xl-3 offset-xl-3">
 
-              <img src="assets/images/logo.png"  height="150" width="200"/>
+    <img src="assets/images/logo.png" height="150" width="200" />
 
   </div>
-</div>
-{{this.form.value | json}}
-  <form
-    [formGroup]="form"
-    (ngSubmit)="submitForm(formDirective)"
-    novalidate
-    #formDirective="ngForm"
-  >
-  <mat-form-field class="col-xl-12" [formGroup]="form">
+</div>  
+
+<form [formGroup]="form" (ngSubmit)="submitForm(formDirective)" novalidate #formDirective="ngForm">
+  <mat-form-field class="col-xl-6" [formGroup]="form">
     <mat-label>
       Customer Name
     </mat-label>
-    <input
-      type="text"
-      matInput
-      formControlName="customerName"
-      placeholder="Customer Name"
-    />
+    <input type="text" matInput formControlName="customerName" placeholder="Customer Name" />
 
     <mat-error *ngIf="form.controls.customerName?.hasError('required')">
       Customer Name is required
     </mat-error>
   </mat-form-field>
-  <mat-form-field class="col-xl-12" [formGroup]="form">
+  <mat-form-field class="col-xl-6" [formGroup]="form">
     <mat-label>
       Insurance Company Name
     </mat-label>
-    <input
-      type="text"
-      matInput
-      formControlName="companyName"
-      placeholder="Insurance Company Name"
-    />
+    <input type="text" matInput formControlName="companyName" placeholder="Insurance Company Name" />
 
     <mat-error *ngIf="form.controls.companyName?.hasError('required')">
       Insurance Company Name is required
     </mat-error>
   </mat-form-field>
-    <mat-form-field class="col-xl-12">
-      <mat-label>
-        Refund Issuance Date
-      </mat-label>
-      <input
-        matInput
-        [matDatepicker]="picker"
-        formControlName="refundDate"
-        (dateChange)="startChange($event)"
-      />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-      <mat-error *ngIf="form.controls.refundDate?.hasError('required')">
-        Refund Issuance date is required
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field class="col-xl-12" [formGroup]="form">
-      <mat-label>
-        Policy Number
-      </mat-label>
-      <input
-        type="text"
-        matInput
-        formControlName="policyNumber"
-        placeholder="Enter a Policy Number"
-      />
-
-      <mat-error *ngIf="form.controls.policyNumber?.hasError('required')">
-        Policy Number is required
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field class="col-xl-12" [formGroup]="form">
-      <mat-label>
-        Vehicle
-      </mat-label>
-      <input
-        type="text"
-        matInput
-        formControlName="vehilcleId"
-        placeholder="Type to select Vehicle"
-        [matAutocomplete]="auto3"
-      />
-      <mat-autocomplete
-        #auto3="matAutocomplete"
-        [displayWith]="displayVehicle.bind(this)"
-      >
-        <mat-option
-          *ngFor="let option of filteredVehicle | async"
-          [value]="option.id"
-        >
-          {{ option.make }} | {{ option.model }}
-        </mat-option>
-      </mat-autocomplete>
-      <mat-error *ngIf="form.controls.vehicleId?.hasError('required')">
-        Vehicle is required
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field class="col-xl-12">
-      <mat-label>Policy Type </mat-label>
-      <mat-select formControlName="policyTypeId">
-        <mat-option *ngFor="let item of PolicyType" [value]="item.id">
-          {{ item.name }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="form.controls.policyTypeId?.hasError('required')">
-        Policy Type is required
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="col-xl-12" [formGroup]="form">
-      <mat-label>
-        Insurance Type
-      </mat-label>
-      <mat-select formControlName="insuranceTypeId">
-        <mat-option *ngFor="let item of insuranceTypeSelect" [value]="item.id">
-          {{ item.name }}
-        </mat-option>
-      </mat-select>
-
-
-    </mat-form-field>
-    <mat-form-field class="col-xl-12" [formGroup]="form">
-      <mat-label>Insurance Broker</mat-label>
-      <input
-        type="text"
-        matInput
-        placeholder="Type here to select Broker"
-        formControlName="insuranceCompanyId"
-        [matAutocomplete]="auto"
-      />
-      <mat-autocomplete
-        #auto="matAutocomplete"
-        [displayWith]="displayCompanyFn.bind(this)"
-      >
-        <!-- <button mat-button color="primary" class="add-button" (click)="showCustomerModal()"><mat-icon id="create">add</mat-icon>Add New Customer</button> -->
-        <mat-option
-          *ngFor="let option of filteredInsuranceCompanies | async"
-          [value]="option.id"
-        >
-          {{ option.displayNameAs }}
-        </mat-option>
-      </mat-autocomplete>
-      <mat-error *ngIf="form.controls.insuranceCompanyId?.hasError('required')">
-        Broker is required
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field class="col-xl-12" [formGroup]="form">
-      <mat-label>
-        Refund Amount Recevied From Insurance Broker
-      </mat-label>
-      <input
-        type="text"
-        matInput
-        formControlName="amountForBroker"
-        placeholder="Refund Amount Recevied From Insurance Broker"
-      />
-
-      <mat-error *ngIf="form.controls.amountForBroker?.hasError('required')">
-        Refund Amount To Insurance Broker is required
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="col-xl-12" [formGroup]="form">
-      <mat-label>Sales Agent</mat-label>
-      <input
-        type="text"
-        matInput
-        placeholder="Type here to select Agent"
-        formControlName="agentId"
-        [matAutocomplete]="auto5"
-      />
-      <mat-autocomplete
-        #auto5="matAutocomplete"
-        [displayWith]="displaySalesAgent.bind(this)"
-      >
-        <!-- <button mat-button color="primary" class="add-button" (click)="showCustomerModal()"><mat-icon id="create">add</mat-icon>Add New Customer</button> -->
-        <mat-option
-          *ngFor="let option of filtersalesAgents | async"
-          [value]="option.id"
-        >
-          {{ option.displayNameAs }}
-        </mat-option>
-      </mat-autocomplete>
-      <mat-error *ngIf="form.controls.agentId?.hasError('required')">
-        Agent is required
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field class="col-xl-12" [formGroup]="form">
-      <mat-label>
-        Refunded Amount To Sales Agent
-      </mat-label>
-      <input
-        type="text"
-        matInput
-        formControlName="amountForSalesAgent"
-        placeholder="Refunded Amount To Sales Agent"
-      />
-
-      <mat-error
-        *ngIf="form.controls.amountForSalesAgent?.hasError('required')"
-      >
-        Refunded Amount To Sales Agent is required
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field class="col-xl-4"  >
-      <mat-label> Credit Account </mat-label>
-      <input type="text" matInput formControlName="AccountId"
-          placeholder="Type to select credit account" [matAutocomplete]="auto">
-      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayAccounts.bind(this)">
-          <!-- <button mat-button color="primary" class="add-button" (click)="showCustomerModal()"><mat-icon id="create">add</mat-icon>Add New Customer</button> -->
-          <mat-option *ngFor="let option of filterAccounts | async" [value]="option.id">
-              {{option.name}} | {{option.description}}
-          </mat-option>
-      </mat-autocomplete>
-      <mat-error *ngIf="form.controls.accountId?.hasError('required')">
-          Credit Account is required
-      </mat-error>
+  <mat-form-field class="col-xl-6">
+    <mat-label>
+      Refund Issuance Date
+    </mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="refundDate" (dateChange)="startChange($event)" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="form.controls.refundDate?.hasError('required')">
+      Refund Issuance date is required
+    </mat-error>
   </mat-form-field>
-    <div class="flex">
-      <button nz-button nzType="primary" type="submit"> {{isEditMode?'Update Refund Transaction':'Issue a new Refund Transaction'}} </button>
+  <mat-form-field class="col-xl-6" [formGroup]="form">
+    <mat-label>
+      Policy Number
+    </mat-label>
+    <input type="text" matInput formControlName="policyNumber" placeholder="Enter a Policy Number" />
+
+    <mat-error *ngIf="form.controls.policyNumber?.hasError('required')">
+      Policy Number is required
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="col-xl-6" [formGroup]="form">
+    <mat-label>
+      Vehicle
+    </mat-label>
+    <input type="text" matInput formControlName="vehilcleId" placeholder="Type to select Vehicle"
+      [matAutocomplete]="auto3" />
+    <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayVehicle.bind(this)">
+      <mat-option *ngFor="let option of filteredVehicle | async" [value]="option.id">
+        {{ option.make }} | {{ option.model }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="form.controls.vehicleId?.hasError('required')">
+      Vehicle is required
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="col-xl-6">
+    <mat-label>Policy Type </mat-label>
+    <mat-select formControlName="policyTypeId">
+      <mat-option *ngFor="let item of PolicyType" [value]="item.id">
+        {{ item.name }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.controls.policyTypeId?.hasError('required')">
+      Policy Type is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-xl-6" [formGroup]="form">
+    <mat-label>
+      Insurance Type
+    </mat-label>
+    <mat-select formControlName="insuranceTypeId">
+      <mat-option *ngFor="let item of insuranceTypeSelect" [value]="item.id">
+        {{ item.name }}
+      </mat-option>
+    </mat-select>
+
+
+  </mat-form-field>
+  <mat-form-field class="col-xl-6" [formGroup]="form">
+    <mat-label>Insurance Broker</mat-label>
+    <input type="text" matInput placeholder="Type here to select Broker" formControlName="insuranceCompanyId"
+      [matAutocomplete]="auto" />
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayCompanyFn.bind(this)">
+      <!-- <button mat-button color="primary" class="add-button" (click)="showCustomerModal()"><mat-icon id="create">add</mat-icon>Add New Customer</button> -->
+      <mat-option *ngFor="let option of filteredInsuranceCompanies | async" [value]="option.id">
+        {{ option.displayNameAs }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="form.controls.insuranceCompanyId?.hasError('required')">
+      Broker is required
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="col-xl-6" [formGroup]="form">
+    <mat-label>
+      Refund Amount Recevied From Insurance Broker
+    </mat-label>
+    <input type="text" matInput formControlName="amountForBroker"
+      placeholder="Refund Amount Recevied From Insurance Broker" />
+
+    <mat-error *ngIf="form.controls.amountForBroker?.hasError('required')">
+      Refund Amount To Insurance Broker is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-xl-6" [formGroup]="form">
+    <mat-label>Sales Agent</mat-label>
+    <input type="text" matInput placeholder="Type here to select Agent" formControlName="agentId"
+      [matAutocomplete]="auto5" />
+    <mat-autocomplete #auto5="matAutocomplete" [displayWith]="displaySalesAgent.bind(this)">
+      <!-- <button mat-button color="primary" class="add-button" (click)="showCustomerModal()"><mat-icon id="create">add</mat-icon>Add New Customer</button> -->
+      <mat-option *ngFor="let option of filtersalesAgents | async" [value]="option.id">
+        {{ option.displayNameAs }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="form.controls.agentId?.hasError('required')">
+      Agent is required
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="col-xl-6" [formGroup]="form">
+    <mat-label>
+      Refunded Amount To Sales Agent
+    </mat-label>
+    <input type="text" matInput formControlName="amountForSalesAgent" placeholder="Refunded Amount To Sales Agent" />
+
+    <mat-error *ngIf="form.controls.amountForSalesAgent?.hasError('required')">
+      Refunded Amount To Sales Agent is required
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="col-xl-6">
+    <mat-label> Credit Account </mat-label>
+    <input type="text" matInput formControlName="accountId" placeholder="Type to select credit account"
+      [matAutocomplete]="AccountAuto">
+    <mat-autocomplete #AccountAuto="matAutocomplete" [displayWith]="displayAccounts.bind(this)">
+      <!-- <button mat-button color="primary" class="add-button" (click)="showCustomerModal()"><mat-icon id="create">add</mat-icon>Add New Customer</button> -->
+      <mat-option *ngFor="let option of filterAccounts | async" [value]="option.id">
+        {{option.name}} | {{option.description}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="form.controls.accountId?.hasError('required')">
+      Credit Account is required
+    </mat-error>
+  </mat-form-field>
+  <div class="text-center">
+    <button nz-button nzType="primary" type="submit"> {{isEditMode?'Update Refund Transaction':'Issue a new Refund Transaction'}} </button>
   </div>
-  </form>
-
-
+</form>

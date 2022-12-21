@@ -1,5 +1,3 @@
-
-
 <div class="row">
 
     <div class="col-xl-4 breadcrumbs mb-3">
@@ -85,88 +83,97 @@
         </mat-chip-list>
     </div>
     <div class="col-xl-12 mb-3">
-        <a nz-button class="float-right" nzType="primary" (click)="openModal()" >
-           Issue a refund </a>
+        <a nz-button class="float-right" nzType="primary" (click)="openModal()">
+            Issue a refund </a>
     </div>
 
 
 </div>
 
 
-    <div class="row">
-        <div class="col-xl-12 ">
-            <nz-table class="card" #rowSelectionTable [nzData]="listData" [nzNoResult]="noData" nzShowSizeChanger
-                [nzPageSize]="pageSize">
-                <thead>
-                    <tr>
-                        <th class="ant-table-selection-column" [nzSortFn]="sortNumbersFn" (click)="sortOn('index')">#
-                        </th>
-                        <th [nzSortFn]="sortNamesFn" (click)="sortOn('date')"> Refund date</th>
-                        <th [nzSortFn]="sortNamesFn" (click)="sortOn('salesAgent')"> Sales agent  </th>
-                        <th [nzSortFn]="sortNamesFn" (click)="sortOn('policyNumber')"> Policy number  </th>
-                        <th [nzSortFn]="sortNamesFn" (click)="sortOn('insuranceType')"> Insurance yype  </th>
-                        <th [nzSortFn]="sortNamesFn" (click)="sortOn('vehicle')"> Vehicle </th>
-                        <th [nzSortFn]="sortNumbersFn" (click)="sortOn('transactionReferenceNumber')">Transaction reference number</th>
+<div class="row">
+    <div class="col-xl-12 ">
+        <nz-table class="card" #rowSelectionTable [nzData]="listData" [nzNoResult]="noData" nzShowSizeChanger
+            [nzPageSize]="pageSize">
+            <thead>
+                <tr>
+                    <th class="ant-table-selection-column" [nzSortFn]="sortNumbersFn" (click)="sortOn('index')">#
+                    </th>
+                    <th [nzSortFn]="sortNamesFn" (click)="sortOn('customerName')">Customer Name</th>
+                    <th [nzSortFn]="sortNamesFn" (click)="sortOn('insuranceCampany')">Insurance Company</th>
+                    <th [nzSortFn]="sortNamesFn" (click)="sortOn('date')"> Refund date</th>
+                    <th [nzSortFn]="sortNamesFn" (click)="sortOn('policyNumber')"> Policy number </th>
+                    <th [nzSortFn]="sortNamesFn" (click)="sortOn('vehicle')"> Vehicle </th>
+                    <th [nzSortFn]="sortNamesFn" (click)="sortOn('policyType')">Policy Type</th>
+                    <th [nzSortFn]="sortNamesFn" (click)="sortOn('insuranceType')"> Insurance Type </th>
+                    <th [nzSortFn]="sortNamesFn" (click)="sortOn('insuranceBroker')">Insurance Broker</th>
+                    <th [nzSortFn]="sortNamesFn" (click)="sortOn('refund')">Amount From Broker</th>
+                    <th [nzSortFn]="sortNamesFn" (click)="sortOn('salesAgent')"> Sales agent </th>
+                    <th [nzSortFn]="sortNamesFn" (click)="sortOn('amount')">Refunded Amount to Agent</th>
+                    <th [nzSortFn]="sortNamesFn" (click)="sortOn('creditAccount')">Credit Account</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
 
-                        <th [nzSortFn]="sortNumbersFn" (click)="sortOn('amountForSalesAgent')">Amount given to sales agent</th>
-                        <th [nzSortFn]="sortNamesFn" (click)="sortOn('memo')">Message on receipt</th>
-                        <th [nzSortFn]="sortNamesFn" (click)="sortOn('account')">Refund Account</th>
-                        <th [nzSortFn]="sortNumbersFn" (click)="sortOn('paymentMethod')"> Payment Method</th>
-                        <th [nzSortFn]="sortNamesFn" (click)="sortOn('amount')">Refunded Amount to Agent</th>
+            <tbody>
+                <tr *ngFor="let data of rowSelectionTable.data; let i = index;">
+                    <td style="padding-left: 1% !important;">{{i+1}}</td>
+                    <td>{{data.customerName}}</td>
+                    <td>{{data.insuranceCompanyId}}</td>
+                    <td>{{data.refundDate | date}}</td>
+                    <td>{{data.policyNumber}}</td>
+                    <td>{{data.vehicle.make}}</td>
+                    <td>{{data.policyType.name}}</td>
+                    <td>{{data.insuranceType.name}}</td>
+                    <td>{{data.insuranceCompany.company}}</td>
+                    <td>{{data.amountForBroker}}</td>
+                    <td>{{data.agent.displayNameAs}}</td>
+                    <td>{{data.amountForSalesAgent}}</td>
+                    <td>{{data.account.name}}</td>
 
-                        <!-- <th>Phone Number</th> -->
-                        <!-- <th [nzSortFn]="sortNamesFn" (click)="sortOn('lastLoggedIn')">Last Logged in</th> -->
-                        <th>Action</th>
-                    </tr>
-                </thead>
+                    <td><i nz-icon nzType="edit" nz-tooltip nzTooltipTitle="Edit Contact"
+                        (click)="$event.stopPropagation(editRefund(data))" nzTheme="fill" class="text-success"
+                       ></i>
+        
+                      <nz-divider nzType="vertical"></nz-divider>
+        
+                      <i nz-icon nzType="delete" nz-tooltip nzTooltipTitle="Delete Contact"
+                        (click)="$event.stopPropagation(deleteRefund(data))" nzTheme="fill" class="text-danger"
+                       ></i>
+                    </td>
 
-                <tbody>
-                    <tr *ngFor="let data of rowSelectionTable.data; let i = index;"
-                        >
-                        <td>
-                            {{data.index}}
-
-                        </td>
-                        <td>
-                           {{data.refundDate | date}}
-                        </td>
-                        <td>{{data.salesAgent.displayNameAs}}</td>
-                        <td>{{data.policyNumber}}</td>
-                        <td>{{data.insuranceType.name}}</td>
-                        <td>{{data.vehicle.name}}</td>
-                        <td>{{data.transactionReferenceNumber}}</td>
-                        <td>{{ data.creditAccount.name }}</td>
-                        <td>{{ data.paymentMethod.name }}</td>
-                        <td>{{ data.amount}}</td>
-
-
-                    </tr>
-                </tbody>
-            </nz-table>
-        </div>
+                </tr>
+            </tbody>
+        </nz-table>
     </div>
+</div>
 
 
 <ng-template #noData>
     <nz-empty class="m-5" [nzNotFoundImage]="'assets/images/no-data/no-team.svg'" [nzNotFoundContent]="noDataDescrp">
     </nz-empty>
 </ng-template>
-<nz-modal nzFooter="null" nzHeader="Issue a Refund Transaction" [nzCloseIcon]="cancelIcon"[nzBodyStyle] nzWidth="1000" [(nzVisible)]="isVisible" nzMaskClosable="false"  (nzOnCancel)="closeModal()">
-  <div>
-    <app-add-refund></app-add-refund>
-  </div>
+
+<ng-template>
+<nz-modal nzFooter="null" nzHeader="Issue a Refund Transaction" [nzCloseIcon]="cancelIcon" [nzBodyStyle] nzWidth="1000"
+    [(nzVisible)]="isVisible" nzMaskClosable="false" (nzOnCancel)="closeModal()">
+    <div>
+        <app-add-refund [observerRefund]="refund"></app-add-refund>
+    </div>
 </nz-modal>
+</ng-template>
+
 <ng-template #noDataDescrp>
     <div class="m-4">
         No Data Available.
-        <a  (click)="showModal()" class="kit__utils__link">
+        <a (click)="showModal()" class="kit__utils__link">
             Receive New Payment
         </a>
     </div>
 </ng-template>
 <ng-template #cancelIcon>
-  <div class="font-size-24">
-    <i nz-icon nzType="close" nzTheme="outline" nz-tooltip></i>
-  </div>
+    <div class="font-size-24">
+        <i nz-icon nzType="close" nzTheme="outline" nz-tooltip></i>
+    </div>
 
 </ng-template>

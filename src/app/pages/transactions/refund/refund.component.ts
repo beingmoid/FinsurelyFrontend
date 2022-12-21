@@ -4,6 +4,7 @@ import { Payment, Refund } from 'src/app/models/refundDTO';
 import { RefundServiceService } from 'src/app/services/APIServices/refund-service.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AlertService } from 'src/app/services/alert.service';
 
 class FilterObject {
   constructor(private data: Payment) { }
@@ -16,9 +17,14 @@ class FilterObject {
 })
 export class RefundComponent implements OnInit {
   form: FormGroup;
+  isEditMode = false;
+
+  refund: Subject<Refund> = new Subject();
 
   constructor(private sharedService:SharedService,
-    private refundService:RefundServiceService, private fb: FormBuilder) {
+    private refundService:RefundServiceService,
+     private fb: FormBuilder,
+    private _alertService: AlertService) {
 
     this.sharedService.closeForm.subscribe(res=>{
       this.modalView=false;
@@ -87,6 +93,10 @@ export class RefundComponent implements OnInit {
   sortNumbersFn = (a, b) => a[this.sortColumnKey] - b[this.sortColumnKey]
 
   ngOnInit(): void {
+    this.sharedService.formSubmited.subscribe((res) => {
+      this.isVisible = false;
+    }); 
+
     this.refundService.refundObserver$.subscribe(res=>{
       this.listData= res as Refund[];
     })
@@ -94,8 +104,31 @@ export class RefundComponent implements OnInit {
   }
   openModal(){
     this.isVisible=true;
+    this.isEditMode= false;
+
   }
   closeModal(){
     this.isVisible=false;
   }
+
+  editRefund(data) {
+    this.refund.next(data);
+    this.isVisible = true;
+    this.isEditMode =true;
+  }
+  deleteRefund(data) {
+    this._alertService.confirm('Are you sure you want to delete this?').then((res)=>{
+      if(res.isConfirmed){
+        this.refundService.deleteRefund(data.id).subscribe((res) => {
+          if (res.isSuccessfull) {
+    
+            this._alertService.success('Refund SuccessFully Deleted');
+            this.refundService.GetRefunds();
+          }
+        });
+      }
+    })
+  
+  }
+
 }

@@ -1,4 +1,3 @@
-
 <div class="row">
   <div class="col-xl-6"></div>
   <div class="col-xl-6">
@@ -89,43 +88,48 @@
 </div>
 
 <div class="row">
-    <div class="col-xl-12">
-      <nz-table  [nzData]="list" class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small" #filterTable
-       nzShowSizeChanger [nzPageSize]="pageSize" >
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Branch</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-  
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of list">
-            <td>{{item.name}}</td>
-            <td>{{item.branch.name}}</td>
-            <td>{{item.startDate}}</td>
-            <td>{{item.endDate}}</td>
-            <td><i nz-icon nzType="edit" nz-tooltip nzTooltipTitle="Edit Contact"
-              (click)="$event.stopPropagation(editPayroll(item))" nzTheme="fill" class="text-success"
-             ></i>
+  <div class="col-xl-12">
+    <nz-table [nzData]="list" class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small" #filterTable
+      nzShowSizeChanger [nzPageSize]="pageSize">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Branch</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Status</th>
+          <th>Expense Account</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of list" >
+          <td style="padding-left: 1% !important; ">{{item.name}}</td>
+          <td>{{item.branch.branchName}}</td>
+          <td>{{item.startDate}}</td>
+          <td>{{item.endDate}}</td>
+          <td *ngIf="item.status === 1" ><span nz-icon nzType="check-circle"  nzTheme="fill" [nzIconfont]="larger"></span></td>
+          <td *ngIf="item.status === 2" ><span nz-icon nzType="close-circle" nzTheme="fill"></span></td>
+
+          <td>{{item.expenseAccount.name}}</td>
+
+          <td><i nz-icon nzType="edit" nz-tooltip nzTooltipTitle="Edit Contact"
+              (click)="$event.stopPropagation(editPayroll(item))" nzTheme="fill" class="text-success"></i>
 
             <nz-divider nzType="vertical"></nz-divider>
 
             <i nz-icon nzType="delete" nz-tooltip nzTooltipTitle="Delete Contact"
-              (click)="$event.stopPropagation(deletePayroll(item))" nzTheme="fill" class="text-danger"
-             ></i>
+              (click)="$event.stopPropagation(deletePayroll(item))" nzTheme="fill" class="text-danger"></i>
           </td>
-       
-          
-          </tr>
-        </tbody>
-      </nz-table>
-    </div>
-  </div>
 
-  <nz-modal nzWidth="1000" [(nzVisible)]="isVisible" (nzOnCancel)="closeModal()" [nzTitle]="isEditMode?'Update Payroll':'Add New Payroll' ">
-<app-add-payroll></app-add-payroll>
-  </nz-modal>
+
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-modal nzWidth="1000" [(nzVisible)]="isVisible" (nzOnCancel)="closeModal()"
+  [nzTitle]="isEditMode?'Update Payroll':'Add New Payroll' ">
+  <app-add-payroll></app-add-payroll>
+</nz-modal>

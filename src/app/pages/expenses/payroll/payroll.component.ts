@@ -81,7 +81,7 @@ export class PayrollComponent implements OnInit {
       this.list = res;
     })
     this._payrollService.GetPayroll();
-    this._sharedService.formSubmited.subscribe(res=>{
+    this._sharedService.formSubmited.subscribe(res => {
       this.isVisible = false;
     })
 
@@ -95,7 +95,7 @@ export class PayrollComponent implements OnInit {
     this.isVisible = false;
   }
 
-  editExpense(data: payroll) {
+  editPayroll(data: payroll) {
 
 
     this.payroll.next(data);
@@ -104,7 +104,7 @@ export class PayrollComponent implements OnInit {
     this.isVisible = true;
     this.isEditMode = true;
   }
-  deleteExpense(data) {
+  deletePayroll(data) {
     this._alertService.confirm('Are you sure you want to delete this?').then((res) => {
       if (res.isConfirmed) {
         this._payrollService.DeletePayroll(data.id).subscribe((res) => {
