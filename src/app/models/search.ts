@@ -9,4 +9,5 @@ export class Search{
   downloadPDF:boolean;
   downloadExcel:boolean;
   page:number;
+  id:number;
 }

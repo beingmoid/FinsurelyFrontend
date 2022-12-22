@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular
 })
 export class AddAnnouncementComponent implements OnInit {
 form: FormGroup;
+
   constructor(private fb: FormBuilder,
     ) { }
 

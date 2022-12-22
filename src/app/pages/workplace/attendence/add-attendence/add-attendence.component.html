@@ -1,1 +1,49 @@
-<p>add-attendence works!</p>
+<div class="container">
+    <div class="row">
+        <form [formGroup]="form" (ngSubmit)="onSubmit(formDirective)" novalidate #formDirective="ngForm" class="col-xl-12">
+
+            <mat-form-field class="col-xl-6">
+                <mat-label>Full Name</mat-label>
+                <input type="text" matInput placeholder="Enter Full Name">
+            </mat-form-field>
+
+            <mat-form-field class="col-xl-6">
+                <mat-label>Job Title</mat-label>
+                <mat-select placeholder="">
+                    <mat-option value="1">1</mat-option>
+                    <mat-option value="2">2</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+            <mat-form-field class="col-xl-6">
+                <mat-label>Time Inn</mat-label>
+                <input matInput [matDatepicker]="picker" placeholder="Enter Time Inn">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="col-xl-6">
+                <mat-label>Time Out</mat-label>
+                <input matInput [matDatepicker]="picker1" placeholder="Enter Time Out">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="col-xl-6">
+                <mat-label>ID</mat-label>
+                <input type="number" matInput placeholder="Enter ID">
+            </mat-form-field>
+
+            <mat-form-field class="col-xl-6">
+                <mat-label>Branch</mat-label>
+
+            </mat-form-field>
+
+            <div class="text-center">
+                <button nz-button nzType="primary" class="" type="submit">Post Announcement</button>
+
+            </div>
+        </form>
+    </div>
+</div>

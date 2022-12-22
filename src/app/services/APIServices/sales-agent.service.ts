@@ -103,4 +103,6 @@ export class SalesAgentService extends GenericApiService {
     return this.GetAll(API_URL+API_ENDPOINTS.SalesAgent+"/GetBalance?id="+id);
   }
 
+  
+
 }

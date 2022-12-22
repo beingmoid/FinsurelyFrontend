@@ -14,6 +14,7 @@
   <ng-template #attendence>
     <nz-modal nzWidth="1000" [(nzVisible)]="isVisible" (nzOnCancel)="closeModal()"
       [nzTitle]="isEditMode?'Update Attendence':'Add New Attendence' ">
+
       <app-add-attendence></app-add-attendence>
     </nz-modal>
   </ng-template>
