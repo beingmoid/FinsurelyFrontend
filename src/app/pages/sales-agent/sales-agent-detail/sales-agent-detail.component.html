@@ -154,7 +154,7 @@
               </div> -->
                 <nz-table class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small"
              nzShowSizeChanger [nzPageSize]="pageSize"
-
+              
                 [nzData]="statementList"
                     [nzFooter]="tableFooter" [nzLoading]="loading">
                     <thead>
@@ -169,11 +169,8 @@
                             <th> Insurance</th>
                             <th>Service </th>
                             <th>Type </th>
-                            <th> Insurance</th>
                             <th> Vehicle</th>
                             <th> Body </th>
-
-
                             <th>Debit</th>
                             <th>Credit</th>
 
@@ -202,31 +199,16 @@
                                                                           )
                                                                                   )
                                }}</td>
-                            <td *ngIf="data.transactionType==3" colspan="8" style="text-align: center;">{{
-
-
-                              (  data.transactionType ==1?
-                              "POLICY INVOICE":
-                                (data.transactionType==2?
-                                "PAYMENT":
-                                (data.transactionType==3?
-                                "-----------------    OPENING BALANCE    -----------------":
-                                ( data.transactionType==8?
-                                 "REFUND":
-                                "UNKNOWN TRANSACTION"
-                                                          )
-                                                                    )
-                                                                          )
-                                                                                  )
-                               }}</td>
+                            <td *ngIf="data.transactionType==3" colspan="08" style="text-align: center;">
+                               {{ "-----------------    OPENING BALANCE    -----------------"}}
+                              </td>
                             <ng-container *ngIf="data.transactionType!=3">
 
                               <td> {{data.customerName}} </td>
                               <td> {{data.policyNumber}} </td>
                               <td>{{data.insuranceType}}</td>
-                              <td>{{data.policyType}}</td>
-
                               <td> {{data.serviceType }} </td>
+                              <td>{{data.policyType}}</td>
                               <td> {{data.vehicle}} </td>
                               <td> {{data.bodyType}} </td>
                             </ng-container>
