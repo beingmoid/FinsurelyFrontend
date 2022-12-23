@@ -23,6 +23,8 @@ import { SalesService } from 'src/app/services/APIServices/sales.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { environment } from 'src/environments/environment';
 import autoTable from 'jspdf-autotable'
+import { NzTableQueryParams } from 'ng-zorro-antd';
+import { PaginationParams } from 'src/app/models/paginatedResponse';
 export class SearchAndFilter {
   start: Date
   end: Date
@@ -43,7 +45,7 @@ export class SalesAgentDetailComponent implements OnInit {
   paymentAndBilling: PaymentAndBilling;
   paymentDue: number;
   cardLoading: boolean;
-  page: number;
+  page = 1;
   totalPages: number;
   pageSize = 10;
   fullName: string;
@@ -76,6 +78,10 @@ export class SalesAgentDetailComponent implements OnInit {
   entity: UserDetailDTO;
   _data: Reconcilation;
   form: FormGroup;
+  totalCount = undefined;
+  isSearch = false;
+  params: PaginationParams<number> = new PaginationParams<number>();
+  totalBalance;
 
   constructor(private _router: Router,
     private fb: FormBuilder,
@@ -131,11 +137,11 @@ export class SalesAgentDetailComponent implements OnInit {
     });
 
     this.form = this.fb.group({
-      dateFrom: new FormControl(null),
-      dateTo: new FormControl(null),
-      branch: new FormControl(null),
-      isPdf: new FormControl(null),
-      isExcel: new FormControl(null)
+      from: new FormControl(null),
+      to: new FormControl(null),
+      requestExcel: new FormControl(null),
+      requestPdf: new FormControl(null),
+      searchQuery: new FormControl(null),
 
     })
 
@@ -206,16 +212,6 @@ export class SalesAgentDetailComponent implements OnInit {
   }
   statementList: any[];
 
-  async FetchStatement($event) {
-    console.log($event)
-    this.service.GetSalesAgentStatement(this.userDetailId, this.page, this.pageSize).subscribe(async res => {
-      if ((await res))
-        this.statementList = res.dynamicResult.data;
-      this.totalPages = res.dynamicResult.totalPages;
-
-      console.log('Logger', res);
-    });
-  }
   async ngOnInit(): Promise<void> {
     this._sharedService.formSubmited.subscribe(res => {
 
@@ -316,14 +312,18 @@ export class SalesAgentDetailComponent implements OnInit {
         this._router.navigate(['/sales-agent'])
       } else {
 
-        this.page = 10;
-        this.service.GetSalesAgentStatement(this.userDetailId, this.page, this.pageSize).subscribe(async res => {
-          if ((await res))
-            this.statementList = res.dynamicResult.data;
-          this.totalPages = res.dynamicResult.totalPages;
+        // this.page = 10;.
 
-          console.log('Logger', res);
-        });
+        this.params.id = this.userDetailId;
+
+
+        // this.service.SearchWithPagination(this.params).subscribe(async res => {
+        //   if ((await res))
+        //     this.statementList = res.dynamicResult.data;
+        //   this.totalPages = res.dynamicResult.totalPages;
+
+        //   console.log('Logger', res);
+        // });
 
 
         await this.service.GetSaleAgentDetail(this.userDetailId).subscribe(async res => {
@@ -627,6 +627,33 @@ export class SalesAgentDetailComponent implements OnInit {
     pdf.save(`${this.customerDetail.displayNameAs + Date.now()}.pdf`);
   }
   DownloadXCL() {
+
+  }
+
+  onQueryParamsChange(params: NzTableQueryParams): void {
+this.searchPag();
+console.log(this.pageSize, this.page);
+
+  }
+
+  searchPag() {
+    var data = this.form.value as PaginationParams<number>;
+    data.id = this.userDetailId;
+    data.page = this.page;
+    data.itemsPerPage = this.pageSize;
+    this.service.SearchWithPagination(data);
+    this.service.salesAgentStatementObserver$.subscribe((res => {
+      this.statementList = res?.data;
+            this.totalCount =res?.totalCount;  
+      this.totalBalance= res?.totalBalance;
+      console.log('ye wal alog', res);
+      // console.log(this.totalBalance);
+      console.log('statementList', this.statementList);
+      // console.log(this.totalCount);
+    }))
+
+    console.log('chcce', data)
+    console.log(this.form.value);
 
   }
 
