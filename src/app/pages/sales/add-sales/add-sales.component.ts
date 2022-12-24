@@ -20,6 +20,7 @@ import { BodytypeService } from 'src/app/services/APIServices/bodytype.service';
 import { ServiceService } from 'src/app/services/APIServices/service.service';
 import { PolicyTypeService } from 'src/app/services/APIServices/policytype.service';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { PaginationParams } from 'src/app/models/paginatedResponse';
 
 
 @Component({
@@ -30,6 +31,7 @@ import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autoc
 export class AddSalesComponent implements OnInit,OnDestroy {
   @Input()  inputObserver?:Subject<SalesInvoice>;
   @ViewChild(MatAutocompleteTrigger) autocompleteTrigger: MatAutocompleteTrigger;
+  @ViewChild('formDirective') formGroupDirective: FormGroupDirective;
   sysdate = moment().format('MMMM Do YYYY, h:mm a');
   branch: Branch[]=[];
   BodyType:BodyType[];
@@ -73,12 +75,12 @@ export class AddSalesComponent implements OnInit,OnDestroy {
 
         this.service.GetVehicles();
       });
-
+      
     this.SalesForm=this.fb.group({
       customerName:[null,Validators.required],
       chassisNumber:[null,Validators.required],
-      salesInvoiceDate:[new Date(),Validators.required],
       insuranceCompanyName:[null,Validators.required],
+      salesInvoiceDate:[new Date(),Validators.required],
       policyTypeId:[null,Validators.required],
       bodyTypeId:[null],
       serviceId:[null],
@@ -107,9 +109,6 @@ export class AddSalesComponent implements OnInit,OnDestroy {
     this.AmountReceviable=this.fb.control('');
 
    }
-  ngOnDestroy(): void {
-
-  }
    isLoading=false;
    comission:number=0;
    ComissionRate:ComissionRates;
@@ -143,160 +142,6 @@ export class AddSalesComponent implements OnInit,OnDestroy {
   get saleInvoice(){return  this.SalesForm.controls; }
   get saleLine(){return  ((this.SalesForm.controls.saleLineItem as FormArray).controls[0] as FormGroup); }
   async ngOnInit(): Promise<void>{
-
-    if(this.inputObserver){
-      this.inputObserver.subscribe(res=>{
-        if(res){
-          this.SalesInvoice=res;
-          this.isEditMode=true;
-          this.insuranceService.GetSalesAgents();
-          this.shouldBeHidden=false;
-          this.salesId=res.id;
-          this.LineItemId=this.SalesInvoice.saleLineItem[0]?.id;
-          this.SalesForm.patchValue(res);
-          this.SalesForm.controls.insuranceCompanyId.patchValue(res.insuranceCompanyId)
-        }
-
-      });
-      this.SalesForm.controls.paymentMethodId.valueChanges.subscribe(res=>{
-
-        if(res==1) //cash sale
-        {
-
-          this.enableSaleAgent=false;
-          this.SalesForm.controls.salesInvoicePersonId.setValue(null);
-          this.SalesForm.controls.salesInvoicePersonId
-        }
-        else{
-          this.enableSaleAgent=true;
-        }
-
-        });
-      this.BranchService.GetBranch();
-      this.SalesForm.controls.salesInvoiceDate.setValue(new Date().getDate())
-      this.saleLine.controls.commission.valueChanges.subscribe(res=>{
-        this.CalculateNET();
-      });
-      this.saleLine.controls.salesPrice.valueChanges.subscribe(res=>{
-        this.CalculateActualCommission(res);
-      });
-      console.log(this.saleInvoice);
-      this.customerService.customerSelectListObserver$.subscribe(res=>{
-        this.customers=res;
-
-      });
-         this.customerService.GetCustomers();
-      this.SalesAgentService.salesAgentSelectListObserver$.subscribe(res=>{
-        this.salesAgents=res;
-      });
-      this.SalesAgentService.GetSalesAgents();
-      this.insuranceService.salesAgentSelectListObserver$.subscribe(res=>{
-        this.insuranceCompanys=res;
-        console.log(this.insuranceCompanys);
-
-      })
-        this.insuranceService.GetSalesAgents();
-    this.service.insuraceTypeObserver$.subscribe(res=>{
-      this.insuranceTypeSelect=res as InsuranceType[];
-    });
-    this.service.GetInsuranceTypes();
-    this.service.vehicleObserver$.subscribe(res=>{
-      this.vehicle=res as Vehicle[];
-    });
-
-    this.service.GetVehicles();
-    this.service.paymentMethodObserver$.subscribe(res=>{
-      this.paymentMethod=res;
-    });
-    this.service.GetPaymentMethod();
-    this.BranchService.branchObserver$.subscribe(res=>{
-      if(res){
-        this.branch= res as Branch[];
-      }
-    });
-    this.BodyTypeService.bodyTypeObserver$.subscribe(res=>{
-      this.BodyType = res as BodyType[];
-    })
-    this.BodyTypeService.GetBodyType();
-    this.PolicyTypeService.PolicyTypeObserver$.subscribe(res=>{
-      this.PolicyType = res as PolicyType[];
-    })
-    this.PolicyTypeService.GetPolicyType();
-    this.ServiceService.ServiceObserver$.subscribe(res=>{
-      this.Service = res as Service[];
-    });
-
-    this.filterPolicyType= this.SalesForm.controls.policyTypeId.valueChanges.pipe(
-
-      startWith(''),
-        map(value => typeof value === 'string' ? value : value),
-      map(address => address ? this._filterPolicyType(address) : this.PolicyType?.slice())
-
-    );
-    this.filteredBodyType= this.SalesForm.controls.bodyTypeId.valueChanges.pipe(
-
-      startWith(''),
-        map(value => typeof value === 'string' ? value : value),
-      map(address => address ? this._filterBodyType(address) : this.BodyType?.slice())
-
-    );
-    this.filterService= this.SalesForm.controls.serviceId.valueChanges.pipe(
-
-      startWith(''),
-        map(value => typeof value === 'string' ? value : value),
-      map(address => address ? this._filterService(address) : this.Service?.slice())
-
-    );
-    this.filterPolicyType= this.SalesForm.controls.insuranceCompanyId.valueChanges.pipe(
-
-      startWith(''),
-        map(value => typeof value === 'string' ? value : value),
-      map(address => address ? this._filterBodyType(address) : this.BodyType?.slice())
-
-    );
-    this.filteredInsuranceCompanies= this.SalesForm.controls.insuranceCompanyId.valueChanges.pipe(
-
-      startWith(''),
-        map(value => typeof value === 'string' ? value : value),
-      map(address => address ? this._filterInsuranceCompany(address) : this.insuranceCompanys?.slice())
-
-    );
-
-
-
-    // this.filterCustomers= this.SalesForm.controls.customerDetailId.valueChanges.pipe(
-
-    //   startWith(''),
-    //     map(value => typeof value === 'string' ? value : value),
-    //   map(address => address ? this._filterCustomers(address) : this.customers?.slice())
-
-    // );
-    this.filtersalesAgents= this.SalesForm.controls.salesInvoicePersonId.valueChanges.pipe(
-
-      startWith(''),
-        map(value => typeof value === 'string' ? value : value),
-      map(address => address ? this._filterSalesAgent(address) : this.salesAgents?.slice())
-
-    );
-      this.filteredVehicle=this.saleLine.controls.vehilcleId.valueChanges.pipe(
-        startWith(''),
-        map(value => typeof value === 'string' ? value : value),
-        map(make => make ? this._filterVehicle(make) : this.vehicle?.slice())
-      );
-      this.saleLine.controls.total.valueChanges.subscribe(res=>{
-        this.saleInvoice.total.patchValue(res);
-      });
-
-      this.filteredBranch=this.SalesForm.controls.branchId.valueChanges.pipe(
-
-        startWith(''),
-        map(value => typeof value === 'string' ? value : value),
-        map(make => make ? this._filterBranch(make) : this.branch?.slice())
-      );
-
-    }
-
-
     this.SalesForm.controls.paymentMethodId.valueChanges.subscribe(res=>{
 
       if(res==1) //cash sale
@@ -364,7 +209,11 @@ export class AddSalesComponent implements OnInit,OnDestroy {
   this.ServiceService.ServiceObserver$.subscribe(res=>{
     this.Service = res as Service[];
   });
+  // this.ServiceService.GetService();
 
+  // policyTypeId:[null,Validators.required],
+  // bodyTypeId:[null],
+  // serviceId:[null],
   this.filterPolicyType= this.SalesForm.controls.policyTypeId.valueChanges.pipe(
 
     startWith(''),
@@ -432,12 +281,31 @@ export class AddSalesComponent implements OnInit,OnDestroy {
       map(value => typeof value === 'string' ? value : value),
       map(make => make ? this._filterBranch(make) : this.branch?.slice())
     );
+      if(this.inputObserver){
+        this.inputObserver.subscribe(res=>{
+          if(res){
+            this.SalesInvoice=res;
+            this.isEditMode=true;
 
+            this.shouldBeHidden=false;
+            this.salesId=res.id;
+            this.LineItemId=this.SalesInvoice.saleLineItem[0]?.id;
+            this.SalesForm.patchValue(res);
+          }
+
+        });
+
+      }
 
 
 
   }
 
+  ngOnDestroy(): void {
+    this.formGroupDirective.resetForm();
+    this.SalesForm.reset();
+    this.isEditMode=false;
+  }
 
   displayCompanyFn(id) {
 
@@ -604,7 +472,7 @@ export class AddSalesComponent implements OnInit,OnDestroy {
   }
   private _filterPolicyType(value: string) {
     if(value)
-      return this.PolicyType? this.PolicyType?.filter(option => option.name?.toLowerCase().includes(value.toString().toLowerCase())):[];
+      return this.PolicyType ? this.PolicyType?.filter(option => option.name?.toLowerCase().includes(value.toString().toLowerCase())):[];
     else
     return;
   }
@@ -695,7 +563,7 @@ export class AddSalesComponent implements OnInit,OnDestroy {
       data.saleLineItem[0].saleId=0;
       this.saveSales(data,formDirective);
     }
-
+    this.sharedService.formSubmited.next(true);
   }
 
   updateSales(data:SalesInvoice,formDirective:FormGroupDirective){
@@ -703,10 +571,14 @@ export class AddSalesComponent implements OnInit,OnDestroy {
       if(res.isSuccessfull){
         formDirective.resetForm();
         this.SalesForm.reset();
-        this.service.GetSales();
+        this.p.page=1;
+        this.p.itemsPerPage=10;
+        this.service.GetSalesSearch(this.p);
         this.alert.success("Sales updated successfully!")
         // this.sharedService.formSubmited.next('');
-
+        this.p.page=1;
+        this.p.itemsPerPage=10;
+        this.service.GetSalesSearch(this.p);
 
 
       }
@@ -715,12 +587,16 @@ export class AddSalesComponent implements OnInit,OnDestroy {
       }
     });
   }
+   p:PaginationParams<number> = new PaginationParams<number>();
   saveSales(data:SalesInvoice,formDirective:FormGroupDirective){
     this.service.SaveSales(data).subscribe(res=>{
       if(res.isSuccessfull){
         formDirective.resetForm();
         this.SalesForm.reset();
-        this.service.GetSales();
+        
+        this.p.page=1;
+        this.p.itemsPerPage=10;
+        this.service.GetSalesSearch(this.p);
         this.alert.success("Sales saved successfully!")
         // this.sharedService.formSubmited.next('');
 
@@ -730,5 +606,4 @@ export class AddSalesComponent implements OnInit,OnDestroy {
       }
     });
   }
-
 }
