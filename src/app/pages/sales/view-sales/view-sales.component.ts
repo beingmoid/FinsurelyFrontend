@@ -16,6 +16,7 @@ import { ExportService } from "src/app/services/export.service";
 import { SharedService } from "src/app/services/shared.service";
 import { environment } from "src/environments/environment";
 import * as XLSX from 'xlsx';
+import { AddSalesComponent } from "../add-sales/add-sales.component";
 const ELEMENT_DATA=[];
 class FilterObject {
   constructor(private data: any) {}
@@ -92,13 +93,11 @@ export class ViewSalesComponent implements OnInit {
       to: new FormControl(null),
       branchId: new FormControl(null),
       requestExcel: new FormControl(null),
-
-
     })
   }
   searchAddress: string;
   // listData: Branch[];
-
+  @ViewChild('formComponent') formComponent: AddSalesComponent;
   sortName = null;
   sortValue = null;
   listOfSearchName = [];
@@ -442,7 +441,10 @@ export class ViewSalesComponent implements OnInit {
 
 
   handleCancel() {
+    
     this.isVisible = false;
+    this.isEditMode=false;
+    this.formComponent.ngOnDestroy();
   }
   rejectedEntries = [];
   sortOn(colKey: string) {
