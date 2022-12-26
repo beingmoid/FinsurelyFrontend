@@ -53,20 +53,21 @@
 
 
                 <form [formGroup]="form">
-                <div class="w-20 mb-3" id="SearchFiltr">
+                  <div class="w-20 mb-3" id="SearchFiltr">
 
-                  <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-                    <input type="search" nz-input formControlName="searchQuery" placeholder="input search text" />
-                  </nz-input-group>
-                  <ng-template #suffixIconButton>
-                    <button nz-button nzType="primary" nzSearch (click)="Search()"><span nz-icon nzType="search"></span></button>
-                  </ng-template>
-                  <div class="SearchWithFilter dropdown-container ">
-                    <a class="dropdown-toggle click-dropdown" (click)="show=!show">
-                      <span nz-icon nzType="filter" nzTheme="outline"></span>
-                    </a>
-                    <div>
-                      <ul class="dropdown-menu" *ngIf="show">
+                    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                      <input type="search" nz-input formControlName="searchQuery" placeholder="input search text" />
+                    </nz-input-group>
+                    <ng-template #suffixIconButton>
+                      <button nz-button nzType="primary" nzSearch (click)="Search()"><span nz-icon
+                          nzType="search"></span></button>
+                    </ng-template>
+                    <div class="SearchWithFilter dropdown-container ">
+                      <a class="dropdown-toggle click-dropdown" (click)="show=!show">
+                        <span nz-icon nzType="filter" nzTheme="outline"></span>
+                      </a>
+                      <div>
+                        <ul class="dropdown-menu" *ngIf="show">
 
 
                           <li>
@@ -84,9 +85,9 @@
                           <li>
                             <label for="date">Branch</label> <br>
                             <select class="form-select" formControlName="branchId" aria-label="">
-                                  <option *ngFor="let item of branchList" [value]="item.id">
-                                    {{item.branchName}}
-                                  </option>
+                              <option *ngFor="let item of branchList" [value]="item.id">
+                                {{item.branchName}}
+                              </option>
                             </select>
                           </li>
                           <li class="mt-2">
@@ -109,39 +110,30 @@
                           </li>
 
 
-                      </ul>
+                        </ul>
+
+                      </div>
 
                     </div>
 
                   </div>
-
-                </div>
-              </form>
+                </form>
                 <mat-chip-list aria-label="Fish selection">
 
                   <mat-chip *ngIf="this.form.value.from"> From {{this.form.value.from | date }} To
                     {{this.form.value.to
                     | date }} <mat-icon matChipRemove
-
-                    (click)=" this.form.controls.from.setValue(null);this.form.controls.to.setValue(null)"
-                    >cancel</mat-icon>
+                      (click)=" this.form.controls.from.setValue(null);this.form.controls.to.setValue(null)">cancel</mat-icon>
                   </mat-chip>
 
                   <mat-chip *ngIf="this.form.value.branchId">{{getBranchName(this.form.value.branchId)}} <mat-icon
-                    (click)="this.form.controls.branchId.setValue(null)"
-                      matChipRemove>cancel</mat-icon>
+                      (click)="this.form.controls.branchId.setValue(null)" matChipRemove>cancel</mat-icon>
                   </mat-chip>
                   <mat-chip *ngIf="this.form.value.downloadPDF">Export PDF <mat-icon
-
-                    (click)=" this.form.controls.downloadPDF.setValue(null)"
-                    matChipRemove>cancel</mat-icon>
+                      (click)=" this.form.controls.downloadPDF.setValue(null)" matChipRemove>cancel</mat-icon>
                   </mat-chip>
-                  <mat-chip *ngIf="this.form.value.downloadExcel"
-
-
-                   >Export Excel <mat-icon
-                   (click)="this.form.controls.downloadExcel.setValue(null)"
-                   matChipRemove>cancel</mat-icon>
+                  <mat-chip *ngIf="this.form.value.downloadExcel">Export Excel <mat-icon
+                      (click)="this.form.controls.downloadExcel.setValue(null)" matChipRemove>cancel</mat-icon>
                   </mat-chip>
                 </mat-chip-list>
               </div>
@@ -174,24 +166,11 @@
 
 
                   #filterTable nzShowSizeChanger [nzPageSize]="itemsPerPage"> -->
-                  <nz-table class="card" #rowSelectionTable
-
-                  [nzFrontPagination]="false"
-                  [nzTotal]="totalCount"
-
-                  [nzData]="list"
-                  [nzNoResult]="noData"
-                  nzShowSizeChanger
-                  [(nzPageSize)]="pageSize"
-                  [(nzPageIndex)]="page"
-                  [nzTableLayout]="'auto'"
-                  [nzBordered]="true"
-                  [nzLoading]="isloading"
-                  [nzSize]="'small'"
-                  (nzPageIndexChange)="onQueryParamsChange($event)"
-                  (nzPageSizeChange)="onQueryParamsChange($event)"
-                  [nzTitle]="tableTitle"
-                      >
+                <nz-table class="card" #rowSelectionTable [nzFrontPagination]="false" [nzTotal]="totalCount"
+                  [nzData]="list" [nzNoResult]="noData" nzShowSizeChanger [(nzPageSize)]="pageSize"
+                  [(nzPageIndex)]="page" [nzTableLayout]="'auto'" [nzBordered]="true" [nzLoading]="isloading"
+                  [nzSize]="'small'" (nzPageIndexChange)="onQueryParamsChange($event)"
+                  (nzPageSizeChange)="onQueryParamsChange($event)" [nzTitle]="tableTitle">
                   <thead>
                     <tr>
                       <th style="padding-left:2% !important">#</th>
@@ -270,8 +249,8 @@
 </ng-template>
 <ng-template #noDataDescrp>
   <div class="m-4">
-      No Data Available.
-      <!-- <a *ngIf="_permissionService.canCreate" (click)="showModal()" class="kit__utils__link">
+    No Data Available.
+    <!-- <a *ngIf="_permissionService.canCreate" (click)="showModal()" class="kit__utils__link">
           Create New Account
       </a> -->
   </div>

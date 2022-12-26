@@ -63,463 +63,488 @@
 
 
 <div class="user-settings-page m-2">
-<div class="row">
-    <div class="col-xl-12">
-    <div class="card col-xl-12 user-tabs ribbon--alpha">
-        <!-- {{this.dateAndFilters.value | json}} -->
-        <!-- <button nz-button nzType="secondary" (click)="DownloadPDF()">Download PDF Statement</button> -->
-        <nz-tabset class="" nzSize="large">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card col-xl-12 user-tabs ribbon--alpha">
+                <!-- {{this.dateAndFilters.value | json}} -->
+                <!-- <button nz-button nzType="secondary" (click)="DownloadPDF()">Download PDF Statement</button> -->
+                <nz-tabset class="" nzSize="large">
 
-            <nz-tab [nzTitle]="TransactionTabTitle">
+                    <nz-tab [nzTitle]="TransactionTabTitle">
 
-                <div class="row">
+                        <div class="row">
 
-                    <div class="col-xl-4 breadcrumbs mb-3">
-                      <strong>Transactions</strong>
-                    </div>
-                    <div class="col-xl-2 "></div>
-                    <div class="col-xl-6 ">
-                      <div class="w-20 mb-3" id="SearchFiltr">
+                            <div class="col-xl-4 breadcrumbs mb-3">
+                                <strong>Transactions</strong>
+                            </div>
+                            <div class="col-xl-2 "></div>
+                            <div class="col-xl-6 ">
 
-                        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-                          <input type="search" nz-input placeholder="input search text" />
-                        </nz-input-group>
-                        <ng-template #suffixIconButton>
-                          <button nz-button nzType="primary" nzSearch><span nz-icon nzType="search"></span></button>
-                        </ng-template>
-                        <div class="SearchWithFilter dropdown-container ">
-                          <a class="dropdown-toggle click-dropdown" (click)="show=!show">
-                            <span nz-icon nzType="filter" nzTheme="outline"></span>
-                          </a>
-                          <div>
-                            <ul class="dropdown-menu" *ngIf="show">
-                              <form [formGroup]="form">
 
-                                <li>
-                                  <mat-form-field appearance="fill">
-                                    <mat-label>Enter a date range</mat-label>
-                                    <mat-date-range-input [rangePicker]="picker">
-                                      <input matStartDate formControlName="dateFrom" placeholder="Start date">
-                                      <input matEndDate  formControlName="dateTo" placeholder="End date">
-                                    </mat-date-range-input>
-                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-date-range-picker #picker></mat-date-range-picker>
+                                <form [formGroup]="form">
+                                    <div class="w-20 mb-3" id="SearchFiltr">
 
-                                  </mat-form-field>
-                                </li>
-                                <li>
-                                  <label for="date">Branch</label> <br>
-                                  <select class="form-select" formControlName="branch" aria-label="">
-                                    <option value="0" selected="">Ajman</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                  </select>
-                                </li>
-                                <li class="mt-2">
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked
-                                      formControlName="isPdf">
-                                    <label class="form-check-label" for="flexCheckDefault" style="font-size: 15px;">
-                                      Export as PDF
-                                    </label>
-                                  </div>
-                                </li>
-                                <li>
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"
-                                      formControlName="isExcel">
-                                    <label class="form-check-label" for="flexCheckChecked" style="font-size: 15px;">
-                                      Export as Excel
-                                    </label>
-                                  </div>
-                                </li>
+                                        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                                            <input type="search" nz-input placeholder="input search text"
+                                                formControlName="searchQuery" />
+                                        </nz-input-group>
+                                        <ng-template #suffixIconButton>
+                                            <button nz-button nzType="primary" nzSearch (click)="searchPag()"><span
+                                                    nz-icon nzType="search"></span></button>
+                                        </ng-template>
+                                        <div class="SearchWithFilter dropdown-container ">
+                                            <a class="dropdown-toggle click-dropdown" (click)="show=!show">
+                                                <span nz-icon nzType="filter" nzTheme="outline"></span>
+                                            </a>
+                                            <div>
+                                                <ul class="dropdown-menu" *ngIf="show">
 
-                              </form>
-                            </ul>
-                          </div>
+
+                                                    <li>
+                                                        <mat-form-field appearance="fill">
+                                                            <mat-label>Enter a date range</mat-label>
+                                                            <mat-date-range-input [rangePicker]="picker">
+                                                                <input matStartDate formControlName="from"
+                                                                    placeholder="Start date">
+                                                                <input matEndDate formControlName="to"
+                                                                    placeholder="End date">
+                                                            </mat-date-range-input>
+                                                            <mat-datepicker-toggle matSuffix
+                                                                [for]="picker"></mat-datepicker-toggle>
+                                                            <mat-date-range-picker #picker></mat-date-range-picker>
+
+                                                        </mat-form-field>
+                                                    </li>
+
+                                                    <li class="mt-2">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                id="flexCheckDefault" checked
+                                                                formControlName="requestPdf">
+                                                            <label class="form-check-label" for="flexCheckDefault"
+                                                                style="font-size: 15px;">
+                                                                Export as PDF
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                id="flexCheckChecked" formControlName="requestExcel">
+                                                            <label class="form-check-label" for="flexCheckChecked"
+                                                                style="font-size: 15px;">
+                                                                Export as Excel
+                                                            </label>
+                                                        </div>
+                                                    </li>
+
+
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </form>
+                                <mat-chip-list aria-label="Fish selection">
+
+                                    <mat-chip *ngIf="this.form.value.from"> From {{this.form.value.from | date
+                                        }} To {{this.form.value.to | date }} <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                    <mat-chip *ngIf="this.form.value.requestPdf">Export PDF <mat-icon
+                                            matChipRemove>cancel</mat-icon></mat-chip>
+                                    <mat-chip *ngIf="this.form.value.requestExcel">Export Excel <mat-icon
+                                            matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                </mat-chip-list>
+                            </div>
+
 
                         </div>
-                      </div>
-                      <mat-chip-list aria-label="Fish selection">
 
-                        <mat-chip *ngIf="this.form.value.dateFrom"> From {{this.form.value.dateFrom | date }} To {{this.form.value.dateTo | date }}  <mat-icon matChipRemove>cancel</mat-icon> </mat-chip>
-
-                        <mat-chip *ngIf="this.form.value.branch">{{this.form.value.branch }} <mat-icon matChipRemove>cancel</mat-icon></mat-chip>
-                        <mat-chip *ngIf="this.form.value.isPdf">Export PDF <mat-icon matChipRemove>cancel</mat-icon></mat-chip>
-                        <mat-chip *ngIf="this.form.value.isExcel">Export Excel <mat-icon matChipRemove>cancel</mat-icon>
-                        </mat-chip>
-                      </mat-chip-list>
-                    </div>
-
-
-                  </div>
-
-<!--
+                        <!--
               <div class="right" (click)="DownloadXCL()" nz-tooltip nzTooltipTitle="Download Excel Statement">
                 <img src="assets/images/sheets.png" height="30" width="30" />
 
               </div> -->
-                <nz-table class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small"
-             nzShowSizeChanger [nzPageSize]="pageSize"
-              
-                [nzData]="statementList"
-                    [nzFooter]="tableFooter" [nzLoading]="loading">
-                    <thead>
-                        <tr>
+                        <nz-table class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small" nzShowSizeChanger
+                            [(nzPageSize)]="pageSize" [(nzPageIndex)]="page" [nzData]="statementList"
+                            [nzFooter]="tableFooter" [nzLoading]="loading" [nzTotal]="totalCount"
+                            [nzFrontPagination]="false" (nzPageIndexChange)="onQueryParamsChange($event)"
+                            (nzPageSizeChange)="onQueryParamsChange($event)">
+                            <thead>
+                                <tr>
 
-                            <th nzLeft="fixedColumn" nzWidth="120px"> # </th>
-                            <th nzLeft="fixedColumn" nzWidth="80px">Invoice Date</th>
+                                    <th nzLeft="fixedColumn" nzWidth="120px"> # </th>
+                                    <th nzLeft="fixedColumn" nzWidth="80px">Invoice Date</th>
 
-                            <th> Trasnsaction Type</th>
-                            <th> Customer Name</th>
-                            <th> Policy#</th>
-                            <th> Insurance</th>
-                            <th>Service </th>
-                            <th>Type </th>
-                            <th> Vehicle</th>
-                            <th> Body </th>
-                            <th>Debit</th>
-                            <th>Credit</th>
+                                    <th> Trasnsaction Type</th>
+                                    <th> Customer Name</th>
+                                    <th> Policy#</th>
+                                    <th> Insurance</th>
+                                    <th>Service </th>
+                                    <th>Type </th>
+                                    <th> Vehicle</th>
+                                    <th> Body </th>
+                                    <th>Debit</th>
+                                    <th>Credit</th>
 
-                            <th>Balance</th>
+                                    <th>Balance</th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let data of statementList">
-                            <td> {{data.num}} </td>
-                            <td> {{data.invoiceDate | date}} </td>
-                            <td *ngIf="data.transactionType!=3">{{
-
-
-                              (  data.transactionType ==1?
-                              "POLICY INVOICE":
-                                (data.transactionType==2?
-                                "PAYMENT":
-                                (data.transactionType==3?
-                                "OPENING BALANCE":
-                                ( data.transactionType==8?
-                                 "REFUND":
-                                "UNKNOWN TRANSACTION"
-                                                          )
-                                                                    )
-                                                                          )
-                                                                                  )
-                               }}</td>
-                            <td *ngIf="data.transactionType==3" colspan="08" style="text-align: center;">
-                               {{ "-----------------    OPENING BALANCE    -----------------"}}
-                              </td>
-                            <ng-container *ngIf="data.transactionType!=3">
-
-                              <td> {{data.customerName}} </td>
-                              <td> {{data.policyNumber}} </td>
-                              <td>{{data.insuranceType}}</td>
-                              <td> {{data.serviceType }} </td>
-                              <td>{{data.policyType}}</td>
-                              <td> {{data.vehicle}} </td>
-                              <td> {{data.bodyType}} </td>
-                            </ng-container>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of statementList; let i=index">
+                                    <td> {{i+1}} </td>
+                                    <td> {{data.invoiceDate | date}} </td>
+                                    <td *ngIf="data.transactionType!=3">{{
 
 
-                            <td> {{data.debit==0?'':data.debit}} </td>
-                            <td> {{data.credit==0?'':data.credit}} </td>
+                                        ( data.transactionType ==1?
+                                        "POLICY INVOICE":
+                                        (data.transactionType==2?
+                                        "PAYMENT":
+                                        (data.transactionType==3?
+                                        "OPENING BALANCE":
+                                        ( data.transactionType==8?
+                                        "REFUND":
+                                        "UNKNOWN TRANSACTION"
+                                        )
+                                        )
+                                        )
+                                        )
+                                        }}</td>
+                                    <td *ngIf="data.transactionType==3" colspan="08" style="text-align: center;">
+                                        {{ "----------------- OPENING BALANCE -----------------"}}
+                                    </td>
+                                    <ng-container *ngIf="data.transactionType!=3">
 
-                            <td> {{data.balance}} </td>
+                                        <td> {{data.customerName}} </td>
+                                        <td> {{data.policyNumber}} </td>
+                                        <td>{{data.insuranceType}}</td>
+                                        <td> {{data.serviceType }} </td>
+                                        <td>{{data.policyType}}</td>
+                                        <td> {{data.vehicle}} </td>
+                                        <td> {{data.bodyType}} </td>
+                                    </ng-container>
 
-                        </tr>
-                    </tbody>
-                </nz-table>
-            </nz-tab>
-            <nz-tab [nzTitle]="CustomerTabTitle">
 
-                <nz-card [nzTitle]="cardTitle" nzType="">
+                                    <td> {{data.debit==0?'':data.debit}} </td>
+                                    <td> {{data.credit==0?'':data.credit}} </td>
 
-                    <nz-card nzType="inner" [nzTitle]="basicDetails" nzBordered="false">
-                        <nz-descriptions>
-                            <nz-descriptions-item nzTitle="Customer"> {{customerDetail?.firstName +" "+
-                                customerDetail?.middleName +" "+ customerDetail?.lastName }}</nz-descriptions-item>
-                            <nz-descriptions-item nzTitle="Email"> {{customerDetail?.email }}</nz-descriptions-item>
-                            <nz-descriptions-item nzTitle="Mobile"> {{customerDetail?.mobile }}</nz-descriptions-item>
-                            <nz-descriptions-item nzTitle="Fax"> {{customerDetail?.fax }}</nz-descriptions-item>
-                            <nz-descriptions-item nzTitle="Other"> {{customerDetail?.other }}</nz-descriptions-item>
-                            <nz-descriptions-item nzTitle="Website"> {{customerDetail?.website }}
-                            </nz-descriptions-item>
-                        </nz-descriptions>
+                                    <td> {{data.balance}} </td>
 
-                    </nz-card>
-                    <nz-card nzType="inner" [nzTitle]="address" nzBordered="false">
+                                </tr>
+                            </tbody>
+                        </nz-table>
+                    </nz-tab>
+                    <nz-tab [nzTitle]="CustomerTabTitle">
 
-                        <nz-descriptions>
-                            <nz-descriptions-item nzTitle="Billing address">
-                                {{customerDetail?.addresses[0]?.billingAddress
-                                }}</nz-descriptions-item>
-                            <nz-descriptions-item nzTitle="Street"> {{customerDetail?.addresses[0]?.street }}
-                            </nz-descriptions-item>
-                            <nz-descriptions-item nzTitle="City"> {{customerDetail?.addresses[0]?.city }}
-                            </nz-descriptions-item>
-                            <nz-descriptions-item nzTitle="State"> {{customerDetail?.addresses[0]?.state }}
-                            </nz-descriptions-item>
-                            <nz-descriptions-item nzTitle="Postal Code"> {{customerDetail?.addresses[0]?.postalCode }}
-                            </nz-descriptions-item>
-                            <nz-descriptions-item nzTitle="Country"> {{customerDetail?.addresses[0]?.country }}
-                            </nz-descriptions-item>
-                        </nz-descriptions>
+                        <nz-card [nzTitle]="cardTitle" nzType="">
 
-                    </nz-card>
-                    <nz-card nzType="inner" [nzTitle]="paymentAndBilling" nzBordered="false">
-                        <nz-descriptions>
-                            <nz-descriptions-item nzTitle="Preferred Payment Method">
-                                {{customerDetail?.paymentAndBilling[0]?.preferredPaymentMethod?.text
-                                }}</nz-descriptions-item>
-                            <!-- <nz-descriptions-item nzTitle="Preferred Delivery Method"> {{customerDetail?.addresses[0]?.street }}
+                            <nz-card nzType="inner" [nzTitle]="basicDetails" nzBordered="false">
+                                <nz-descriptions>
+                                    <nz-descriptions-item nzTitle="Customer"> {{customerDetail?.firstName +" "+
+                                        customerDetail?.middleName +" "+ customerDetail?.lastName
+                                        }}</nz-descriptions-item>
+                                    <nz-descriptions-item nzTitle="Email"> {{customerDetail?.email
+                                        }}</nz-descriptions-item>
+                                    <nz-descriptions-item nzTitle="Mobile"> {{customerDetail?.mobile
+                                        }}</nz-descriptions-item>
+                                    <nz-descriptions-item nzTitle="Fax"> {{customerDetail?.fax }}</nz-descriptions-item>
+                                    <nz-descriptions-item nzTitle="Other"> {{customerDetail?.other
+                                        }}</nz-descriptions-item>
+                                    <nz-descriptions-item nzTitle="Website"> {{customerDetail?.website }}
+                                    </nz-descriptions-item>
+                                </nz-descriptions>
+
+                            </nz-card>
+                            <nz-card nzType="inner" [nzTitle]="address" nzBordered="false">
+
+                                <nz-descriptions>
+                                    <nz-descriptions-item nzTitle="Billing address">
+                                        {{customerDetail?.addresses[0]?.billingAddress
+                                        }}</nz-descriptions-item>
+                                    <nz-descriptions-item nzTitle="Street"> {{customerDetail?.addresses[0]?.street }}
+                                    </nz-descriptions-item>
+                                    <nz-descriptions-item nzTitle="City"> {{customerDetail?.addresses[0]?.city }}
+                                    </nz-descriptions-item>
+                                    <nz-descriptions-item nzTitle="State"> {{customerDetail?.addresses[0]?.state }}
+                                    </nz-descriptions-item>
+                                    <nz-descriptions-item nzTitle="Postal Code">
+                                        {{customerDetail?.addresses[0]?.postalCode }}
+                                    </nz-descriptions-item>
+                                    <nz-descriptions-item nzTitle="Country"> {{customerDetail?.addresses[0]?.country }}
+                                    </nz-descriptions-item>
+                                </nz-descriptions>
+
+                            </nz-card>
+                            <nz-card nzType="inner" [nzTitle]="paymentAndBilling" nzBordered="false">
+                                <nz-descriptions>
+                                    <nz-descriptions-item nzTitle="Preferred Payment Method">
+                                        {{customerDetail?.paymentAndBilling[0]?.preferredPaymentMethod?.text
+                                        }}</nz-descriptions-item>
+                                    <!-- <nz-descriptions-item nzTitle="Preferred Delivery Method"> {{customerDetail?.addresses[0]?.street }}
                             </nz-descriptions-item> -->
-                            <nz-descriptions-item nzTitle="Terms"> {{customerDetail?.paymentAndBilling[0]?.terms?.text
-                                }}
-                            </nz-descriptions-item>
-                            <nz-descriptions-item nzTitle="Opening Balance">
-                                {{customerDetail?.paymentAndBilling[0]?.openingBalance }}
-                            </nz-descriptions-item>
-                            <nz-descriptions-item nzTitle="As of"> {{customerDetail?.addresses[0]?.postalCode }}
-                            </nz-descriptions-item>
-                        </nz-descriptions>
+                                    <nz-descriptions-item nzTitle="Terms">
+                                        {{customerDetail?.paymentAndBilling[0]?.terms?.text
+                                        }}
+                                    </nz-descriptions-item>
+                                    <nz-descriptions-item nzTitle="Opening Balance">
+                                        {{customerDetail?.paymentAndBilling[0]?.openingBalance }}
+                                    </nz-descriptions-item>
+                                    <nz-descriptions-item nzTitle="As of"> {{customerDetail?.addresses[0]?.postalCode }}
+                                    </nz-descriptions-item>
+                                </nz-descriptions>
 
 
-                    </nz-card>
-                    <nz-card nzType="inner" [nzTitle]="attachments" nzBordered="false">
-                        <nz-list nzItemLayout="horizontal" [nzLoading]="cardLoading">
-                            <nz-list-item *ngFor="let item of customerDetail?.attachments">
-                                <nz-list-item-meta
-                                    nzAvatar="https://findicons.com/files/icons/2813/flat_jewels/512/file.png"
-                                    nzDescription="Customer Files">
-                                    <nz-list-item-meta-title>
-                                        <a [href]="item.attachmentUrl"> Open file </a>
-                                    </nz-list-item-meta-title>
-                                </nz-list-item-meta>
-                            </nz-list-item>
-                            <nz-list-empty *ngIf="customerDetail?.attachments === 0"></nz-list-empty>
-                        </nz-list>
+                            </nz-card>
+                            <nz-card nzType="inner" [nzTitle]="attachments" nzBordered="false">
+                                <nz-list nzItemLayout="horizontal" [nzLoading]="cardLoading">
+                                    <nz-list-item *ngFor="let item of customerDetail?.attachments">
+                                        <nz-list-item-meta
+                                            nzAvatar="https://findicons.com/files/icons/2813/flat_jewels/512/file.png"
+                                            nzDescription="Customer Files">
+                                            <nz-list-item-meta-title>
+                                                <a [href]="item.attachmentUrl"> Open file </a>
+                                            </nz-list-item-meta-title>
+                                        </nz-list-item-meta>
+                                    </nz-list-item>
+                                    <nz-list-empty *ngIf="customerDetail?.attachments === 0"></nz-list-empty>
+                                </nz-list>
 
 
-                    </nz-card>
+                            </nz-card>
 
 
-                </nz-card>
+                        </nz-card>
 
 
-            </nz-tab>
-            <nz-tab [nzTitle]="Reconcilation">
-                <div class="row mb-4">
+                    </nz-tab>
+                    <nz-tab [nzTitle]="Reconcilation">
+                        <div class="row mb-4">
 
-                    <div class="col-xl-12">
-                        <mat-vertical-stepper #stepper>
-                            <mat-step [stepControl]="SearchForm.controls.from" [editable]="true" state="calendar">
-                                <form [formGroup]="SearchForm">
-                                    <ng-template matStepLabel>Select your date range </ng-template>
-                                    {{this.SearchForm.value | json }}
-                                    <mat-form-field appearance="fill" [formGroup]="SearchForm">
-                                        <mat-label>Enter a date range</mat-label>
-                                        <mat-date-range-input [rangePicker]="picker13">
-                                            <input matStartDate formControlName="from" placeholder="Start date"
-                                                (dateChange)="startChange($event)">
-                                            <input matEndDate formControlName="to" placeholder="End date"
-                                                (dateChange)="endChange($event)">
-                                        </mat-date-range-input>
-                                        <mat-datepicker-toggle matSuffix [for]="picker13"></mat-datepicker-toggle>
-                                        <mat-date-range-picker #picker13></mat-date-range-picker>
+                            <div class="col-xl-12">
+                                <mat-vertical-stepper #stepper>
+                                    <mat-step [stepControl]="SearchForm.controls.from" [editable]="true"
+                                        state="calendar">
+                                        <form [formGroup]="SearchForm">
+                                            <ng-template matStepLabel>Select your date range </ng-template>
+                                            <!-- {{this.SearchForm.value | json }} -->
+                                            <mat-form-field appearance="fill" [formGroup]="SearchForm">
+                                                <mat-label>Enter a date range</mat-label>
+                                                <mat-date-range-input [rangePicker]="picker13">
+                                                    <input matStartDate formControlName="from" placeholder="Start date"
+                                                        (dateChange)="startChange($event)">
+                                                    <input matEndDate formControlName="to" placeholder="End date"
+                                                        (dateChange)="endChange($event)">
+                                                </mat-date-range-input>
+                                                <mat-datepicker-toggle matSuffix
+                                                    [for]="picker13"></mat-datepicker-toggle>
+                                                <mat-date-range-picker #picker13></mat-date-range-picker>
 
-                                        <mat-error *ngIf="SearchForm.controls.from.hasError('matStartDateInvalid')">
-                                            Invalid from date</mat-error>
-                                        <mat-error *ngIf="SearchForm.controls.to.hasError('matEndDateInvalid')">Invalid
-                                            to date</mat-error>
-                                    </mat-form-field>
+                                                <mat-error
+                                                    *ngIf="SearchForm.controls.from.hasError('matStartDateInvalid')">
+                                                    Invalid from date</mat-error>
+                                                <mat-error
+                                                    *ngIf="SearchForm.controls.to.hasError('matEndDateInvalid')">Invalid
+                                                    to date</mat-error>
+                                            </mat-form-field>
 
-                                    <div>
-                                        <button mat-button matStepperNext
-                                            (click)="(SearchForm.controls.from.hasError('matStartDateInvalid') &&  SearchForm.controls.to.hasError('matEndDateInvalid'))?stepper.done():stepper">Next</button>
-                                    </div>
-                                </form>
-                            </mat-step>
-                            <mat-step [stepControl]="SearchForm.controls.salesAgentId" [editable]="true" state="agent">
-                                <form [formGroup]="SearchForm">
-                                    <ng-template matStepLabel> Select your sales agent for reconciliation </ng-template>
-                                    <mat-form-field class="col-xl-4" [formGroup]="SearchForm" appearance="fill">
-                                        <mat-label>
-                                            Sales Agent
-                                        </mat-label>
+                                            <div>
+                                                <button mat-button matStepperNext
+                                                    (click)="(SearchForm.controls.from.hasError('matStartDateInvalid') &&  SearchForm.controls.to.hasError('matEndDateInvalid'))?stepper.done():stepper">Next</button>
+                                            </div>
+                                        </form>
+                                    </mat-step>
+                                    <mat-step [stepControl]="SearchForm.controls.salesAgentId" [editable]="true"
+                                        state="agent">
+                                        <form [formGroup]="SearchForm">
+                                            <ng-template matStepLabel> Select your sales agent for reconciliation
+                                            </ng-template>
+                                            <mat-form-field class="col-xl-4" [formGroup]="SearchForm" appearance="fill">
+                                                <mat-label>
+                                                    Sales Agent
+                                                </mat-label>
 
-                                        <input type="text" matInput formControlName="salesAgentId"
-                                            placeholder="Type to select Sales Agent" [matAutocomplete]="auto4">
-                                        <mat-autocomplete #auto4="matAutocomplete"
-                                            [displayWith]="displaySalesAgent.bind(this)">
-                                            <!-- <button mat-button color="primary" class="add-button" (click)="showCustomerModal()"><mat-icon id="create">add</mat-icon>Add New Customer</button> -->
-                                            <mat-option *ngFor="let option of filtersalesAgents | async"
-                                                [value]="option.id">
-                                                {{option.displayNameAs}}
-                                            </mat-option>
-                                        </mat-autocomplete>
-                                        <mat-error *ngIf="SearchForm.controls.salesAgentId?.hasError('required')">
-                                            Sales Agent is required
-                                        </mat-error>
-                                    </mat-form-field>
-                                    <div>
-                                        <button mat-button matStepperPrevious>Back</button>
-                                        <button mat-button matStepperNext>Next</button>
-                                    </div>
-                                </form>
-                            </mat-step>
-                            <mat-step [stepControl]="SearchForm.controls.isFileUploaded" [editable]="true"
-                                state="upload">
-                                <form [formGroup]="SearchForm">
-                                    <ng-template matStepLabel> Upload your sales agent's sales report in excel format
-                                        for reconciliation </ng-template>
-                                    <nz-upload nzType="drag" [nzMultiple]="false" [nzAction]="uploadUrl"
-                                        (nzChange)="handleChange($event)" class="col-xl-4">
-                                        <p class="ant-upload-drag-icon">
-                                            <i nz-icon nzType="inbox"></i>
-                                        </p>
-                                        <p class="ant-upload-text">Click or drag file to this area to upload</p>
-                                        <p class="ant-upload-hint">
-                                            Support for a single or bulk upload. Strictly prohibit from uploading
-                                            company data or other band files
-                                        </p>
-                                    </nz-upload>
-                                    <div>
-                                        <input [hidden]="true" formControlName="isFileUploaded">
-                                        <button mat-button matStepperPrevious>Back</button>
-                                        <button mat-button matStepperNext>Next</button>
-                                    </div>
-                                </form>
-                            </mat-step>
-                            <mat-step [stepControl]="SearchForm.controls.isColumMapped" [editable]="true"
-                                state="compare">
-                                <form [formGroup]="SearchForm">
+                                                <input type="text" matInput formControlName="salesAgentId"
+                                                    placeholder="Type to select Sales Agent" [matAutocomplete]="auto4">
+                                                <mat-autocomplete #auto4="matAutocomplete"
+                                                    [displayWith]="displaySalesAgent.bind(this)">
+                                                    <!-- <button mat-button color="primary" class="add-button" (click)="showCustomerModal()"><mat-icon id="create">add</mat-icon>Add New Customer</button> -->
+                                                    <mat-option *ngFor="let option of filtersalesAgents | async"
+                                                        [value]="option.id">
+                                                        {{option.displayNameAs}}
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                                <mat-error
+                                                    *ngIf="SearchForm.controls.salesAgentId?.hasError('required')">
+                                                    Sales Agent is required
+                                                </mat-error>
+                                            </mat-form-field>
+                                            <div>
+                                                <button mat-button matStepperPrevious>Back</button>
+                                                <button mat-button matStepperNext>Next</button>
+                                            </div>
+                                        </form>
+                                    </mat-step>
+                                    <mat-step [stepControl]="SearchForm.controls.isFileUploaded" [editable]="true"
+                                        state="upload">
+                                        <form [formGroup]="SearchForm">
+                                            <ng-template matStepLabel> Upload your sales agent's sales report in excel
+                                                format
+                                                for reconciliation </ng-template>
+                                            <nz-upload nzType="drag" [nzMultiple]="false" [nzAction]="uploadUrl"
+                                                (nzChange)="handleChange($event)" class="col-xl-4">
+                                                <p class="ant-upload-drag-icon">
+                                                    <i nz-icon nzType="inbox"></i>
+                                                </p>
+                                                <p class="ant-upload-text">Click or drag file to this area to upload</p>
+                                                <p class="ant-upload-hint">
+                                                    Support for a single or bulk upload. Strictly prohibit from
+                                                    uploading
+                                                    company data or other band files
+                                                </p>
+                                            </nz-upload>
+                                            <div>
+                                                <input [hidden]="true" formControlName="isFileUploaded">
+                                                <button mat-button matStepperPrevious>Back</button>
+                                                <button mat-button matStepperNext>Next</button>
+                                            </div>
+                                        </form>
+                                    </mat-step>
+                                    <mat-step [stepControl]="SearchForm.controls.isColumMapped" [editable]="true"
+                                        state="compare">
+                                        <form [formGroup]="SearchForm">
 
 
-                                    <ng-template matStepLabel> Do mapping of columns and let reconciliation be started
+                                            <ng-template matStepLabel> Do mapping of columns and let reconciliation be
+                                                started
+                                            </ng-template>
+                                            <div>
+                                                <input [hidden]="true" formControlName="isColumMapped">
+                                                <button mat-button (click)="openReconModal()"> Configure mappings
+                                                </button>
+                                                <button mat-button matStepperPrevious>Back</button>
+                                                <button mat-button matStepperNext>Next</button>
+                                            </div>
+                                        </form>
+                                    </mat-step>
+                                    <mat-step>
+                                        <ng-template matStepLabel>Done</ng-template>
+                                        <p>Now are able to fetch report.</p>
+                                        <div>
+                                            <button mat-button matStepperPrevious>Back</button>
+                                            <button mat-button (click)="submitReconcilation()">Fetch Report</button>
+                                            <button mat-button (click)="stepper.reset()">Reset</button>
+                                        </div>
+                                    </mat-step>
+
+                                    <ng-template matStepperIcon="calendar" filled>
+                                        <mat-icon [inline]="true" style="color: white;">calendar_today</mat-icon>
                                     </ng-template>
-                                    <div>
-                                        <input [hidden]="true" formControlName="isColumMapped">
-                                        <button mat-button (click)="openReconModal()"> Configure mappings </button>
-                                        <button mat-button matStepperPrevious>Back</button>
-                                        <button mat-button matStepperNext>Next</button>
-                                    </div>
-                                </form>
-                            </mat-step>
-                            <mat-step>
-                                <ng-template matStepLabel>Done</ng-template>
-                                <p>Now are able to fetch report.</p>
-                                <div>
-                                    <button mat-button matStepperPrevious>Back</button>
-                                    <button mat-button (click)="submitReconcilation()">Fetch Report</button>
-                                    <button mat-button (click)="stepper.reset()">Reset</button>
-                                </div>
-                            </mat-step>
+                                    <ng-template matStepperIcon="agent" filled>
+                                        <mat-icon [inline]="true" style="color: white;">engineering</mat-icon>
+                                    </ng-template>
+                                    <ng-template matStepperIcon="upload" filled>
+                                        <mat-icon [inline]="true" style="color: white;">cloud_upload</mat-icon>
+                                    </ng-template>
+                                    <ng-template matStepperIcon="compare" filled>
+                                        <mat-icon [inline]="true" style="color: white;">compare</mat-icon>
+                                    </ng-template>
+                                    <ng-template matStepperIcon="done" filled>
+                                        <mat-icon>done</mat-icon>
+                                    </ng-template>
 
-                            <ng-template matStepperIcon="calendar" filled>
-                                <mat-icon [inline]="true" style="color: white;">calendar_today</mat-icon>
-                            </ng-template>
-                            <ng-template matStepperIcon="agent" filled>
-                                <mat-icon [inline]="true" style="color: white;">engineering</mat-icon>
-                            </ng-template>
-                            <ng-template matStepperIcon="upload" filled>
-                                <mat-icon [inline]="true" style="color: white;">cloud_upload</mat-icon>
-                            </ng-template>
-                            <ng-template matStepperIcon="compare" filled>
-                                <mat-icon [inline]="true" style="color: white;">compare</mat-icon>
-                            </ng-template>
-                            <ng-template matStepperIcon="done" filled>
-                                <mat-icon>done</mat-icon>
-                            </ng-template>
-
-                        </mat-vertical-stepper>
-                    </div>
-
-                </div>
-                <!-- Report -->
-                <div class="row" *ngIf="ReconReport">
-
-                    <div class="col-xl-12">
-
-                        <div class="card">
-                            <div class="card-header bg-alice-blue">
-                                <div class="col-xl-4 d-flex justify-content-start" *ngIf="includeLogo">
-                                    <img src="assets/images/panorama-logo1.png" class="mb-2"
-                                        style="padding: 0 !important;" width="100px" alt="Icon" />
-                                </div>
-                                <div class="d-flex justify-content-center " *ngIf="includeName">
-                                    <div class="text-gray text-center font-size-24">
-                                        Panorama Insurance Commerical Brokers
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                    <div class="text-gray text-center font-weight-bold font-size-24">
-                                        Accounts Reconcilation Report
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                    <div class="text-gray text-center font-size-16">
-                                        {{reconcilationReport?.from | date }} - {{reconcilationReport?.to | date }}
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-start">
-                                    <div class="text-gray text-center font-size-16">
-                                        Reconcilation for : <span class="font-weight-bold">
-                                            {{this.reconcilationReport?.salesAgent?.displayNameAs}}</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-start">
-                                    <div class="text-gray text-center font-size-16">
-                                        As per following document: <span class="font-weight-bold"> <a
-                                                [href]="this.reconcilationReport?.documents?.blobURI">
-                                                {{this.reconcilationReport?.documents?.blobFileName}} </a></span>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-start">
-                                    <div class="text-gray text-center font-size-16">
-                                        Generated Date: <span
-                                            class="font-weight-bold">{{this.reconcilationReport?.generatedDate |
-                                            date}}</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-start">
-                                    <div class="text-gray text-center font-size-16">
-                                        Number of Sales Policy Missing: <span class="font-weight-bold">
-                                            {{this.reconcilationReport?.noOfSalesMissing | number}}</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-start">
-                                    <div class="text-gray text-center font-size-16">
-                                        Difference Amount of:
-                                        <span class="font-weight-bold">
-                                            {{this.reconcilationReport?.amountDifference | number}}
-                                        </span>
-
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-start">
-                                    <div class="text-gray  text-center font-size-16">
-                                        Color guide:
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-start">
-                                    <span class="font-weight-bold mt-2 mr-2"> Unmatched data </span>
-                                    <span class="box-yellow mr-2">
-
-                                    </span>
-                                    <span class="font-weight-bold mt-2 mr-2"> Empty Cell </span>
-
-                                    <span class="box-red mr-2">
-
-                                    </span>
-                                </div>
-
+                                </mat-vertical-stepper>
                             </div>
-                            <div class="card-body  bg-alice-blue">
 
-                                <div class="row">
-                                    <div class="col-xl-12">
-                                        <!-- <table style="border: 5px;">
+                        </div>
+                        <!-- Report -->
+                        <div class="row" *ngIf="ReconReport">
+
+                            <div class="col-xl-12">
+
+                                <div class="card">
+                                    <div class="card-header bg-alice-blue">
+                                        <div class="col-xl-4 d-flex justify-content-start" *ngIf="includeLogo">
+                                            <img src="assets/images/panorama-logo1.png" class="mb-2"
+                                                style="padding: 0 !important;" width="100px" alt="Icon" />
+                                        </div>
+                                        <div class="d-flex justify-content-center " *ngIf="includeName">
+                                            <div class="text-gray text-center font-size-24">
+                                                Panorama Insurance Commerical Brokers
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            <div class="text-gray text-center font-weight-bold font-size-24">
+                                                Accounts Reconcilation Report
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            <div class="text-gray text-center font-size-16">
+                                                {{reconcilationReport?.from | date }} - {{reconcilationReport?.to | date
+                                                }}
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-start">
+                                            <div class="text-gray text-center font-size-16">
+                                                Reconcilation for : <span class="font-weight-bold">
+                                                    {{this.reconcilationReport?.salesAgent?.displayNameAs}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-start">
+                                            <div class="text-gray text-center font-size-16">
+                                                As per following document: <span class="font-weight-bold"> <a
+                                                        [href]="this.reconcilationReport?.documents?.blobURI">
+                                                        {{this.reconcilationReport?.documents?.blobFileName}}
+                                                    </a></span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-start">
+                                            <div class="text-gray text-center font-size-16">
+                                                Generated Date: <span
+                                                    class="font-weight-bold">{{this.reconcilationReport?.generatedDate |
+                                                    date}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-start">
+                                            <div class="text-gray text-center font-size-16">
+                                                Number of Sales Policy Missing: <span class="font-weight-bold">
+                                                    {{this.reconcilationReport?.noOfSalesMissing | number}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-start">
+                                            <div class="text-gray text-center font-size-16">
+                                                Difference Amount of:
+                                                <span class="font-weight-bold">
+                                                    {{this.reconcilationReport?.amountDifference | number}}
+                                                </span>
+
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-start">
+                                            <div class="text-gray  text-center font-size-16">
+                                                Color guide:
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-start">
+                                            <span class="font-weight-bold mt-2 mr-2"> Unmatched data </span>
+                                            <span class="box-yellow mr-2">
+
+                                            </span>
+                                            <span class="font-weight-bold mt-2 mr-2"> Empty Cell </span>
+
+                                            <span class="box-red mr-2">
+
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                    <div class="card-body  bg-alice-blue">
+
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <!-- <table style="border: 5px;">
                                           <thead>
                                               <tr>
                                                   <th> DATE </th>
@@ -541,90 +566,91 @@
 
                                           </tbody>
                                       </table> -->
-                                        <nz-table class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small"
-                                            #filterTable [nzData]="reconcilationReport.statement" [nzNoResult]="null"
-                                            [nzFooter]="null">
-                                            <thead>
-                                                <tr>
+                                                <nz-table class="card" nzTableLayout="auto" [nzBordered]="true"
+                                                    nzSize="small" #filterTable [nzData]="reconcilationReport.statement"
+                                                    [nzNoResult]="null" [nzFooter]="null">
+                                                    <thead>
+                                                        <tr>
 
-                                                    <th> # </th>
-                                                    <th> DATE </th>
-                                                    <th> CUSTOMER NAME </th>
-                                                    <th> POLICY NUMBER </th>
-                                                    <th> VEHICLE </th>
-                                                    <th> TRANSACTION REFERENCE NUMBER </th>
-                                                    <th> INSURANCE TYPE </th>
-                                                    <th> MEMO/DESCRIPTION </th>
-                                                    <th> DEBIT </th>
-                                                    <th> CREDIT </th>
-                                                    <th> AMOUNT </th>
-                                                    <th> BALANCE </th>
-                                                    <th> STATUS </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr *ngFor="let data of filterTable.data; let i = index;">
+                                                            <th> # </th>
+                                                            <th> DATE </th>
+                                                            <th> CUSTOMER NAME </th>
+                                                            <th> POLICY NUMBER </th>
+                                                            <th> VEHICLE </th>
+                                                            <th> TRANSACTION REFERENCE NUMBER </th>
+                                                            <th> INSURANCE TYPE </th>
+                                                            <th> MEMO/DESCRIPTION </th>
+                                                            <th> DEBIT </th>
+                                                            <th> CREDIT </th>
+                                                            <th> AMOUNT </th>
+                                                            <th> BALANCE </th>
+                                                            <th> STATUS </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let data of filterTable.data; let i = index;">
 
-                                                    <td
-                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
-                                                        {{data.invoiceDate | date}} </td>
-                                                    <td
-                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
-                                                        {{ data.name }}</td>
-                                                    <td
-                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
-                                                        {{data.policyNumber}} </td>
-                                                    <td
-                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
-                                                        {{data.vehicle}} </td>
-                                                    <td
-                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
-                                                        {{data.transactionRefNumber}} </td>
-                                                    <td
-                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
-                                                        {{data.insuranceType }} </td>
-                                                    <td
-                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
-                                                        {{data.memo}} </td>
-                                                    <td
-                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
-                                                        {{data.debit==0?'':data.debit}} </td>
-                                                    <td
-                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
-                                                        {{data.credit==0?'':data.credit}} </td>
-                                                    <td
-                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
-                                                        {{data.amount}} </td>
-                                                    <td
-                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
-                                                        {{data.balance}} </td>
-                                                    <td
-                                                        [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
-                                                        <img [src]="data?.rejected==false?'assets/images/approve-icon.png':'assets/images/reject-icon.png'"
-                                                            width="30" /> </td>
-
-
-
+                                                            <td
+                                                                [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                                {{data.invoiceDate | date}} </td>
+                                                            <td
+                                                                [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                                {{ data.name }}</td>
+                                                            <td
+                                                                [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                                {{data.policyNumber}} </td>
+                                                            <td
+                                                                [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                                {{data.vehicle}} </td>
+                                                            <td
+                                                                [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                                {{data.transactionRefNumber}} </td>
+                                                            <td
+                                                                [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                                {{data.insuranceType }} </td>
+                                                            <td
+                                                                [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                                {{data.memo}} </td>
+                                                            <td
+                                                                [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                                {{data.debit==0?'':data.debit}} </td>
+                                                            <td
+                                                                [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                                {{data.credit==0?'':data.credit}} </td>
+                                                            <td
+                                                                [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                                {{data.amount}} </td>
+                                                            <td
+                                                                [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                                {{data.balance}} </td>
+                                                            <td
+                                                                [ngStyle]="data?.mappingReport?.invoiceDate?.item2?{}:{'background-color':data?.mappingReport?.invoiceDate?.item1===true?'#F2F4F8':'#ffb946' }">
+                                                                <img [src]="data?.rejected==false?'assets/images/approve-icon.png':'assets/images/reject-icon.png'"
+                                                                    width="30" />
+                                                            </td>
 
 
 
 
-                                                </tr>
-                                            </tbody>
-                                        </nz-table>
+
+
+
+                                                        </tr>
+                                                    </tbody>
+                                                </nz-table>
+                                            </div>
+
+
+                                        </div>
+
+
                                     </div>
 
-
                                 </div>
-
-
                             </div>
-
                         </div>
-                    </div>
-                </div>
-                <!-- <app-reconcile [data]=""></app-reconcile> -->
-                <!-- <div class="row" *ngIf="reconcilationReport">
+                        <!-- <app-reconcile [data]=""></app-reconcile> -->
+                        <!-- <div class="row" *ngIf="reconcilationReport">
                     <div class="col-md-12">
                         <nz-table class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small" #filterTable
                             [nzData]="reconcilationReport.statement" [nzNoResult]="noData" [nzFooter]="tableFooter"
@@ -666,12 +692,12 @@
                     </div>
 
                 </div> -->
-            </nz-tab>
-        </nz-tabset>
+                    </nz-tab>
+                </nz-tabset>
 
+            </div>
+        </div>
     </div>
-</div>
-</div>
 </div>
 <ng-template #noData>
     <nz-empty class="m-5" [nzNotFoundImage]="'assets/images/no-data/no-contact.svg'" [nzNotFoundContent]="noDataDescrp">
@@ -763,6 +789,3 @@
 </div>
 
 <app-add-payment [userDetailId]="this.userDetailId"></app-add-payment>
-
-
-
