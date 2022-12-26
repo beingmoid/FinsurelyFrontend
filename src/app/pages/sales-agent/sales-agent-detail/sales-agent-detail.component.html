@@ -193,8 +193,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let data of statementList">
-                                    <td> {{data.num}} </td>
+                                <tr *ngFor="let data of statementList; let i=index">
+                                    <td> {{i+1}} </td>
                                     <td> {{data.invoiceDate | date}} </td>
                                     <td *ngIf="data.transactionType!=3">{{
 
@@ -329,7 +329,7 @@
                                         state="calendar">
                                         <form [formGroup]="SearchForm">
                                             <ng-template matStepLabel>Select your date range </ng-template>
-                                            {{this.SearchForm.value | json }}
+                                            <!-- {{this.SearchForm.value | json }} -->
                                             <mat-form-field appearance="fill" [formGroup]="SearchForm">
                                                 <mat-label>Enter a date range</mat-label>
                                                 <mat-date-range-input [rangePicker]="picker13">
