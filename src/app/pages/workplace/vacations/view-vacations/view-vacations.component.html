@@ -12,3 +12,70 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-xl-12">
+      
+        <button nz-button nzType="primary" class="float-right mb-3" (click)="openModal()">Add Vacations</button>
+    </div>
+  </div>
+<div class="row my-4">
+    <!-- <div class="col-xl-1"><p>Upcomming</p></div> -->
+    <div class="col">
+        <mat-divider></mat-divider>
+    </div>
+    <div class="col-xl-2">
+        <p>25TH May 2022</p>
+    </div>
+</div>
+<div class="col-xl-3" id="birthdayCard">
+    <div class="card">
+        <div class="card-body d-flex flex-wrap justify-content-between align-items-start bg-alice-blue">
+            <div class="">
+                <div class="clr-blue f-22 fw-400">Marriage Loan</div>
+                <div class="f-18 clr-black fw-300">Dear Sir i need Loan for my
+                    marriage From 26TH of May 2022 to
+                    29TH of May 2022.</div>
+                <div class="clr-blue f-22 fw-400 mt-3">Sale Agent</div>
+                <div class="f-18 clr-black fw-300">M. Haris Ahmed</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="row my-4">
+    <!-- <div class="col-xl-1"><p>Upcomming</p></div> -->
+    <div class="col">
+        <mat-divider></mat-divider>
+    </div>
+    <div class="col-xl-2">
+        <p>25TH May 2022</p>
+    </div>
+</div>
+<div class="col-xl-3" id="birthdayCard">
+    <div class="card">
+        <div class="card-body d-flex flex-wrap justify-content-between align-items-start bg-alice-blue">
+            <div class="">
+                <div class="clr-blue f-22 fw-400">Marriage Vacations</div>
+                <div class="f-18 clr-black fw-300">Dear Sir i need Loan for my
+                    marriage From 26TH of May 2022 to
+                    29TH of May 2022.</div>
+                <div class="clr-blue f-22 fw-400 mt-3">Sale Agent</div>
+                <div class="f-18 clr-black fw-300">M. Haris Ahmed</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<ng-template #Vacations>
+    <nz-modal nzWidth="1000" [(nzVisible)]="isVisible" (nzOnCancel)="closeModal()"
+      [nzTitle]="isEditMode?'Update Vacations':'Add New Vacations' ">
+
+<app-add-vacation></app-add-vacation>  
+
+ </nz-modal>
+  </ng-template>
+  
+  <ng-container *ngTemplateOutlet="Vacations"></ng-container>

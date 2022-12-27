@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="row">
+
+        <!-- {{ this.form.value | json }} -->
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit(formDirective)" novalidate #formDirective="ngForm" class="col-xl-12">
+            
+
+            <div class="text-center">
+                
+                <mat-form-field class="col-xl-6">
+                    <mat-label>Full Name</mat-label>
+                    <input type="text" matInput placeholder="M. Haris Ahmed" formControlName="title">
+                </mat-form-field>
+                <mat-form-field class="col-xl-6">
+                    <mat-label>Job Title</mat-label>
+                    <input type="text" matInput placeholder="Sale Agent" formControlName="title">
+                </mat-form-field>
+                <mat-form-field class="col-xl-6">
+                    <mat-label>Vacation Title</mat-label>
+                    <input type="text" matInput placeholder="Marriage Vacation" formControlName="title">
+                </mat-form-field>
+                <mat-form-field class="col-xl-6">
+                    <mat-label>Date From</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                 </mat-form-field>
+                 <mat-form-field class="col-xl-6">
+                    <mat-label>Date Till</mat-label>
+                    <input matInput [matDatepicker]="picker1" formControlName="date">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                 </mat-form-field>
+                <mat-form-field class="col-xl-6">
+                    <mat-label>Branch</mat-label>
+                    <input type="text" matInput placeholder="UAE" formControlName="title">
+                </mat-form-field>
+                <mat-form-field class="col-xl-12">
+                    <mat-label>Vacation Description</mat-label>
+                    <input type="number" matInput placeholder="Dear Sir i need vacations for my marriage From 26TH of May 2022 till 29TH of May 2022." formControlName="title">
+                </mat-form-field>
+
+                <button nz-button nzType="primary" class="mr-2" type="submit">Decline</button>
+                <button nz-button nzType="primary" class="" type="submit">Accept</button>
+
+            </div>
+        </form>
+
+    </div>
+</div>
