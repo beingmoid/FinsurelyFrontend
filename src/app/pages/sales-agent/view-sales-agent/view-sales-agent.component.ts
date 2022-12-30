@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { Router } from '@angular/router';
+import { NzTableQueryParams } from 'ng-zorro-antd';
 import { Memoize } from 'src/app/directives/memoize.decorator';
 import { UserDetailDTO } from 'src/app/models/userDTO';
 import { CustomerService } from 'src/app/services/APIServices/customer.service';
@@ -33,12 +34,20 @@ export class ViewSalesAgentComponent implements OnInit {
   CustomerForm: FormGroup
   isEditMode: boolean;
   isVisible: boolean;
-  pageSize: number = 10;
+  page=1;
+  pageSize=10;
   totalPayable=0;
   sortColumnKey: string;
+  isloading=false;
+  totalRows:number;
+  totalCount;
+
+
+
   constructor(private _service:SalesAgentService,
     private _shared:SharedService,
     private _router:Router , private fb:FormBuilder) {
+
       this._shared.formSubmited.subscribe(res=>{
         this.isVisible=false;
       });
@@ -47,34 +56,7 @@ export class ViewSalesAgentComponent implements OnInit {
   }
   searchAddress: string;
   // listData: Branch[];
-  nameList = [
-    { text: 'Export as PDF', value: 'PDF', checked: true },
-    { text: 'Export as Excel', value: 'Excel', checked: false }
-  ];
 
-  data = [
-    {
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park'
-    },
-    {
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park'
-    },
-    {
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park'
-    },
-    {
-      name: 'Jim Red',
-      age: 32,
-      address: 'London No. 2 Lake Park'
-    }
-  ];
-  displayData = [...this.data];
   sortName = null;
   sortValue = null;
   listOfSearchName = [];
@@ -98,20 +80,36 @@ export class ViewSalesAgentComponent implements OnInit {
     this._service.salesAgentObserver$.subscribe(res=>{
       this.totalPayable=0;
       if(res){
-        this.listData=res;
-        res.forEach((item)=>{
+        this.listData=res.data;
+        res.data.forEach((item)=>{
 
           this.totalPayable+=item.openBalance;
 
         });
     }
+
+    this.totalCount= 18; 
+    console.log('resCHek' ,this.totalCount)
+    console.log('2nd', res)
+
     this.listDataCopy = JSON.stringify(this.listData);
       });
 
-    this._service.GetAllSalesAgents();
+    this._service.GetAgentwithBalancePaginatedAsync(this.page, this.pageSize);
 
   }
+  onQueryParamsChange(params: NzTableQueryParams): void {
+    this.isloading=true;
+    console.log(this.pageSize, this.page);
 
+
+
+  this._service.GetAgentwithBalancePaginatedAsync(this.page, this.pageSize);
+
+
+
+  }
+  
   showModal() {
     // this.CustomerForm.reset();
     this.isEditMode = false;

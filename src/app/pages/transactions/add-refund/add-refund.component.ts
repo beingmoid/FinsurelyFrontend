@@ -110,7 +110,7 @@ isLoaded = true;
     this.accountsService.GetAccounts();
 
     this.SalesAgentService.salesAgentObserver$.subscribe(res=>{
-      this.salesAgents= res as UserDetailDTO[];
+      this.salesAgents= res.data as UserDetailDTO[];
     });
     this.SalesAgentService.GetAllSalesAgents();
     this.insuranceService.salesAgentObserver$.subscribe(res=>{

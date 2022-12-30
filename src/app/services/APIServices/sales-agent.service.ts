@@ -15,17 +15,20 @@ import { GenericApiService } from './genericApi.service';
 })
 export class SalesAgentService extends GenericApiService {
 
+
   salesAgentSelectListObserver$: Observable<UserDetailDTO[]> = new Observable<UserDetailDTO[]>();
   private salesAgentSelectListSubject: BehaviorSubject<UserDetailDTO[]> = new BehaviorSubject<UserDetailDTO[]>(undefined);
-  salesAgentObserver$: Observable<UserDetailDTO[]> = new Observable<UserDetailDTO[]>();
-  private salesAgentSubject: BehaviorSubject<UserDetailDTO[]> = new BehaviorSubject<UserDetailDTO[]>(undefined);
+
+  salesAgentObserver$: Observable<PaginatedData<any>> = new Observable<PaginatedData<any>>();
+  private salesAgentSubject: BehaviorSubject<PaginatedData<any>> = new BehaviorSubject<PaginatedData<any>>(undefined);
+
   preferredPaymentMethodtObserver$: Observable<PreferredPaymentMethod[]> = new Observable<PreferredPaymentMethod[]>();
   private preferredPaymentMethodSubject: BehaviorSubject<PreferredPaymentMethod[]> = new BehaviorSubject<PreferredPaymentMethod[]>(undefined);
   termsObserver$: Observable<any[]> = new Observable<PreferredPaymentMethod[]>();
   private termsSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(undefined);
   salesInvoiceObserver$: Observable<any[]> = new Observable<PreferredPaymentMethod[]>();
   private salesInvoiceSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(undefined);
-  
+
   salesAgentStatementObserver$: Observable<PaginatedData<any>> = new Observable<PaginatedData<any>>();
   private salesAgentStatementSubject: BehaviorSubject<PaginatedData<any>> = new BehaviorSubject<PaginatedData<any>>(undefined);
 
@@ -108,8 +111,15 @@ export class SalesAgentService extends GenericApiService {
 
   SearchWithPagination(params: PaginationParams<number>) {
     return this.Post(params, API_URL + API_ENDPOINTS.SalesAgent + `/GetAgentPaginated`).subscribe(res => {
-      this.salesAgentStatementSubject.next((res.dynamicResult as PaginatedData<any>)); 
+      this.salesAgentStatementSubject.next((res.dynamicResult as PaginatedData<any>));
     })
+  }
+
+  GetAgentwithBalancePaginatedAsync(pageNo:number,pageSize: number) {
+    return this.GetAll(API_URL + API_ENDPOINTS.SalesAgent + `/GetAgentwithBalancePaginatedAsync?page=${pageNo}&itemsPerPage=${pageSize}`).subscribe(res => {
+      this.salesAgentSubject.next((res.dynamicResult as PaginatedData<any>));
+    })
+
   }
 
 

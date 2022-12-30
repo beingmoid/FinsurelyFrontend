@@ -10,8 +10,7 @@
 
   // flex-shrink: 0;
   >.feature {
-    background-color: #456990;
-    height: 100vh;
+    background: linear-gradient(-180deg, #054085 0%, rgba(11, 90, 183, 0.85) 100%) !important;    height: 100vh;
     justify-content: center;
     flex: 1;
     flex-direction: column;

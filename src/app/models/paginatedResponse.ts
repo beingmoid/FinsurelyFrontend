@@ -18,5 +18,6 @@ export class PaginationParams<TKey>{
   page: number =1;
   requestExcel: boolean;
   requestPdf: boolean;
+  requestAllData: boolean;
 
 }

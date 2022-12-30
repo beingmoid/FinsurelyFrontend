@@ -85,5 +85,6 @@ export const API_ENDPOINTS = {
     Payroll: 'api/Payroll',
     Receipts: 'api/Receipts',
     Announcement: 'api/Announcement',
-    VactionApplication: 'api/VacationApplication'
+    VactionApplication: 'api/VacationApplication',
+    Loan: 'api/Loan',
 }
