@@ -50,7 +50,7 @@ export class EmployeeViewComponent implements OnInit {
         });
       }
     });
-  this.empService.GetAllCustomers();
+  this.empService.GetAllEmployees();
   }
   filter(){
 

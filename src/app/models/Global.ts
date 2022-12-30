@@ -83,5 +83,7 @@ export const API_ENDPOINTS = {
     ExpenseCategory:'api/ExpenseCategory',
     Expenses: 'api/Expense',
     Payroll: 'api/Payroll',
-    Receipts: 'api/Receipts'
+    Receipts: 'api/Receipts',
+    Announcement: 'api/Announcement',
+    VactionApplication: 'api/VacationApplication'
 }

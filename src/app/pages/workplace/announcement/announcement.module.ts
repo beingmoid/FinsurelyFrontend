@@ -5,6 +5,7 @@ import { AnnouncementRoutingModule } from './announcement-routing.module';
 import { ViewAnnouncementsComponent } from './view-announcements/view-announcements.component';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
 import { SharedModule } from 'src/app/shared.module';
+import { WidgetsComponentsModule } from 'src/app/components/kit/widgets/widgets-components.module';
 
 
 @NgModule({
@@ -12,7 +13,7 @@ import { SharedModule } from 'src/app/shared.module';
   imports: [
     CommonModule,
     AnnouncementRoutingModule,
-    SharedModule
+    SharedModule,
   ],
  
 })

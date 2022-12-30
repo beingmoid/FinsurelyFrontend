@@ -3,46 +3,64 @@
 
         <!-- {{ this.form.value | json }} -->
 
-        <form [formGroup]="form" (ngSubmit)="onSubmit(formDirective)" novalidate #formDirective="ngForm" class="col-xl-12">
-            
+        <form [formGroup]="form" (ngSubmit)="onSubmit(formDirective)" novalidate #formDirective="ngForm"
+            class="col-xl-12">
+
 
             <div class="text-center">
-                
+
                 <mat-form-field class="col-xl-6">
-                    <mat-label>Full Name</mat-label>
-                    <input type="text" matInput placeholder="M. Haris Ahmed" formControlName="title">
+                    <mat-label>Applicant Name</mat-label>
+                    <input type="text" matInput placeholder="M. Haris Ahmed" value="haris"
+                        formControlName="applicantName">
                 </mat-form-field>
                 <mat-form-field class="col-xl-6">
                     <mat-label>Job Title</mat-label>
-                    <input type="text" matInput placeholder="Sale Agent" formControlName="title">
+                    <input type="text" matInput placeholder="Sale Agent" formControlName="jobTitle">
                 </mat-form-field>
                 <mat-form-field class="col-xl-6">
                     <mat-label>Vacation Title</mat-label>
-                    <input type="text" matInput placeholder="Marriage Vacation" formControlName="title">
+                    <input type="text" matInput placeholder="Marriage Vacation" formControlName="vacationTitle">
                 </mat-form-field>
                 <mat-form-field class="col-xl-6">
                     <mat-label>Date From</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="date">
+                    <input matInput [matDatepicker]="picker" formControlName="dateFrom">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
-                 </mat-form-field>
-                 <mat-form-field class="col-xl-6">
+                </mat-form-field>
+                <mat-form-field class="col-xl-6">
                     <mat-label>Date Till</mat-label>
-                    <input matInput [matDatepicker]="picker1" formControlName="date">
+                    <input matInput [matDatepicker]="picker1" formControlName="dateTo">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
-                 </mat-form-field>
-                <mat-form-field class="col-xl-6">
-                    <mat-label>Branch</mat-label>
-                    <input type="text" matInput placeholder="UAE" formControlName="title">
-                </mat-form-field>
-                <mat-form-field class="col-xl-12">
-                    <mat-label>Vacation Description</mat-label>
-                    <input type="number" matInput placeholder="Dear Sir i need vacations for my marriage From 26TH of May 2022 till 29TH of May 2022." formControlName="title">
                 </mat-form-field>
 
-                <button nz-button nzType="primary" class="mr-2" type="submit">Decline</button>
-                <button nz-button nzType="primary" class="" type="submit">Accept</button>
+                <mat-form-field class="col-xl-6">
+                    <mat-label>Branch</mat-label>
+                    <input type="text" matInput [matAutocomplete]="auto" formControlName="branchId"
+                        placeholder="Select Branch">
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayBranchType.bind(this)">
+                        <mat-option [value]="item.id"
+                            *ngFor="let item of filterBranchType | async">{{item.branchName}}</mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+                <mat-form-field class="col-xl-6">
+                    <mat-label>Employee</mat-label>
+                    <input type="text" matInput [matAutocomplete]="auto1" formControlName="userDetailId" placeholder="Employee">
+                    <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayEmployeeType.bind(this)">
+                        <mat-option [value]="item.id" *ngFor="let item of filterEmployeeType | async">{{item.displayNameAs}}</mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+                <mat-form-field class="col-xl-6">
+                    <mat-label>Vacation Description</mat-label>
+                    <input type="text" matInput
+                        placeholder="Dear Sir i need vacations for my marriage From 26TH of May 2022 till 29TH of May 2022."
+                        formControlName="description">
+                </mat-form-field>
+
+                <button nz-button nzType="primary" class="" type="submit">Submit</button>
 
             </div>
         </form>

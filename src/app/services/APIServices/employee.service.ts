@@ -32,12 +32,12 @@ export class EmployeeService extends GenericApiService {
     this.preferredPaymentMethodtObserver$=this.preferredPaymentMethodSubject.asObservable();
     this.termsObserver$= this.termsSubject.asObservable();
   }
-  GetCustomers(){
+  GetEmployees(){
     this.GetAll(API_URL+API_ENDPOINTS.Employee).subscribe(res=>{
       this.customerSelectListSubject.next(res.dynamicResult)
     });
   }
-  GetAllCustomers(){
+  GetAllEmployees(){
     this.GetAll(API_URL+API_ENDPOINTS.Employee).subscribe(res=>{
       this.customerSubject.next(res.dynamicResult)
     });

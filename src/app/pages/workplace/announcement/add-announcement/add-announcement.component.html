@@ -1,26 +1,23 @@
 <div class="container">
     <div class="row">
 
-        <!-- {{ this.form.value | json }} -->
+        {{ this.form.value | json }}
 
         <form [formGroup]="form" (ngSubmit)="onSubmit(formDirective)" novalidate #formDirective="ngForm" class="col-xl-12">
 
             <mat-form-field class="col-xl-6">
                 <mat-label>Full Name</mat-label>
-                <input type="text" matInput placeholder="Enter Full Name" formControlName="name">
+                <input type="text" matInput placeholder="Enter Full Name" formControlName="fullName">
             </mat-form-field>
 
             <mat-form-field class="col-xl-6">
                 <mat-label>Job Title</mat-label>
-                <mat-select formControlName="jobTitle" placeholder="">
-                    <mat-option value="1">1</mat-option>
-                    <mat-option value="2" >2</mat-option>
-                </mat-select>
+                <input type="text"  matInput placeholder="Job Title" formControlName="jobTitle">
             </mat-form-field>
 
             <mat-form-field class="col-xl-6">
                 <mat-label>Announcement Title</mat-label>
-                <input type="text" matInput placeholder="Enter Announcement Title" formControlName="title">
+                <input type="text" matInput placeholder="Enter Announcement Title" formControlName="annoucementTitle">
             </mat-form-field>
 
             <mat-form-field class="col-xl-6">
@@ -36,6 +33,7 @@
             </mat-form-field>
 
             <div class="text-center">
+                
                 <button nz-button nzType="primary" class="" type="submit">Post Announcement</button>
 
             </div>

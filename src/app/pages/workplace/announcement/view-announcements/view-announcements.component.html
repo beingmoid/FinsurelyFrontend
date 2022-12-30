@@ -1,14 +1,57 @@
-<div class="row">
-
-  <div class="col-xl-4 breadcrumbs mb-3">
-    <strong>Workplace</strong>
+<div class="row mb-3">
+  <div class="col-xl-12">
+    <a class="font-size-16 text-primary" [routerLink]="['/workplace']"><i class="fe fe-arrow-left"></i> Back to
+      Workplace Manager</a>
   </div>
 </div>
+
+<div class="col-xl-4">
+
+  <div class="card">
+    <div class="card-body d-flex flex-wrap justify-content-between align-items-start bg-alice-blue">
+      <div class="">
+        <div class="clr-blue f-22 fw-400">Announcement</div>
+        <div class="clr-blue fw-600 f-50">01</div>
+        <div class="f-18 clr-black fw-300">View All</div>
+      </div>
+      <div class="my-auto mx-0">
+        <img src="assets/images/cards/megaphone.png" width="70px" alt="Icon" />
+      </div>
+    </div>
+  </div>
+
+</div>
+
 <div class="row">
   <div class="col-xl-12">
     <button nz-button nzType="primary" class="float-right mb-3" (click)="openModal()">Add Announcement</button>
   </div>
 </div>
+
+<div class="row" *ngFor="let item of list">
+  <div class="col-xl-10">
+    <mat-divider></mat-divider>
+  </div>
+  <div class="col-xl-2">
+    <p>{{item.date | date}}</p>
+  </div>
+  <div class="col-xl-3" id="birthdayCard" *ngFor="let data of item.value">
+    <div class="card">
+      <div class="card-body d-flex flex-wrap justify-content-between align-items-start bg-alice-blue">
+        <div class="">
+          <div class="clr-blue f-22 fw-400">{{data.annoucementTitle}}</div>
+          <div class="f-18 clr-black fw-300">{{data.description}}</div>
+          <div class="clr-blue f-22 fw-400 mt-3">{{data.jobTitle}}</div>
+          <div class="f-18 clr-black fw-300">{{data.fullname}}</div>
+          <div class="f-18 clr-black fw-300">{{data.date | date}}</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
 
 
 <ng-template #announcement>

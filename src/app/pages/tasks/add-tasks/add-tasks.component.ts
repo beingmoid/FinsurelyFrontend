@@ -81,7 +81,7 @@ export class AddTasksComponent implements OnInit, OnDestroy {
         this.assignedByList = res;
       }
     });
-    this._empService.GetAllCustomers();
+    this._empService.GetAllEmployees();
     this.caseStatusSubject = this._empService.getStatues().subscribe(res => {
       if (res)
         this.statuses = res.dynamicResult as{id:number,name:string}[];

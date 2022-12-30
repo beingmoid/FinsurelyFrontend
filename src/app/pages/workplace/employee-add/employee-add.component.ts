@@ -150,7 +150,7 @@ export class EmployeeAddComponent implements OnInit {
       data.addresses[0].userDetailId=data.id;
       data.userId=this.userId;
       this.editCustomer(data,formDirective);
-      this.customerService.GetAllCustomers();
+      this.customerService.GetAllEmployees();
       this._sharedService.formSubmited.next({status:'Updated'});
     }
     else{
@@ -177,8 +177,8 @@ export class EmployeeAddComponent implements OnInit {
       if(res.isSuccessfull){
         formDirective.resetForm();
         this.alertService.success("Customer Added Sucessfully")
-        this.customerService.GetAllCustomers();
-        this.customerService.GetCustomers();
+        this.customerService.GetAllEmployees();
+        this.customerService.GetEmployees();
         this._sharedService.formSubmited.next({status:'Inserted'});
       }
       else  {
