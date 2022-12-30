@@ -180,9 +180,9 @@
                                     <th> Trasnsaction Type</th>
                                     <th> Customer Name</th>
                                     <th> Policy#</th>
-                                    <th> Insurance</th>
-                                    <th>Service </th>
-                                    <th>Type </th>
+                                    <th> Insurance Type</th>
+
+                                    <th>Transaction Reference#</th>
                                     <th> Vehicle</th>
                                     <th> Body </th>
                                     <th>Debit</th>
@@ -213,7 +213,7 @@
                                         )
                                         )
                                         }}</td>
-                                    <td *ngIf="data.transactionType==3" colspan="08" style="text-align: center;">
+                                    <td *ngIf="data.transactionType==3" colspan="07" style="text-align: center;">
                                         {{ "----------------- OPENING BALANCE -----------------"}}
                                     </td>
                                     <ng-container *ngIf="data.transactionType!=3">
@@ -221,8 +221,7 @@
                                         <td> {{data.customerName}} </td>
                                         <td> {{data.policyNumber}} </td>
                                         <td>{{data.insuranceType}}</td>
-                                        <td> {{data.serviceType }} </td>
-                                        <td>{{data.policyType}}</td>
+                                        <td>{{data?.refNo}} </td>
                                         <td> {{data.vehicle}} </td>
                                         <td> {{data.bodyType}} </td>
                                     </ng-container>
@@ -767,7 +766,7 @@
     <div nz-row nzJustify="end">
         <div nz-col nzSpan="2">
             <i class="fa fa-calculator" aria-hidden="true" style="color: #109CF1;"></i>
-            Total :{{paymentDue}} AED
+            Total :{{totalBalance}} AED
         </div>
 
     </div>
