@@ -32,6 +32,7 @@ import { SalesDetailComponent } from './sales-detail/sales-detail.component';
     SharedModule,
     MatChipsModule,
 
+
   ],
   exports:[AddVehicleComponent]
 })

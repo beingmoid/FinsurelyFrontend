@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
     if (this.email.invalid || this.password.invalid) {
       return
     }
-    
+
     this.loading = true
     const payload = {
       email: this.email.value,

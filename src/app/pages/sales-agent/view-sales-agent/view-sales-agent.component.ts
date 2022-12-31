@@ -39,7 +39,7 @@ export class ViewSalesAgentComponent implements OnInit {
   totalPayable=0;
   sortColumnKey: string;
   isloading=false;
-  totalRows:number;
+
   totalCount;
 
 
@@ -88,7 +88,7 @@ export class ViewSalesAgentComponent implements OnInit {
         });
     }
 
-    this.totalCount= 18; 
+    this.totalCount= res?.totalCount;
     console.log('resCHek' ,this.totalCount)
     console.log('2nd', res)
 
@@ -109,7 +109,7 @@ export class ViewSalesAgentComponent implements OnInit {
 
 
   }
-  
+
   showModal() {
     // this.CustomerForm.reset();
     this.isEditMode = false;

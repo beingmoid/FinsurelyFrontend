@@ -5,12 +5,12 @@
     <div class="authContainer">
       <div class="feature text-center">
         <nz-carousel nzAutoPlay>
-          <div nz-carousel-content *ngFor="let index of [1, 2, 3 ]">
-            <img class="w-50 mb-4" src="assets/images/features/{{index}}.svg" alt="Feature {{index}}">
-            <h1 class="font-weight-bold mb-3">Feature {{ index }}</h1>
+          <div nz-carousel-content *ngFor="let index of [ {id:1,val:'We Are Back'},{id:2,val:'With Some New'}, {id:3,val:'And Awesome Tools For Your Business'}]">
+            <img class="w-50 mb-4" src="assets/images/features/{{index.id}}.svg" alt="Feature {{index.id}}">
+            <h1 class="font-weight-bold mb-3">  {{ index.val }}</h1>
             <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. It has been the
-              industry's standard dummy.
+              Excited to use Finsuerly?. We are as well to show you around how we have updated all of our features and introduced some new tools for
+              Insurance Agents/Brokers/Agencies to maximize their daily work load
             </p>
           </div>
         </nz-carousel>

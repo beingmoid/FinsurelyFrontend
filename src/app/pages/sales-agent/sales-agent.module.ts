@@ -29,6 +29,6 @@ import { AgentProfileComponent } from './agent-profile/agent-profile.component';
     MatChipsModule
   ],
   exports:[AddSalesAgentComponent],
-  
+
 })
 export class SalesAgentModule { }
