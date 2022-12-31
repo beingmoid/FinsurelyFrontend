@@ -108,6 +108,7 @@
   <div class="row">
     <div class="col-xl-12">
       <nz-table class="card" #rowSelectionTable [nzData]="listData"[nzTotal]="totalCount" nzShowSizeChanger
+        [nzFrontPagination]="false"
         [(nzPageIndex)]="page" [(nzPageSize)]="pageSize" (nzPageIndexChange)="onQueryParamsChange($event)"
         (nzPageSizeChange)="onQueryParamsChange($event)" nzTableLayout="auto"   [nzBordered]="true"
       [nzTotal]="totalCount">
