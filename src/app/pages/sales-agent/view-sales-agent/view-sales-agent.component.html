@@ -107,20 +107,21 @@
 
   <div class="row">
     <div class="col-xl-12">
-      <nz-table class="card" #rowSelectionTable [nzData]="listData" [nzTotal]="totalRows" [nzNoResult]="noData" nzShowSizeChanger
+      <nz-table class="card" #rowSelectionTable [nzData]="listData"[nzTotal]="totalCount" nzShowSizeChanger
+        [nzFrontPagination]="false"
         [(nzPageIndex)]="page" [(nzPageSize)]="pageSize" (nzPageIndexChange)="onQueryParamsChange($event)"
-        (nzPageSizeChange)="onQueryParamsChange($event)" [nzTableLayout]="'fixed'" [nzBordered]="true"
-        [nzSize]="'small'" [nzTotal]="totalCount">
+        (nzPageSizeChange)="onQueryParamsChange($event)" nzTableLayout="auto"   [nzBordered]="true"
+      [nzTotal]="totalCount">
         <thead>
           <tr>
-            <th [nzLeft]="true" [nzWidth]="'100px'" class="ant-table-selection-column" [nzSortFn]="sortNumbersFn"
-              (click)="sortOn('index')">#
+            <th [nzLeft]="true" [nzWidth]="'100px'" class="ant-table-selection-column"
+             >#
             </th>
-            <th [nzLeft]="true" [nzAlign]="'center'" [nzSortFn]="sortNamesFn" (click)="sortOn('fullName')">Sales Person
+            <th [nzLeft]="true" [nzAlign]="'center'"  >Sales Person
               / Company</th>
-            <th [nzLeft]="true" [nzAlign]="'center'" [nzSortFn]="sortNumbersFn" (click)="sortOn('type')">Email </th>
-            <th [nzRight]="true" [nzAlign]="'center'" [nzSortFn]="sortNumbersFn" (click)="sortOn('type')">Mobile </th>
-            <th [nzRight]="true" [nzAlign]="'center'" [nzSortFn]="sortNumbersFn" (click)="sortOn('openBalance')">Open
+            <th [nzLeft]="true" [nzAlign]="'center'"  >Email </th>
+            <th [nzRight]="true" [nzAlign]="'center'" >Mobile </th>
+            <th [nzRight]="true" [nzAlign]="'center'" >Open
               Balance </th>
 
 

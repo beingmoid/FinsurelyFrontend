@@ -90,7 +90,7 @@ export class ViewSalesComponent implements OnInit {
   }
   searchAddress: string;
   // listData: Branch[];
- 
+
   sortName = null;
   sortValue = null;
   listOfSearchName = [];
