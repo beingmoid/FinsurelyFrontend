@@ -15,6 +15,8 @@ import { SharedService } from 'src/app/services/shared.service';
 import autoTable from 'jspdf-autotable';
 import jsPDF from 'jspdf';
 import { formatDate } from "@angular/common";
+import { NzTableQueryParams } from 'ng-zorro-antd';
+import { PaginationParams } from 'src/app/models/paginatedResponse';
 
 @Component({
   selector: 'app-view-detail-insurance-company',
@@ -22,126 +24,112 @@ import { formatDate } from "@angular/common";
   styleUrls: ['./view-detail-insurance-company.component.scss']
 
 })
-export class ViewDetailInsuranceCompanyComponent implements OnInit{
+export class ViewDetailInsuranceCompanyComponent implements OnInit {
 
   isVisible: boolean;
   userDetailId = 0;
-  customerDetail:UserDetailDTO;
-  address:Address;
-  paymentAndBilling:PaymentAndBilling;
-  paymentDue:number;
-  cardLoading:boolean;
-  pageSize=10;
-  fullName:string;
-  listData:SalesInvoice[]=[];
-comissions:ComissionRates[]=[];
-  isEditMode=true;
-  userId:string;
-  customerSubject:Subscription;
-  form:FormGroup;
-  form2:FormGroup;
-  tpl:string;
-  nonTpl:string;
-  openingBalance:number;
+  customerDetail: UserDetailDTO;
+  address: Address;
+  paymentAndBilling: PaymentAndBilling;
+  paymentDue: number;
+  cardLoading: boolean;
+  page = 1;
+  totalPages: number;
+  pageSize = 10;
+  fullName: string;
+  listData: SalesInvoice[] = [];
+  comissions: ComissionRates[] = [];
+  isEditMode = true;
+  userId: string;
+  customerSubject: Subscription;
+  form: FormGroup;
+  form2: FormGroup;
+  tpl: string;
+  nonTpl: string;
+  openingBalance: number;
+  totalCount = undefined;
+  isloading=false;
+  params: PaginationParams<number> = new PaginationParams<number>();
+  totalPayable=0;
+  listDataCopy: string;
+  totalBalance;
+
+
+
+
+
   // customerObserverSubject:Subject<UserDetailDTO> = new Subject();
-  report:AccountsReceviableReport;
-  statement:Statement[]=[];
-  paymentModal=false;
+  report: AccountsReceviableReport;
+  statement: Statement[] = [];
+  paymentModal = false;
+  statementList: any[];
 
   constructor(private _router: Router,
-    private _sharedService:SharedService,
+    private _sharedService: SharedService,
     private route: ActivatedRoute,
-    private service:InsuranceCompanyService,
-    private alert:AlertService,
-    private imageCompression:NgxImageCompressService,
-    private fb:FormBuilder) {
+    private service: InsuranceCompanyService,
+    private alert: AlertService,
+    private imageCompression: NgxImageCompressService,
+    private fb: FormBuilder,
+    private _AgentService: SalesAgentService,
+    ) {
 
 
-      this.form=this.fb.group({
-        isTpl:[null],
-        isNonTpl:[null],
-        rates:[null],
-        isActive:[null]
-      });
-      this.form2=this.fb.group({
-        isTpl:[null],
-        isNonTpl:[null],
-        rates:[null],
-        isActive:[null]
-      });
-      this.form = this.fb.group({
-        dateFrom: new FormControl(null),
-        dateTo: new FormControl(null),
-        branch: new FormControl(null),
-        isPdf: new FormControl(null),
-        isExcel: new FormControl(null)
+    this.form = this.fb.group({
+      isTpl: [null],
+      isNonTpl: [null],
+      rates: [null],
+      isActive: [null]
+    });
+    this.form2 = this.fb.group({
+      isTpl: [null],
+      isNonTpl: [null],
+      rates: [null],
+      isActive: [null]
+    });
 
-      })
+    this.form = this.fb.group({
+      from: new FormControl(null),
+      to: new FormControl(null),
+      requestExcel: new FormControl(null),
+      requestPdf: new FormControl(null),
+      searchQuery: new FormControl(null),
 
-    }
+    })
+
+  }
 
   searchAddress: string;
-  // listData: Branch[];
-  nameList = [
-    { text: 'Export as PDF', value: 'PDF', checked: true },
-    { text: 'Export as Excel', value: 'Excel', checked: false }
-  ];
 
-  data = [
-    {
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park'
-    },
-    {
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park'
-    },
-    {
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park'
-    },
-    {
-      name: 'Jim Red',
-      age: 32,
-      address: 'London No. 2 Lake Park'
-    }
-  ];
-  displayData = [...this.data];
-  sortName = null;
-  sortValue = null;
-  listOfSearchName = [];
 
   show = false;
 
   chiplist = [];
 
-    showModal(){
-      this._sharedService.sentPaymentForm.next(null);
-    }
- async ngOnInit(): Promise<void> {
+  showModal() {
+    this._sharedService.sentPaymentForm.next(null);
+  }
+  async ngOnInit(): Promise<void> {
     this.route.queryParams.subscribe(async params => {
-      this.userDetailId  =await +params['salesAgent'] || 0;
+      this.userDetailId = await +params['salesAgent'] || 0;
 
 
-      this._sharedService.formSubmited.subscribe(async x=> {
-        this.isVisible=false;
-        await this.service.GetSaleAgentDetail(this.userDetailId).subscribe(res=>{
-          if(res.isSuccessfull){
-            this.customerDetail=res.dynamicResult as UserDetailDTO;
+      this._sharedService.formSubmited.subscribe(async x => {
+        this.isVisible = false;
+        await this.service.GetSaleAgentDetail(this.userDetailId).subscribe(res => {
+          if (res.isSuccessfull) {
+            this.customerDetail = res.dynamicResult as UserDetailDTO;
 
-            this.listData=this.customerDetail.salesInvoicePersons;
-            this.userId=this.customerDetail.userId;
-            this.paymentAndBilling=this.customerDetail.paymentAndBilling[0];
-            this.address=this.customerDetail.addresses[0];
+            this.listData = this.customerDetail.salesInvoicePersons;
+            this.userId = this.customerDetail.userId;
+            this.paymentAndBilling = this.customerDetail.paymentAndBilling[0];
+            this.address = this.customerDetail.addresses[0];
           }
-          else{
+          else {
             console.log('failed fetching');
           }
 
-         });
+        });
       })
       // redirect if userDetailId is null or undefined
       if (!this.userDetailId) {
@@ -149,50 +137,70 @@ comissions:ComissionRates[]=[];
       } else {
         //
 
-        this.service.GetBalance(this.userDetailId).subscribe(res=>{
-          this.openingBalance=res.dynamicResult.balance
+        this.service.GetBalance(this.userDetailId).subscribe(res => {
+          this.openingBalance = res.dynamicResult.balance
         });
-        this.service.GetRates(this.userDetailId).subscribe(res=>{
-          if(res){
-            this.comissions= res.dynamicResult as ComissionRates[];
+        this.service.GetRates(this.userDetailId).subscribe(res => {
+          if (res) {
+            this.comissions = res.dynamicResult as ComissionRates[];
 
-            this.tpl= this.comissions.filter(x=>x.isTpl)[0]?.rates?.toString();
+            this.tpl = this.comissions.filter(x => x.isTpl)[0]?.rates?.toString();
 
-             this.nonTpl = this.comissions.filter(x=>x.isNonTpl)[0]?.rates?.toString();
+            this.nonTpl = this.comissions.filter(x => x.isNonTpl)[0]?.rates?.toString();
           }
 
         });
         console.log(this.comissions);
-         await this.service.GetSaleAgentDetail(this.userDetailId).subscribe( async res=>{
-        if(res.isSuccessfull){
-          this.customerDetail=res.dynamicResult as UserDetailDTO;
-          this.listData=this.customerDetail.insuranceCompanyInvoices;
-          (await this.service.GetReceviableStatementReport(res.dynamicResult.defaultAccountId)).subscribe(res=>{
-            if(res.dynamicResult){
-              console.log(res.dynamicResult)
-             this.report=res.dynamicResult as AccountsReceviableReport;
-             this.statement=(res.dynamicResult as AccountsReceviableReport).statement;
-             this.paymentDue=this.report.totalBalance;
-            }
+        await this.service.GetSaleAgentDetail(this.userDetailId).subscribe(async res => {
+          if (res.isSuccessfull) {
+            this.customerDetail = res.dynamicResult as UserDetailDTO;
+            this.listData = this.customerDetail.insuranceCompanyInvoices;
+            (await this.service.GetReceviableStatementReport(res.dynamicResult.defaultAccountId)).subscribe(res => {
+              if (res.dynamicResult) {
+                console.log(res.dynamicResult)
+                this.report = res.dynamicResult as AccountsReceviableReport;
+                this.statement = (res.dynamicResult as AccountsReceviableReport).statement;
+                this.paymentDue = this.report.totalBalance;
+              }
 
 
-          });
-          this.userId=this.customerDetail.userId;
+            });
+            this.userId = this.customerDetail.userId;
 
-          this.fullName=this.customerDetail.displayNameAs;
-        }
-        else{
-          console.log('failed fetching');
-        }
+            this.fullName = this.customerDetail.displayNameAs;
+          }
+          else {
+            console.log('failed fetching');
+          }
 
-       });
+        });
       }
 
     });
 
+    this._AgentService.salesAgentObserver$.subscribe(res=>{
+      this.totalPayable=0;
+      if(res){
+        this.listData=res.data;
+        res.data.forEach((item)=>{
+
+          this.totalPayable+=item.openBalance;
+
+        });
+    }
+
+    this.totalCount= res?.totalCount;
+    console.log('resCHek' ,this.totalCount)
+    console.log('2nd', res)
+
+    this.listDataCopy = JSON.stringify(this.listData);
+      });
+
+    this._AgentService.GetAgentwithBalancePaginatedAsync(this.page, this.pageSize);
+
   }
 
-  editDetail(){
+  editDetail() {
     console.log('working');
     this.isVisible = true;
 
@@ -200,67 +208,67 @@ comissions:ComissionRates[]=[];
   handleCancel() {
     this.isVisible = false
   }
-  saveTpl(){
+  saveTpl() {
 
     var data = this.form.value as ComissionRates;
-    data.isTpl=true;
-    data.isNonTpl=false;
-    data.isActive=true;
-    data.userDetailId=this.userDetailId;
-    this.service.saveComissionRate(data).subscribe(res=>{
-      if(res.dynamicResult){
+    data.isTpl = true;
+    data.isNonTpl = false;
+    data.isActive = true;
+    data.userDetailId = this.userDetailId;
+    this.service.saveComissionRate(data).subscribe(res => {
+      if (res.dynamicResult) {
         this.alert.success("Saved");
-        this.service.GetRates(this.userDetailId).subscribe(res=>{
-          if(res){
-            this.comissions= res.dynamicResult as ComissionRates[];
+        this.service.GetRates(this.userDetailId).subscribe(res => {
+          if (res) {
+            this.comissions = res.dynamicResult as ComissionRates[];
 
-            this.tpl= res.dynamicResult.filter(x=>x.isTpl)[0]?.rates.toString();
+            this.tpl = res.dynamicResult.filter(x => x.isTpl)[0]?.rates.toString();
 
-             this.nonTpl = res.dynamicResult.filter(x=>x.isNonTpl)[0]?.rates.toString();
+            this.nonTpl = res.dynamicResult.filter(x => x.isNonTpl)[0]?.rates.toString();
           }
 
         });
       }
-      else{
+      else {
         this.alert.error("Error");
       }
     })
   }
-  saveNonTpl(){
+  saveNonTpl() {
     var data = this.form2.value as ComissionRates;
-    data.isNonTpl=true;
-    data.isTpl=false;
-    data.isActive=true;
-    data.userDetailId=this.userDetailId;
-    this.service.saveComissionRate(data).subscribe(res=>{
-      if(res.dynamicResult){
+    data.isNonTpl = true;
+    data.isTpl = false;
+    data.isActive = true;
+    data.userDetailId = this.userDetailId;
+    this.service.saveComissionRate(data).subscribe(res => {
+      if (res.dynamicResult) {
         this.alert.success("Saved");
-        this.service.GetRates(this.userDetailId).subscribe(res=>{
+        this.service.GetRates(this.userDetailId).subscribe(res => {
 
-          if(res){
-            this.comissions= res.dynamicResult as ComissionRates[];
+          if (res) {
+            this.comissions = res.dynamicResult as ComissionRates[];
 
-            this.tpl= this.comissions.filter(x=>x.isTpl)[0].rates.toString();
+            this.tpl = this.comissions.filter(x => x.isTpl)[0].rates.toString();
 
-             this.nonTpl = this.comissions.filter(x=>x.isNonTpl)[0].rates.toString();
+            this.nonTpl = this.comissions.filter(x => x.isNonTpl)[0].rates.toString();
           }
 
         });
       }
-      else{
+      else {
         this.alert.error("Error");
       }
     })
   }
-  header = [['Date', 'Type', 'Invoice#', 'Name', 'Policy#',  'Vehicle', 'Account', 'Debit','Credit','Amount','Balance']];
-  tableData=[];
-  DownloadPDF(){
-    var options:Intl.DateTimeFormatOptions = { localeMatcher:'best fit', year: '2-digit', month: 'long', day: '2-digit' };
-    var pdf = new jsPDF('landscape','px');
-    this.statement.forEach(x=>{
-      let datetoday = formatDate(x.date,'mediumDate','en-AE').toString();
-      this.tableData.push([datetoday,x.transactionType,x.invoiceNumber,x.name,x.policyNumber,x.vehicle,x.accountName,x.debit,x.credit,x.amount,x.balance])
-      }
+  header = [['Date', 'Type', 'Invoice#', 'Name', 'Policy#', 'Vehicle', 'Account', 'Debit', 'Credit', 'Amount', 'Balance']];
+  tableData = [];
+  DownloadPDF() {
+    var options: Intl.DateTimeFormatOptions = { localeMatcher: 'best fit', year: '2-digit', month: 'long', day: '2-digit' };
+    var pdf = new jsPDF('landscape', 'px');
+    this.statement.forEach(x => {
+      let datetoday = formatDate(x.date, 'mediumDate', 'en-AE').toString();
+      this.tableData.push([datetoday, x.transactionType, x.invoiceNumber, x.name, x.policyNumber, x.vehicle, x.accountName, x.debit, x.credit, x.amount, x.balance])
+    }
     );
     var img = new Image();
     img.src = 'assets/images/logo.png';
@@ -269,14 +277,14 @@ comissions:ComissionRates[]=[];
 
 
 
-    var headRows = function() {
+    var headRows = function () {
       return [{
         id: "ID",
         name: "Name",
       }];
     };
 
-    var bodyRows = function(rowCount) {
+    var bodyRows = function (rowCount) {
       rowCount = rowCount || 10;
       let body = [];
 
@@ -289,56 +297,56 @@ comissions:ComissionRates[]=[];
 
       return body;
     }
-    var customer =  this.customerDetail.displayNameAs;
+    var customer = this.customerDetail.displayNameAs;
 
     autoTable(pdf, {
       head: this.header,
-    body: this.tableData,
+      body: this.tableData,
 
-    didDrawPage: function(data) {
-      // Header
+      didDrawPage: function (data) {
+        // Header
 
-      pdf.addImage(img, 'png', 5, -12, 115, 65,'SLOW');
-      pdf.setFontSize(50);
-      pdf.setTextColor(20,20,0);
-      pdf.setFont('poppins');
+        pdf.addImage(img, 'png', 5, -12, 115, 65, 'SLOW');
+        pdf.setFontSize(50);
+        pdf.setTextColor(20, 20, 0);
+        pdf.setFont('poppins');
 
-       pdf.text(`STATEMENT OF ACCOUNT`,81, -5 );
-
-
-      // pdf.setFontSize(20);
-      // pdf.setTextColor(85);
-      // pdf.setFont('poppins');
+        pdf.text(`STATEMENT OF ACCOUNT`, 81, -5);
 
 
+        // pdf.setFontSize(20);
+        // pdf.setTextColor(85);
+        // pdf.setFont('poppins');
 
 
-      // Footer
-      var str = "Page " + pdf.internal.pages
-      // Total page number plugin only available in jspdf v1.0+
-      if (typeof pdf.putTotalPages === 'function') {
-        str = str + " of " + pdf.internal.pages;
+
+
+        // Footer
+        var str = "Page " + pdf.internal.pages
+        // Total page number plugin only available in jspdf v1.0+
+        if (typeof pdf.putTotalPages === 'function') {
+          str = str + " of " + pdf.internal.pages;
+        }
+        pdf.setFontSize(10);
+
+        // jsPDF 1.4+ uses getWidth, <1.4 uses .width
+        var pageSize = pdf.internal.pageSize;
+        var pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight();
+        // pdf.text(str, data.settings.margin.left, pageHeight - 10);
+      },
+
+      margin: {
+        top: 150, left: 20, right: 20, bottom: 75
       }
-      pdf.setFontSize(10);
 
-      // jsPDF 1.4+ uses getWidth, <1.4 uses .width
-      var pageSize = pdf.internal.pageSize;
-      var pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight();
-      // pdf.text(str, data.settings.margin.left, pageHeight - 10);
-    },
-
-    margin: {
-      top: 150, left: 20, right: 20, bottom: 75
-    }
-
-    ,
+      ,
 
 
-    styles: { fillColor: [0, 0, 51] },
-    didDrawCell: data => {
+      styles: { fillColor: [0, 0, 51] },
+      didDrawCell: data => {
         console.log(data.column.index)
-      data.cell.width=15;
-    }
+        data.cell.width = 15;
+      }
     });
 
 
@@ -348,6 +356,35 @@ comissions:ComissionRates[]=[];
     // pdf.output('dataurlnewwindow')
 
     // Download PDF doc
-    pdf.save(`${this.customerDetail.displayNameAs+Date.now()}.pdf`);
+    pdf.save(`${this.customerDetail.displayNameAs + Date.now()}.pdf`);
+  }
+
+  onQueryParamsChange(params: NzTableQueryParams): void {
+    this.isloading=true;
+
+    console.log('pageSizw', this.pageSize, this.page);
+    
+    this._AgentService.GetAgentwithBalancePaginatedAsync(this.page, this.pageSize);
+
+
+  }
+  searchPag() {
+    var data = this.form.value as PaginationParams<number>;
+    data.id = this.userDetailId;
+    data.page = this.page;
+    data.itemsPerPage = this.pageSize;
+    this._AgentService.SearchWithPagination(data);
+    this._AgentService.salesAgentStatementObserver$.subscribe((res => {
+      this.statementList = res?.data;
+      this.totalCount = res?.totalCount;
+      this.totalBalance = res?.totalBalance;
+      console.log('ye wal alog', res);
+      // console.log(this.totalBalance);
+      console.log('statementList', this.statementList);
+      // console.log(this.totalCount);
+    }))
+
+    console.log('chcce', data)
+    console.log(this.form.value);
   }
 }

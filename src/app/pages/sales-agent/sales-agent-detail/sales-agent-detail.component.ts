@@ -399,7 +399,7 @@ export class SalesAgentDetailComponent implements OnInit {
 
       }
 
-    this.searchPag()
+      this.searchPag()
     });
 
   }
@@ -604,8 +604,8 @@ export class SalesAgentDetailComponent implements OnInit {
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
-this.searchPag();
-console.log(this.pageSize, this.page);
+    this.searchPag();
+    console.log(this.pageSize, this.page);
 
   }
 
@@ -617,8 +617,8 @@ console.log(this.pageSize, this.page);
     this.service.SearchWithPagination(data);
     this.service.salesAgentStatementObserver$.subscribe((res => {
       this.statementList = res?.data;
-            this.totalCount =res?.totalCount;
-      this.totalBalance= res?.totalBalance;
+      this.totalCount = res?.totalCount;
+      this.totalBalance = res?.totalBalance;
       console.log('ye wal alog', res);
       // console.log(this.totalBalance);
       console.log('statementList', this.statementList);
