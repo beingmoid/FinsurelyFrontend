@@ -1137,9 +1137,9 @@ nz-header.ant-layout-header.cui__layout__header {
 
 // for left side menu scroll issue
 
-.ant-layout-sider-children .menuOuter .ps-content {
-  overflow-x: auto;
-}
+// .ant-layout-sider-children .menuOuter .ps-content {
+//   overflow-x: auto;
+// }
 
 .ant-layout-sider-children .menuOuter .ps-content::-webkit-scrollbar-thumb {
   visibility: hidden;

@@ -16,13 +16,13 @@
       <div  class="p-2">
 
         <div class="d-flex flex-wrap align-items-start mb-3 mt-2">
-          <div [hidden]="isMenuCollapsed" class="kit__utils__avatar kit__utils__avatar--size27 kit__utils__avatar--rounded mr-3 ml-4">
+          <div [hidden]="isMenuCollapsed" class="kit__utils__avatar kit__utils__avatar--size50 kit__utils__avatar--rounded mr-3 ml-4">
             <!-- TODO: Add image as avatar -->
             <img src="assets/images/icon.png" height="50" width="50"  class="mr-2" alt="Afnan" />
             <!-- <nz-avatar nzIcon="user" [nzShape]="'square'" [nzSize]="'large'" class="avatar"></nz-avatar> -->
 
           </div>
-          <div [hidden]="!isMenuCollapsed" class="kit__utils__avatar kit__utils__avatar--size27 kit__utils__avatar--rounded mr-3 ml-4">
+          <div [hidden]="!isMenuCollapsed" class="kit__utils__avatar kit__utils__avatar--size50 kit__utils__avatar--rounded mr-3 ml-4" id="icoon">
             <!-- TODO: Add image as avatar -->
             <img src="assets/images/icon.png" alt="{{name}}" />
             <img src="assets/images/icon.png" height="50" width="50"  class="mr-2" alt="Afnan" />
@@ -31,8 +31,8 @@
           </div>
 
           <div >
-            <div class="text-primary font-weight-bold font-size-18">
-              <span nzTooltipTitle="Manage your finance with insurely" nzTooltipPlacement="right" nz-tooltip style="color:#ffffff">
+            <div [hidden]="isMenuCollapsed" class="text-primary font-weight-bold font-size-32" >
+              <span nzTooltipTitle="Manage your finance with insurely" nzTooltipPlacement="right" nz-tooltip style="color:#ffffff;vertical-align: middle;">
                 Finsurely
               </span>
               <!-- <a (click)="logout()" class="float-right" nzTooltipTitle="Logout" nzTooltipPlacement="right" nz-tooltip>
