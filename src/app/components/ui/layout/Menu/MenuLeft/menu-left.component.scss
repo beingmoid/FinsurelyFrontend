@@ -93,7 +93,7 @@
   /////////////////////////////////////////////////////////////////////////////////////////
   /* ANTD MENU CUSTOMIZATION */
   .navigation {
-    padding: 0 rem(15);
+    padding: 0 0 0 1rem;
     transition: background 0s, width 0.0001s !important; // collapsed state ant-menu fix
     background: transparent;
     border-right: none;
@@ -190,14 +190,16 @@
       }
 
       .ant-menu-item-selected {
-        background: transparent !important;
+        // background: transparent !important;
+        background: #FFFFFF;
+border-radius: 100px 0px 0px 100px;
 
         > a,
         & span {
-          color: $primary !important;
+          color: #1F3563 !important;
 
           .icon {
-            color: #ffff !important;
+            color: #1F3563 !important;
           }
         }
 
@@ -317,7 +319,7 @@
 /* DARK THEME */
 .dark {
   color: $dark-gray-2;
-  background: linear-gradient(-180deg, #054085 0%, rgba(11, 90, 183, 0.85) 100%) !important;
+  background: linear-gradient(90deg, #054085 0%, rgba(11, 90, 183, 0.85) 100%) !important;
 
   .icon {
     color: #ffffff;
@@ -372,7 +374,7 @@
             color: #ffff;
 
             .icon {
-              color: #ffff !important;
+              color:#1F3563 !important;
             }
           }
         }
