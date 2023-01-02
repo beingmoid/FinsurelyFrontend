@@ -4,10 +4,11 @@
   </div>
   <div class="col-xl-4 "></div>
   <div class="col-xl-6 ">
+    <form [formGroup]="form">
     <div class="w-20 mb-3" id="SearchFiltr">
 
       <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-        <input type="search" nz-input placeholder="input search text" />
+        <input type="search" formControlName="searchQuery" nz-input placeholder="input search text" />
       </nz-input-group>
       <ng-template #suffixIconButton>
         <button nz-button nzType="primary" nzSearch><span nz-icon nzType="search"></span></button>
@@ -18,9 +19,9 @@
         </a>
         <div>
           <ul class="dropdown-menu" *ngIf="show">
-            <form [formGroup]="form">
 
-              <li>
+
+              <!-- <li>
                 <mat-form-field appearance="fill">
                   <mat-label>Enter a date range</mat-label>
                   <mat-date-range-input [rangePicker]="picker">
@@ -31,8 +32,8 @@
                   <mat-date-range-picker #picker></mat-date-range-picker>
 
                 </mat-form-field>
-              </li>
-              <li>
+              </li> -->
+              <!-- <li>
                 <label for="date">Branch</label> <br>
                 <select class="form-select" formControlName="branch" aria-label="">
                   <option value="0" selected="">Ajman</option>
@@ -40,8 +41,8 @@
                   <option value="2">Two</option>
                   <option value="3">Three</option>
                 </select>
-              </li>
-              <li class="mt-2">
+              </li> -->
+              <!-- <li class="mt-2">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked
                     formControlName="isPdf">
@@ -49,7 +50,7 @@
                     Export as PDF
                   </label>
                 </div>
-              </li>
+              </li> -->
               <li>
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"
@@ -60,12 +61,13 @@
                 </div>
               </li>
 
-            </form>
+
           </ul>
         </div>
 
       </div>
     </div>
+  </form>
     <mat-chip-list aria-label="Fish selection">
 
       <mat-chip *ngIf="this.form.value.dateFrom"> From {{this.form.value.dateFrom | date }} To {{this.form.value.dateTo

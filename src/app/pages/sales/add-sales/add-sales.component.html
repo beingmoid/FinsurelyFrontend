@@ -36,12 +36,23 @@
 
             </mat-form-field>
             <mat-form-field class="col-xl-4" [formGroup]="SalesForm" appearance="fill">
-
                 <mat-label>
-                    Insurance Company
+                    Insurance Company Name
                 </mat-label>
 
-                <input type="text" matInput formControlName="insuranceCompanyId"
+                <input type="text" matInput formControlName="chassisNumber" placeholder="Input Chassis#"
+                    >
+
+
+
+            </mat-form-field>
+            <mat-form-field class="col-xl-4" [formGroup]="SalesForm" appearance="fill">
+
+                <mat-label>
+                   Broker/Insurance Company
+                </mat-label>
+
+                <input type="text" matInput formControlName="insuranceCompanyName"
                     placeholder="Type to select Insurance Company" [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayCompanyFn.bind(this)">
                     <button mat-button color="primary" class="add-button" (click)="showInsuranceCompanyModal()"><mat-icon id="create">add</mat-icon>Add New Insurance Company</button>

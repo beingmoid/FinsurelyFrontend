@@ -115,10 +115,18 @@ export class SalesAgentService extends GenericApiService {
     })
   }
 
-  GetAgentwithBalancePaginatedAsync(pageNo:number,pageSize: number) {
-    return this.GetAll(API_URL + API_ENDPOINTS.SalesAgent + `/GetAgentwithBalancePaginatedAsync?page=${pageNo}&itemsPerPage=${pageSize}`).subscribe(res => {
-      this.salesAgentSubject.next((res.dynamicResult as PaginatedData<any>));
-    })
+  GetAgentwithBalancePaginatedAsync(pageNo:number,pageSize: number,searchQuery?:string) {
+    if(searchQuery){
+      return this.GetAll(API_URL + API_ENDPOINTS.SalesAgent + `/GetAgentwithBalancePaginatedAsync?page=${pageNo}&itemsPerPage=${pageSize}&searchQuery=${searchQuery}`).subscribe(res => {
+        this.salesAgentSubject.next((res.dynamicResult as PaginatedData<any>));
+      })
+    }
+    else{
+      return this.GetAll(API_URL + API_ENDPOINTS.SalesAgent + `/GetAgentwithBalancePaginatedAsync?page=${pageNo}&itemsPerPage=${pageSize}`).subscribe(res => {
+        this.salesAgentSubject.next((res.dynamicResult as PaginatedData<any>));
+      })
+    }
+
 
   }
 

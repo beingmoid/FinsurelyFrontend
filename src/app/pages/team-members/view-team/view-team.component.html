@@ -11,19 +11,19 @@
                 </ng-template>
             </div>
         </div>
-        <div class="col-xl-2 " *ngIf="showAddButton">
-            <a nz-button class="float-right" nzType="primary" *ngIf="_permissionService.canCreate"
+        <div class="col-xl-2 " >
+            <a nz-button class="float-right" nzType="primary"
                 (click)="showModal()">Add Team Member</a>
         </div>
     </div>
-    <div class="plans-div" *ngIf="!showAddButton">
+    <div class="plans-div" >
         <ngb-alert [dismissible]="false" class="trial-expiry-info f-13 w-100 mb-4">
             <i nz-icon nzType="warning" nzTheme="outline" class="font-weight-bold f-18 mr-2"></i>
             Maximum of {{numberOfUsers}} Team members can be created as per your subscribed plan.
         </ngb-alert>
     </div>
 
-    <div class="plans-div" *ngIf="showAddButton">
+    <div class="plans-div" >
         <ngb-alert [dismissible]="false" type="info" class=" f-13 w-100 mb-4">
             <i nz-icon nzType="info-circle" nzTheme="outline" class="font-weight-bold f-18 mr-2"></i>
             {{numberOfUsers}} Team members allowed as per your subscribed plan.
@@ -144,7 +144,7 @@
                 <div class="t-10 text-gray-5">Last name</div>
                 <div>{{teamData.lastName}}</div>
               </div>
- 
+
               <div class="col-xl-4 mb-4">
                 <div class="t-10 text-gray-5">Email</div>
                 <div>{{ teamData.email }}</div>
@@ -173,7 +173,7 @@
 
             </div>
             <!-- row 2 ends  -->
-              
+
             <div class="row mb-3">
 
               <h6 class="fw-500 mY-3 col-xl-12 contactInfo">Contact Info</h6>
@@ -255,7 +255,7 @@
                 </div>
 
           </div>
-          <!-- row 5 ends  --> 
+          <!-- row 5 ends  -->
 
         </div>
       </div>
@@ -264,4 +264,3 @@
     </div >
   </nz-modal>
 </div>
-  

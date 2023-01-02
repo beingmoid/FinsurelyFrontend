@@ -142,7 +142,7 @@ export class AddSalesAgentComponent implements OnInit {
     this.SalesAgentService.SaveSalesAgent(data).subscribe(res => {
       if (res.isSuccessfull) {
         formDirective.resetForm();
-        this.SalesAgentService.GetAllSalesAgents()
+        this.SalesAgentService.GetAgentwithBalancePaginatedAsync(1,10);
         this.alertService.success("Sales Agent Updated Sucessfully")
         this._shared.formSubmited.next({ status: "Inserted" });
       }
@@ -157,7 +157,7 @@ export class AddSalesAgentComponent implements OnInit {
     (await this.SalesAgentService.updateSalesAgent(this.salesAgentId, data)).subscribe(res => {
       if (res.isSuccessfull) {
         formDirective.resetForm();
-        this.SalesAgentService.GetAllSalesAgents()
+        this.SalesAgentService.GetAgentwithBalancePaginatedAsync(1,10);
         this.alertService.success("Sales Agent Updated Sucessfully")
         this._shared.formSubmited.next({ status: "Updated" });
 

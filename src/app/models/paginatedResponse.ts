@@ -17,6 +17,8 @@ export class PaginationParams<TKey>{
   itemsPerPage: number =10;
   page: number =1;
   requestExcel: boolean;
+  pdfFileUrl:string
+  excelFileUrl:string;
   requestPdf: boolean;
   requestAllData: boolean;
 

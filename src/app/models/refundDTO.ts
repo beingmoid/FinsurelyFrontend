@@ -14,8 +14,6 @@ export class Refund{
     paymentMethodId:number;
     paymentMethod:PaymentMethod;
     transactionReferenceNumber:string;
-    refundAccountId:number;
-    refundAccount:AccountDTO;
     policyNumber:string;
     insuranceTypeId:number;
     insuranceType:InsuranceType;

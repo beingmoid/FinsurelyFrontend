@@ -619,6 +619,13 @@ export class SalesAgentDetailComponent implements OnInit {
       this.statementList = res?.data;
       this.totalCount = res?.totalCount;
       this.totalBalance = res?.totalBalance;
+      if(res.pdfFileUrl){
+        window.open(res?.pdfFileUrl,"_blank");
+      }
+      if(res.excelFileUrl){
+        window.open(res?.pdfFileUrl,"_blank");
+      }
+
       console.log('ye wal alog', res);
       // console.log(this.totalBalance);
       console.log('statementList', this.statementList);

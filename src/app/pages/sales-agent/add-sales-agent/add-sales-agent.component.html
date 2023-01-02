@@ -1,7 +1,7 @@
 <div class="container">
-    <div class="row"> 
+    <div class="row">
         <form [formGroup]="SalesAgentForm"  (ngSubmit)="OnSubmit(formDirective)" novalidate #formDirective="ngForm">
-            {{this.SalesAgentForm.value | json}}
+
           <!--   {{this.fnAddress.value | json}}
             {{this.fnPaymentAndDelivery.value | json}}
             {{this.fnAttachment.value | json}} -->
@@ -73,7 +73,7 @@
                         sub customer?
                     </mat-checkbox>
                 </div>
-                <mat-form-field class="form-group col-xl-3" appearance="fill" 
+                <mat-form-field class="form-group col-xl-3" appearance="fill"
                     *ngIf="ParentSalesAgentInfoTag">
                     <mat-label>Parent Customer Info</mat-label>
                     <mat-select matInput placeholder="Select Parent Customer" formControlName="userDetailId">
@@ -96,17 +96,17 @@
             </div>
             <div class="row">
                 <div class="col-xl-12 d-flex justify-content-center">
-         
+
                     <button type="submit" nz-button nzType="primary">
                        Add new Sales Agent
-                        
+
                         </button>
                     </div>
             </div>
         </form>
-       
-      
-    
+
+
+
 
 </div>
 

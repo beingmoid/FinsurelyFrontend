@@ -78,6 +78,7 @@ export class AddSalesComponent implements OnInit,OnDestroy {
       customerName:[null,Validators.required],
       chassisNumber:[null,Validators.required],
       salesInvoiceDate:[new Date(),Validators.required],
+      insuranceCompanyName:[null,Validators.required],
       policyTypeId:[null,Validators.required],
       bodyTypeId:[null],
       serviceId:[null],
