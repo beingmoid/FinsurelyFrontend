@@ -226,17 +226,18 @@
       </nz-table>
     </div>
   </div>
-  <ng-template #tmpl> 
-    
-  <div class="add-account-modal-div">
+  <ng-template #tmpl>
+    <div class="add-account-modal-div">
+      <nz-modal nzFooter="null" nzWidth="1500" [(nzVisible)]="isVisible" nzMaskClosable="false"
+        [nzTitle]="isEditMode ? 'Update Sales' : 'Create New Sales'" (nzOnCancel)="handleCancel()">
+        <app-add-sales #formComponent [inputObserver]="salesObserverSubject"></app-add-sales>
+      </nz-modal>
+    </div>
+  </ng-template>
+  <ng-container *ngTemplateOutlet="tmpl">
 
-    <nz-modal nzFooter="null" nzWidth="1500" [(nzVisible)]="isVisible" nzMaskClosable="false"
-      [nzTitle]="isEditMode ? 'Update Sales' : 'Create New Sales'" (nzOnCancel)="handleCancel()">
-      <app-add-sales #formComponent [inputObserver]="salesObserverSubject"></app-add-sales>
-    </nz-modal>
-  </div>
-</ng-template>
-<ng-container *ngTemplateOutlet="tmpl"></ng-container>
+  </ng-container>
+  
   <div>
     <nz-modal nzFooter="null" nzWidth="800" [(nzVisible)]="isBulkUploadVisible" nzMaskClosable="false"
       [nzTitle]="'Bulk Upload Sales Polices'" (nzOnCancel)="isBulkUploadVisible = false">
