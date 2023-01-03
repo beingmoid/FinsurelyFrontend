@@ -11,7 +11,7 @@ import { GenericApiService } from './genericApi.service';
 export class BranchService extends GenericApiService  {
   branchObserver$: Observable<Branch[]>;
   private branchSubject$: BehaviorSubject<Branch[]> = new BehaviorSubject<Branch[]>(undefined);
-  constructor(private httpClient:HttpClient) { 
+  constructor(private httpClient:HttpClient) {
     super(httpClient);
     this.branchObserver$ = this.branchSubject$.asObservable();
   }
@@ -30,5 +30,12 @@ export class BranchService extends GenericApiService  {
   }
    DeleteBranch(id:number){
     return this.Delete(id,API_URL+API_ENDPOINTS.Branch);
+  }
+  GetBranchWithSales(){
+    this.GetAll(API_URL+API_ENDPOINTS.Branch+"/GetBranchWithSales").subscribe(res=>{
+      if(res.isSuccessfull){
+        this.branchSubject$.next(res.dynamicResult as Branch[])
+      }
+    })
   }
 }

@@ -152,7 +152,7 @@ export class SalesAgentDetailComponent implements OnInit {
   sortName = null;
   sortValue = null;
   listOfSearchName = [];
-
+  paginationParams = new PaginationParams<number>();
   show = false;
 
   chiplist = [];
@@ -185,6 +185,8 @@ export class SalesAgentDetailComponent implements OnInit {
   statementList: any[];
 
   async ngOnInit(): Promise<void> {
+
+
     this._sharedService.formSubmited.subscribe(res => {
 
       this.service.GetSaleAgentDetail(this.userDetailId).subscribe(async res => {
@@ -287,7 +289,15 @@ export class SalesAgentDetailComponent implements OnInit {
         // this.page = 10;.
 
         this.params.id = this.userDetailId;
-
+        this.service.salesAgentStatementObserver$.subscribe((res => {
+          this.statementList = res?.data;
+          this.totalCount = res?.totalCount;
+          this.totalBalance = res?.totalBalance;
+          console.log('hello')
+        }));
+        this.paginationParams.page=this.page;
+        this.paginationParams.itemsPerPage=this.pageSize;
+       this.service.SearchWithPagination(this.paginationParams);
 
         // this.service.SearchWithPagination(this.params).subscribe(async res => {
         //   if ((await res))

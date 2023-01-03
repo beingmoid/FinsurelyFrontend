@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { API_ENDPOINTS, API_URL } from 'src/app/models/Global';
 import { BaseResponse } from 'src/app/models/IApiResponse';
 import { InsuranceType } from 'src/app/models/insuranceTypeDTO';
+import { PaginatedData, PaginationParams } from 'src/app/models/paginatedResponse';
 import { PaymentMethod, PreferredPaymentMethod } from 'src/app/models/preferredPaymentMethodDTO';
 import { SalesInvoice, Vehicle } from 'src/app/models/TransactionsDTO';
 import { UserDetailDTO } from 'src/app/models/userDTO';
@@ -88,5 +89,16 @@ DeleteSales(id:number){
 
   GetColumnHeaders(path:string){
     return this.GetAll(API_URL+API_ENDPOINTS.SalesInvoice+`/GetColumnHeader?fileUrl=${path}`)
+  }
+
+  GetSalesSearch(params:PaginationParams<number>){
+
+
+    return this.Post(params,API_URL+API_ENDPOINTS.SalesInvoice+'/SalesSearch').subscribe(res=>{
+        if(res.isSuccessfull){
+          this.salesSubject$.next(res.dynamicResult as PaginatedData<SalesInvoice>)
+        }
+    })
+    ;
   }
 }
