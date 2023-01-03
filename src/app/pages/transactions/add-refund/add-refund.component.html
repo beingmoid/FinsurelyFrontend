@@ -9,7 +9,7 @@
     <img src="assets/images/logo.png" height="150" width="200" />
 
   </div>
-</div>  
+</div>
 
 <form [formGroup]="form" (ngSubmit)="submitForm(formDirective)" novalidate #formDirective="ngForm">
   <mat-form-field class="col-xl-6" [formGroup]="form">
@@ -142,20 +142,7 @@
       Refunded Amount To Sales Agent is required
     </mat-error>
   </mat-form-field>
-  <mat-form-field class="col-xl-6">
-    <mat-label> Credit Account </mat-label>
-    <input type="text" matInput formControlName="accountId" placeholder="Type to select credit account"
-      [matAutocomplete]="AccountAuto">
-    <mat-autocomplete #AccountAuto="matAutocomplete" [displayWith]="displayAccounts.bind(this)">
-      <!-- <button mat-button color="primary" class="add-button" (click)="showCustomerModal()"><mat-icon id="create">add</mat-icon>Add New Customer</button> -->
-      <mat-option *ngFor="let option of filterAccounts | async" [value]="option.id">
-        {{option.name}} | {{option.description}}
-      </mat-option>
-    </mat-autocomplete>
-    <mat-error *ngIf="form.controls.accountId?.hasError('required')">
-      Credit Account is required
-    </mat-error>
-  </mat-form-field>
+
   <div class="text-center">
     <button nz-button nzType="primary" type="submit"> {{isEditMode?'Update Refund Transaction':'Issue a new Refund Transaction'}} </button>
   </div>

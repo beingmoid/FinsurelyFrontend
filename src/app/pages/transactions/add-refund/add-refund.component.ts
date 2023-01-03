@@ -70,7 +70,7 @@ isLoaded = true;
       policyNumber:[null,Validators.required],
       insuranceCompanyId:[null,Validators.required],
       policyTypeId:[null,Validators.required],
-      accountId:[null,Validators.required],
+
 
       customerName: [null, Validators.required],
       companyName:[null, Validators.required],
@@ -102,15 +102,11 @@ isLoaded = true;
 
 
 
-    this.accountsService.accountObserver$.subscribe(res=>{
-      this.Accounts=res as AccountDTO[];
 
-      console.log("account",  this.Accounts)
-    });
-    this.accountsService.GetAccounts();
 
-    this.SalesAgentService.salesAgentObserver$.subscribe(res=>{
-      this.salesAgents= res.data as UserDetailDTO[];
+
+    this.SalesAgentService.salesAgentObserver$.subscribe((res:any)=>{
+      this.salesAgents= res as UserDetailDTO[];
     });
     this.SalesAgentService.GetAllSalesAgents();
     this.insuranceService.salesAgentObserver$.subscribe(res=>{
@@ -135,16 +131,7 @@ isLoaded = true;
       this.insuranceTypeSelect=res as InsuranceType[];
     });
     this.service.GetInsuranceTypes();
-    this.filterAccounts= this.form.controls.accountId.valueChanges.pipe(
 
-      startWith(''),
-        map(value => typeof value === 'string' ? value : value),
-      map(address => address ? this._filterAccounts(address) : this.Accounts?.slice())
-
-    );
-    this.form.controls.accountId.valueChanges.subscribe(res=>{
-      console.log(res);
-    });
     this.filterPolicyType= this.form.controls.policyTypeId.valueChanges.pipe(
 
       startWith(''),

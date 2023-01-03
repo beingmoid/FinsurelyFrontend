@@ -70,6 +70,7 @@ export class ViewSalesAgentComponent implements OnInit {
   }
   ngOnInit(): void {
     this.form = this.fb.group({
+      searchQuery: new FormControl(null),
       dateFrom: new FormControl(null),
       dateTo: new FormControl(null),
       branch: new FormControl(null),
@@ -80,9 +81,10 @@ export class ViewSalesAgentComponent implements OnInit {
     this._service.salesAgentObserver$.subscribe(res=>{
       this.totalPayable=0;
       if(res){
-        this.listData=res.data;
+        this.listData=res?.data;
         res.data.forEach((item)=>{
 
+          
           this.totalPayable+=item.openBalance;
 
         });
@@ -97,6 +99,17 @@ export class ViewSalesAgentComponent implements OnInit {
 
     this._service.GetAgentwithBalancePaginatedAsync(this.page, this.pageSize);
 
+
+    this.form.controls.searchQuery.valueChanges.subscribe(res=>{
+      this._service.GetAgentwithBalancePaginatedAsync(this.page, this.pageSize,res);
+    });
+    this.form.controls.searchQuery.valueChanges.subscribe(res=>{
+      this.Search(res);
+    });
+  }
+  @Memoize()
+  Search(str:string){
+    this._service.GetAgentwithBalancePaginatedAsync(this.page, this.pageSize,str);
   }
   onQueryParamsChange(params: NzTableQueryParams): void {
     this.isloading=true;
@@ -145,5 +158,9 @@ export class ViewSalesAgentComponent implements OnInit {
     if (id) {
       this._router.navigate(['sales-agent/view'], { queryParams: { salesAgent: id,agentBalance:data.openBalance } })
     }
+  }
+
+  SearchSalesAgent(){
+
   }
 }

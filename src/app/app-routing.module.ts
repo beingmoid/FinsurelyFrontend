@@ -158,6 +158,12 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         loadChildren: ()=>
         import('src/app/pages/expense-category/expense-category.module').then(m => m.ExpenseCategoryModule)
+      },
+      {
+        path: 'team-member',
+        canActivate: [AuthGuard],
+        loadChildren: ()=>
+        import('src/app/pages/team-members/team-members.module').then(m => m.TeamMembersModule)
       }
 
     ],

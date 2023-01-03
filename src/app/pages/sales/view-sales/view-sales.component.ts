@@ -5,6 +5,8 @@ import { NzTableQueryParams } from "ng-zorro-antd";
 import { NzResizeEvent } from "ng-zorro-antd/resizable";
 import { NzUploadChangeParam, NzUploadFile } from "ng-zorro-antd/upload";
 import { Subject, Subscription } from "rxjs";
+import { Branch } from "src/app/models/branchDTO";
+import { PaginatedData, PaginationParams } from "src/app/models/paginatedResponse";
 import { SalesInvoice } from "src/app/models/TransactionsDTO";
 import { UserDetailDTO } from "src/app/models/userDTO";
 import { AlertService } from "src/app/services/alert.service";
@@ -62,6 +64,7 @@ export class ViewSalesComponent implements OnInit {
   salesObserverSubject: Subject<SalesInvoice> = new Subject();
   interval: NodeJS.Timeout;
   serverSideUploading=false;
+  paginationParams = new PaginationParams<number>();
   scrollConfig = {
     x: "600px"
   };
@@ -78,18 +81,18 @@ export class ViewSalesComponent implements OnInit {
     private sharedService: SharedService,
     private fb:FormBuilder,
     private excel:ExportService,
-    private branchService: BranchService,
+    private branchService:BranchService,
   ) {
     this.sharedService.formSubmited.subscribe(res => {
       this.isEditMode = false;
       this.isVisible = false;
     });
     this.form = this.fb.group({
-      dateFrom: new FormControl(null),
-      dateTo: new FormControl(null),
-      branch: new FormControl(null),
-      isPdf: new FormControl(null),
-      isExcel: new FormControl(null)
+      from: new FormControl(null),
+      to: new FormControl(null),
+      branchId: new FormControl(null),
+      requestExcel: new FormControl(null),
+
 
     })
   }
@@ -215,7 +218,7 @@ export class ViewSalesComponent implements OnInit {
   vehicles=false;
   branch=false;
   range=false;
-
+  branchList:Branch[];
   OnSelectionChange($event:string[]){
    if($event.find(x=>x==="crown")){
     this.agent=true;
@@ -261,8 +264,9 @@ export class ViewSalesComponent implements OnInit {
   onQueryParamsChange(params: NzTableQueryParams): void {
     this.isloading=true;
 
-
-  this.service.GetPaginated(this.page,this.pageSize);
+    this.paginationParams.page=this.page;
+    this.paginationParams.page=this.pageSize;
+  this.service.GetSalesSearch(this.paginationParams);
   }
   onResize({ width }: NzResizeEvent, col: string): void {
     this.listOfColumn = this.listOfColumn.map(e =>
@@ -311,6 +315,12 @@ export class ViewSalesComponent implements OnInit {
   }
   ngOnInit(): void {
 
+    this.branchService.branchObserver$.subscribe(res=>{
+      if(res){
+        this.branchList=res;
+      }
+    })
+    this.branchService.GetBranchWithSales();
     // this.selectedSearchFilters.valueChanges.subscribe(val=>{
     //   console.log('working as val',val)
     // })
@@ -320,12 +330,15 @@ export class ViewSalesComponent implements OnInit {
     // }
     // this.listOfOption = children;
   this.isloading=true;
-    this.salesSubject = this.service.salesObserver$.subscribe(res => {
+    this.salesSubject = this.service.salesObserver$.subscribe((res:PaginatedData<SalesInvoice>)=> {
 
       if(res){
         this.listData=[];
-        this.totalRows=res.totalRows as number;
-        this.listData=[...res.data]
+        this.totalRows=res?.totalCount as number;
+        this.listData=res?.data;
+        if(res.excelFileUrl){
+          window.open(res?.excelFileUrl,'_blank');
+        }
 
         this.isloading=false;
       }
@@ -337,21 +350,20 @@ export class ViewSalesComponent implements OnInit {
       console.log("Sales", this.listData);
 
     });
-    this.service.GetPaginated(1,this.pageSize);
+    this.paginationParams.page=this.page;
+    this.paginationParams.itemsPerPage=this.pageSize;
 
-
-    this.branchService.branchWithSalesObserver$.subscribe((res)=>{
-      if(res){
-        this.dataBranch=res;
-        console.log("result", res);
-      }
-      console.log("result", res);
-
-    });
-    this.branchService.GetBranchWithSales();
+    this.service.GetSalesSearch(this.paginationParams);
   }
 
-
+  Search(){
+    this.isloading=true;
+    var data = this.form.value as PaginationParams<number>;
+  data.page=this.page;
+    data.itemsPerPage=this.pageSize;
+    this.service.GetSalesSearch(data);
+    console.log(data);
+  }
 
 
 
