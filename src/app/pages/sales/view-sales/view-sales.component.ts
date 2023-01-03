@@ -8,6 +8,7 @@ import { Subject, Subscription } from "rxjs";
 import { SalesInvoice } from "src/app/models/TransactionsDTO";
 import { UserDetailDTO } from "src/app/models/userDTO";
 import { AlertService } from "src/app/services/alert.service";
+import { BranchService } from "src/app/services/APIServices/branch.service";
 import { SalesService } from "src/app/services/APIServices/sales.service";
 import { ExportService } from "src/app/services/export.service";
 import { SharedService } from "src/app/services/shared.service";
@@ -64,6 +65,9 @@ export class ViewSalesComponent implements OnInit {
   scrollConfig = {
     x: "600px"
   };
+  dataBranch:SalesInvoice[];
+  
+
   columnTrackBy(index: number, item) {
     return item.key;
   }
@@ -74,6 +78,7 @@ export class ViewSalesComponent implements OnInit {
     private sharedService: SharedService,
     private fb:FormBuilder,
     private excel:ExportService,
+    private branchService: BranchService,
   ) {
     this.sharedService.formSubmited.subscribe(res => {
       this.isEditMode = false;
@@ -333,6 +338,17 @@ export class ViewSalesComponent implements OnInit {
 
     });
     this.service.GetPaginated(1,this.pageSize);
+
+
+    this.branchService.branchWithSalesObserver$.subscribe((res)=>{
+      if(res){
+        this.dataBranch=res;
+        console.log("result", res);
+      }
+      console.log("result", res);
+
+    });
+    this.branchService.GetBranchWithSales();
   }
 
 

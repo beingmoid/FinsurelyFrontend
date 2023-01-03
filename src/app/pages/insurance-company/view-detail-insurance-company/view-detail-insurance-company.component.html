@@ -82,7 +82,7 @@
                             </div>
                             <div class="col-xl-2 "></div>
                             <div class="col-xl-6 ">
-                                <form [formGroup]="form">
+                                <form [formGroup]="form">   
                                     <div class="w-20 mb-3" id="SearchFiltr">
 
                                         <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
@@ -161,8 +161,77 @@
 
 
                           </div>
+                          <nz-table class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small" nzShowSizeChanger
+                          [(nzPageSize)]="pageSize" [(nzPageIndex)]="page" 
+                          [nzFooter]="tableFooter"  [nzTotal]="totalCount"
+                          [nzFrontPagination]="false" (nzPageIndexChange)="onQueryParamsChange($event)"
+                          (nzPageSizeChange)="onQueryParamsChange($event)">
+                          <thead>
+                              <tr>
 
-                        <nz-table class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small" #filterTable
+                                  <th nzLeft="fixedColumn" nzWidth="120px"> # </th>
+                                  <th nzLeft="fixedColumn" nzWidth="80px">Invoice Date</th>
+
+                                  <th> Trasnsaction Type</th>
+                                  <th> Customer Name</th>
+                                  <th> Policy#</th>
+                                  <th> Insurance Type</th>
+
+                                  <th>Transaction Reference#</th>
+                                  <th> Vehicle</th>
+                                  <th> Body </th>
+                                  <th>Debit</th>
+                                  <th>Credit</th>
+
+                                  <th>Balance</th>
+
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let data of statementList; let i=index">
+                                  <td> {{i+1}} </td>
+                                  <td> {{data.invoiceDate | date}} </td>
+                                  <td *ngIf="data.transactionType!=3">{{
+
+
+                                      ( data.transactionType ==1?
+                                      "POLICY INVOICE":
+                                      (data.transactionType==2?
+                                      "PAYMENT":
+                                      (data.transactionType==3?
+                                      "OPENING BALANCE":
+                                      ( data.transactionType==8?
+                                      "REFUND":
+                                      "UNKNOWN TRANSACTION"
+                                      )
+                                      )
+                                      )
+                                      )
+                                      }}</td>
+                                  <td *ngIf="data.transactionType==3" colspan="07" style="text-align: center;">
+                                      {{ "----------------- OPENING BALANCE -----------------"}}
+                                  </td>
+                                  <ng-container *ngIf="data.transactionType!=3">
+
+                                      <td> {{data.customerName}} </td>
+                                      <td> {{data.policyNumber}} </td>
+                                      <td>{{data.insuranceType}}</td>
+                                      <td>{{data?.refNo}} </td>
+                                      <td> {{data.vehicle}} </td>
+                                      <td> {{data.bodyType}} </td>
+                                  </ng-container>
+
+
+                                  <td> {{data.debit==0?'':data.debit}} </td>
+                                  <td> {{data.credit==0?'':data.credit}} </td>
+
+                                  <td> {{data.balance}} </td>
+
+                              </tr>
+                          </tbody>
+                      </nz-table>
+
+                        <!-- <nz-table class="card" nzTableLayout="auto" [nzBordered]="true" nzSize="small" #filterTable
                             [nzData]="statement" [nzNoResult]="noData" nzShowSizeChanger [(nzPageSize)]="pageSize" [(nzPageIndex)]="page" 
                             [nzFooter]="tableFooter" (nzPageIndexChange)="onQueryParamsChange($event)"
                             (nzPageSizeChange)="onQueryParamsChange($event)"  [nzLoading]="isloading" [nzTotal]="totalCount">
@@ -221,7 +290,7 @@
 
                                 </tr>
                             </tbody>
-                        </nz-table>
+                        </nz-table> -->
                     </nz-tab>
                     <nz-tab [nzTitle]="CustomerTabTitle">
 

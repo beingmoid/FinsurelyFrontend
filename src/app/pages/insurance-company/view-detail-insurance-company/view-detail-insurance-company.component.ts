@@ -137,9 +137,9 @@ export class ViewDetailInsuranceCompanyComponent implements OnInit {
       } else {
         //
 
-        this.service.GetBalance(this.userDetailId).subscribe(res => {
-          this.openingBalance = res.dynamicResult.balance
-        });
+        // this.service.GetBalance(this.userDetailId).subscribe(res => {
+        //   this.openingBalance = res.dynamicResult.balance
+        // });
         this.service.GetRates(this.userDetailId).subscribe(res => {
           if (res) {
             this.comissions = res.dynamicResult as ComissionRates[];
@@ -151,29 +151,29 @@ export class ViewDetailInsuranceCompanyComponent implements OnInit {
 
         });
         console.log(this.comissions);
-        await this.service.GetSaleAgentDetail(this.userDetailId).subscribe(async res => {
-          if (res.isSuccessfull) {
-            this.customerDetail = res.dynamicResult as UserDetailDTO;
-            this.listData = this.customerDetail.insuranceCompanyInvoices;
-            (await this.service.GetReceviableStatementReport(res.dynamicResult.defaultAccountId)).subscribe(res => {
-              if (res.dynamicResult) {
-                console.log(res.dynamicResult)
-                this.report = res.dynamicResult as AccountsReceviableReport;
-                this.statement = (res.dynamicResult as AccountsReceviableReport).statement;
-                this.paymentDue = this.report.totalBalance;
-              }
+        // await this.service.GetSaleAgentDetail(this.userDetailId).subscribe(async res => {
+        //   if (res.isSuccessfull) {
+        //     this.customerDetail = res.dynamicResult as UserDetailDTO;
+        //     this.listData = this.customerDetail.insuranceCompanyInvoices;
+        //     (await this.service.GetReceviableStatementReport(res.dynamicResult.defaultAccountId)).subscribe(res => {
+        //       if (res.dynamicResult) {
+        //         console.log(res.dynamicResult)
+        //         this.report = res.dynamicResult as AccountsReceviableReport;
+        //         this.statement = (res.dynamicResult as AccountsReceviableReport).statement;
+        //         this.paymentDue = this.report.totalBalance;
+        //       }
 
 
-            });
-            this.userId = this.customerDetail.userId;
+        //     });
+        //     this.userId = this.customerDetail.userId;
 
-            this.fullName = this.customerDetail.displayNameAs;
-          }
-          else {
-            console.log('failed fetching');
-          }
+        //     this.fullName = this.customerDetail.displayNameAs;
+        //   }
+        //   else {
+        //     console.log('failed fetching');
+        //   }
 
-        });
+        // });
       }
 
     });
@@ -185,7 +185,8 @@ export class ViewDetailInsuranceCompanyComponent implements OnInit {
         res.data.forEach((item)=>{
 
           this.totalPayable+=item.openBalance;
-
+          this.isloading = true;
+console.log("DATACHEcK", this.listData)
         });
     }
 
@@ -196,7 +197,7 @@ export class ViewDetailInsuranceCompanyComponent implements OnInit {
     this.listDataCopy = JSON.stringify(this.listData);
       });
 
-    this._AgentService.GetAgentwithBalancePaginatedAsync(this.page, this.pageSize);
+// this._AgentService.SearchWithPagination(this.page,this.pageSize)    
 
   }
 
@@ -360,7 +361,8 @@ export class ViewDetailInsuranceCompanyComponent implements OnInit {
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
-    this.isloading=true;
+    this.isloading=true  ;
+    this.searchPag();
 
     console.log('pageSizw', this.pageSize, this.page);
     
