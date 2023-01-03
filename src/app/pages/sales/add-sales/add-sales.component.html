@@ -52,7 +52,7 @@
                    Broker/Insurance Company
                 </mat-label>
 
-                <input type="text" matInput formControlName="insuranceCompanyName"
+                <input type="text" matInput formControlName="insuranceCompanyId"
                     placeholder="Type to select Insurance Company" [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayCompanyFn.bind(this)">
                     <button mat-button color="primary" class="add-button" (click)="showInsuranceCompanyModal()"><mat-icon id="create">add</mat-icon>Add New Insurance Company</button>
