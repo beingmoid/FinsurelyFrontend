@@ -70,7 +70,7 @@ export class ViewSalesComponent implements OnInit {
     x: "600px"
   };
   dataBranch:SalesInvoice[];
-  
+
 
   columnTrackBy(index: number, item) {
     return item.key;
@@ -314,20 +314,14 @@ export class ViewSalesComponent implements OnInit {
   }
   ngOnInit(): void {
 
-    this.branchService.branchObserver$.subscribe(res=>{
+    this.branchService.branchWithSalesObserver$.subscribe(res=>{
       if(res){
         this.branchList=res;
+        console.log('branch working',this.branchList);
       }
     })
     this.branchService.GetBranchWithSales();
-    // this.selectedSearchFilters.valueChanges.subscribe(val=>{
-    //   console.log('working as val',val)
-    // })
-    // const children: Array<{ label: string; value: string }> = [];
-    // for (let i = 10; i < 36; i++) {
-    //   children.push({ label: i.toString(36) + i, value: i.toString(36) + i });
-    // }
-    // this.listOfOption = children;
+
   this.isloading=true;
     this.salesSubject = this.service.salesObserver$.subscribe((res:PaginatedData<SalesInvoice>)=> {
 
@@ -441,7 +435,7 @@ export class ViewSalesComponent implements OnInit {
 
 
   handleCancel() {
-    
+
     this.isVisible = false;
     this.isEditMode=false;
     this.formComponent.ngOnDestroy();
@@ -495,7 +489,14 @@ export class ViewSalesComponent implements OnInit {
     this.isEditMode = true;
     this.salesObserverSubject.next(data);
   }
-  DeleteSales() {
 
+  DeleteSales(data:SalesInvoice) {
+    this.service.DeleteSales(data.id).subscribe(res=>{
+      if(res.isSuccessfull){
+
+        this.alert.success('Sale Entry Deleted')
+        this.service.GetSalesSearch(this.paginationParams);
+      }
+    })
   }
 }

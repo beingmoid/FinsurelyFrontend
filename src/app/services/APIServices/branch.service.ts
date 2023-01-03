@@ -13,12 +13,13 @@ export class BranchService extends GenericApiService  {
   branchObserver$: Observable<Branch[]>;
   private branchSubject$: BehaviorSubject<Branch[]> = new BehaviorSubject<Branch[]>(undefined);
 
-  branchWithSalesObserver$: Observable<SalesInvoice[]>;
-  private branchWithSalesSubject$: BehaviorSubject<SalesInvoice[]> = new BehaviorSubject<SalesInvoice[]>(undefined);
+  branchWithSalesObserver$: Observable<Branch[]>;
+  private branchWithSalesSubject$: BehaviorSubject<Branch[]> = new BehaviorSubject<Branch[]>(undefined);
 
-  constructor(private httpClient:HttpClient) { 
+  constructor(private httpClient:HttpClient) {
     super(httpClient);
     this.branchObserver$ = this.branchSubject$.asObservable();
+    this.branchWithSalesObserver$=this.branchWithSalesSubject$.asObservable();
   }
   GetBranch(){
     this.GetAll(API_URL+API_ENDPOINTS.Branch).subscribe(res=>{
@@ -38,11 +39,11 @@ export class BranchService extends GenericApiService  {
   }
 
   GetBranchWithSales(){
-    this.GetAll(API_URL + API_ENDPOINTS.SalesInvoice).subscribe(res=>{
+    this.GetAll(API_URL + API_ENDPOINTS.Branch+"/GetBranchWithSales").subscribe(res=>{
       if(res.isSuccessfull){
-        this.branchWithSalesSubject$.next(res.dynamicResult as SalesInvoice[]);
+        this.branchWithSalesSubject$.next(res.dynamicResult as Branch[]);
       }
     })
-    
+
   }
 }
