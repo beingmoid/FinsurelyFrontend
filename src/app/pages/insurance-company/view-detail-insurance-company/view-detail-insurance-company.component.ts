@@ -48,9 +48,9 @@ export class ViewDetailInsuranceCompanyComponent implements OnInit {
   nonTpl: string;
   openingBalance: number;
   totalCount = undefined;
-  isloading=false;
+  isloading = false;
   params: PaginationParams<number> = new PaginationParams<number>();
-  totalPayable=0;
+  totalPayable = 0;
   listDataCopy: string;
   totalBalance;
 
@@ -72,7 +72,7 @@ export class ViewDetailInsuranceCompanyComponent implements OnInit {
     private imageCompression: NgxImageCompressService,
     private fb: FormBuilder,
     private _AgentService: SalesAgentService,
-    ) {
+  ) {
 
 
     this.form = this.fb.group({
@@ -178,26 +178,26 @@ export class ViewDetailInsuranceCompanyComponent implements OnInit {
 
     });
 
-    this._AgentService.salesAgentObserver$.subscribe(res=>{
-      this.totalPayable=0;
-      if(res){
-        this.listData=res.data;
-        res.data.forEach((item)=>{
+    this._AgentService.salesAgentObserver$.subscribe(res => {
+      this.totalPayable = 0;
+      if (res) {
+        this.listData = res.data;
+        res.data.forEach((item) => {
 
-          this.totalPayable+=item.openBalance;
+          this.totalPayable += item.openBalance;
           this.isloading = true;
-console.log("DATACHEcK", this.listData)
+          console.log("DATACHEcK", this.listData)
         });
-    }
+      }
 
-    this.totalCount= res?.totalCount;
-    console.log('resCHek' ,this.totalCount)
-    console.log('2nd', res)
+      this.totalCount = res?.totalCount;
+      console.log('resCHek', this.totalCount)
+      console.log('2nd', res)
 
-    this.listDataCopy = JSON.stringify(this.listData);
-      });
+      this.listDataCopy = JSON.stringify(this.listData);
+    });
 
-// this._AgentService.SearchWithPagination(this.page,this.pageSize)    
+    // this._AgentService.SearchWithPagination(this.page,this.pageSize)    
 
   }
 
@@ -361,11 +361,11 @@ console.log("DATACHEcK", this.listData)
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
-    this.isloading=true  ;
+    this.isloading = true;
     this.searchPag();
 
     console.log('pageSizw', this.pageSize, this.page);
-    
+
     this._AgentService.GetAgentwithBalancePaginatedAsync(this.page, this.pageSize);
 
 
